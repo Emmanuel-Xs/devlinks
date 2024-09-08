@@ -60,8 +60,8 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
     --ring: 240 4.9% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -76,6 +76,7 @@
     @apply border-border;
   }
   body {
+    font-family: var(--font-ins-sans);
     @apply bg-background text-foreground;
   }
 }
