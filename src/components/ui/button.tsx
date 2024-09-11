@@ -5,24 +5,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "focus-visible:shadow-active hover:shadow-active inline-flex items-center justify-center whitespace-nowrap rounded-lg text-base font-semibold tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-base font-semibold tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-25",
   {
     variants: {
       variant: {
         default:
-          "hover:bg-active focus-visible:bg-active bg-primary text-primary-foreground",
+          "bg-primary text-primary-foreground hover:bg-active hover:shadow-active focus-visible:bg-active focus-visible:shadow-active",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+          "focus-visible:bg-active-link hover:bg-active-link border border-primary bg-transparent text-primary",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "px-7 py-[11px]",
-        sm: "h-8 rounded-md px-3 text-xs",
+        default: "px-[27px] py-[11px]",
+        sm: "box-border px-[11px] py-[5.5px] min-[580px]:px-6",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
       },
