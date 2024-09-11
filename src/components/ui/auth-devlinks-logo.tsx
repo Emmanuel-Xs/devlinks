@@ -9,15 +9,15 @@ export default function DevlinksLogo({ className }: { className?: string }) {
         src="/logos/devlinksLogo.svg"
         alt="icon logo of devlinks"
         priority
-        width="32"
-        height="32"
+        width="41"
+        height="40"
       />
       <Image
         src="/logos/devlinks.svg"
         alt="devlinks text"
         priority
-        width="108"
-        height="21"
+        width="136"
+        height="27"
       />
     </div>
   );

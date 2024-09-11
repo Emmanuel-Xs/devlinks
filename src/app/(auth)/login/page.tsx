@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/Auth/LoginForm";
-import DevlinksLogo from "@/components/ui/devlinks-logo";
+import DevlinksLogo from "@/components/ui/auth-devlinks-logo";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
