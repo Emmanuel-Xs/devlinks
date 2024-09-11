@@ -46,6 +46,7 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        active: "hsl(var(--active))",
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
@@ -55,9 +56,12 @@ const config: Config = {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--radius)", //8px
+        md: "calc(var(--radius) - 2px)", //6px
+        sm: "calc(var(--radius) - 4px)", //4px
+      },
+      boxShadow: {
+        active: "var(--shadow) hsl(var(--primary) / 0.25)",
       },
     },
   },
