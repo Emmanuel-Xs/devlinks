@@ -1,5 +1,10 @@
 import { SignupForm } from "@/components/Auth/SignupForm";
 import DevlinksLogo from "@/components/ui/devlinks-logo";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "sign up",
+};
 
 export default function Page() {
   return (

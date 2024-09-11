@@ -47,7 +47,7 @@ export function SignupForm() {
             Password must contain at least 8 characters
           </p>
           <Button type="submit" className="w-full">
-            Login
+            Create new account
           </Button>
         </form>
         <p className="text text-center">
