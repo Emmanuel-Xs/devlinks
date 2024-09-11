@@ -47,6 +47,7 @@ const config: Config = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         active: "hsl(var(--active))",
+        "active-link": "hsl(var(--active-link))",
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
