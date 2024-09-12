@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${insSans.variable}  antialiased`}>{children}</body>
+      <body className={`${insSans.variable} antialiased`}>{children}</body>
     </html>
   );
 }
