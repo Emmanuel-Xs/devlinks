@@ -1,6 +1,7 @@
 "use client";
+
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,6 +17,7 @@ export default function DevlinksLogo({ className }: { className?: string }) {
         width="32"
         height="32"
         title={isSmUp ? "" : "devlinks logo"}
+        style={{ width: "auto" }}
       />
       {isSmUp && (
         <Image
@@ -24,6 +26,7 @@ export default function DevlinksLogo({ className }: { className?: string }) {
           priority
           width="108"
           height="21"
+          style={{ width: "auto" }}
         />
       )}
     </Link>

@@ -1,7 +1,7 @@
 "use client";
 
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";

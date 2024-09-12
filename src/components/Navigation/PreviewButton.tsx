@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { EyeIcon } from "lucide-react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function PreviewButton() {
   const isSmUp = useMediaQuery("only screen and (min-width : 580px)");
