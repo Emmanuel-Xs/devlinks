@@ -7,7 +7,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="h-svh space-y-4 py-4">
+    <main className="grid min-h-svh grid-rows-[78px,_1fr] gap-4 pt-4">
       <Navbar />
       <section className="m-4 mx-auto mt-0 flex w-[min(100%_-_2rem,_1392px)] gap-4">
         <Sidebar />
