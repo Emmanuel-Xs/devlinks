@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <section className="w-full rounded-xl bg-card p-6">profile Page</section>
+    <section className="max-h-[834px] w-full rounded-xl bg-card p-6">
+      profile Page
+    </section>
   );
 }
