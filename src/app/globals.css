@@ -85,3 +85,11 @@
     text-wrap: balance;
   }
 }
+
+html {
+  overflow-x: hidden;
+}
+
+body[data-scroll-locked] {
+  min-width: 100%;
+}
