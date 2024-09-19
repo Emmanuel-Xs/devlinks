@@ -5,22 +5,27 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
   error?: string;
+  wrapperClassName?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, error, icon, type, ...props }, ref) => {
+  (
+    { className, wrapperClassName, error, icon, type = "text", ...props },
+    ref,
+  ) => {
     return (
       <div
         className={cn(
-          "focus-within:shadow-active flex w-full items-center gap-3 rounded-lg border border-input px-4 py-[10px] transition-colors focus-within:ring-1 focus-within:ring-primary disabled:cursor-not-allowed disabled:opacity-50",
+          "flex w-full items-center gap-3 rounded-lg border border-input px-4 py-[10px] transition-colors placeholder:font-sans focus-within:shadow-active focus-within:ring-1 focus-within:ring-primary disabled:cursor-not-allowed disabled:opacity-50",
+          wrapperClassName,
           error ? "border-destructive focus-within:ring-0" : "",
         )}
       >
-        {icon && <span className="mr-2">{icon}</span>}
+        {icon && <span>{icon}</span>}
         <input
           type={type}
           className={cn(
-            "w-full border-0 bg-transparent text-sm font-normal outline-none file:text-sm file:font-medium placeholder:text-card-foreground/50 focus:ring-0 sm:text-base",
+            "w-full border-0 bg-transparent text-sm font-normal text-card-foreground outline-none file:text-sm file:font-medium placeholder:text-card-foreground/50 focus:ring-0 sm:text-base",
             className,
           )}
           ref={ref}
