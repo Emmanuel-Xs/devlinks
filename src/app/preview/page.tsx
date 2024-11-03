@@ -1,5 +1,12 @@
 import React from "react";
 
 export default function Page() {
-  return <div>preview Page</div>;
+  return (
+    <main>
+      <div>
+        <nav>nav</nav>
+      </div>
+      <div></div>
+    </main>
+  );
 }

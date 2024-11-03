@@ -1,5 +1,5 @@
 import React from "react";
-import PhoneFrame from "./PhoneFrame";
+import PhoneFrame from "./phone-frame.tsx";
 
 export default function Sidebar() {
   return (

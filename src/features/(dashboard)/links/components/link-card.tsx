@@ -1,6 +1,6 @@
 import { EqualIcon } from "lucide-react";
-import LinkPlatform from "./LinkPlatform";
-import LinkInput from "./LinkInput";
+import LinkPlatform from "./link-select-platform";
+import LinkInput from "./link-input";
 import { LinkCardProps } from "@/lib/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -8,12 +8,14 @@ import { CSS } from "@dnd-kit/utilities";
 type LinkCard = {
   links: LinkCardProps;
   removeLink: (id: number) => void;
+  updateLink: (id: number, updates: Partial<LinkCardProps>) => void;
   forceDragging?: boolean;
 };
 
 export default function LinkCard({
   links,
   forceDragging = false,
+  updateLink,
   removeLink,
 }: LinkCard) {
   const {
@@ -27,6 +29,10 @@ export default function LinkCard({
   } = useSortable({
     id: links.order,
   });
+
+   const handlePlatformChange = (newPlatform: string) => {
+     updateLink(links.id, { platform: newPlatform });
+   };
 
   const parentStyles = {
     transform: CSS.Transform.toString(transform),
@@ -60,7 +66,7 @@ export default function LinkCard({
           remove
         </p>
       </div>
-      <LinkPlatform platform={links.platform} />
+      <LinkPlatform platform={links.platform} onPlatformChange={handlePlatformChange}/>
       <LinkInput link={links.link} />
     </div>
   );

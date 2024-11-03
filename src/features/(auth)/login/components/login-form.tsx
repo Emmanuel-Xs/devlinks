@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
-import AuthEmail from "./AuthEmail";
-import AuthPassword from "./AuthPassword";
+import AuthEmail from "../../components/auth-email";
+import AuthPassword from "@/features/(auth)/components/auth-password";
 
 export function LoginForm() {
   return (

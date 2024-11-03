@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import { EyeIcon } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 

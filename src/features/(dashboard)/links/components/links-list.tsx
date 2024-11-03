@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../../../components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import LinkCard from "./LinkCard";
-import LinksPrompt from "./LinksPrompt";
+import LinkCard from "./link-card";
+import LinksPrompt from "./links-prompt";
 import { LinkCardProps } from "@/lib/types";
 import dynamic from "next/dynamic";
 import {
@@ -50,6 +50,14 @@ export default function LinksList() {
         },
         ...prev,
       ].sort((a, b) => b.order - a.order),
+    );
+  };
+
+  const updateLink = (id: number, updates: Partial<LinkCardProps>) => {
+    setLinksArray((prevLinks) =>
+      prevLinks.map((link) =>
+        link.id === id ? { ...link, ...updates } : link,
+      ),
     );
   };
 
@@ -127,6 +135,7 @@ export default function LinksList() {
                   <LinkCard
                     links={link}
                     key={link.id}
+                    updateLink={updateLink}
                     removeLink={removeLink}
                   />
                 ))}
@@ -135,6 +144,7 @@ export default function LinksList() {
                 {activeItem ? (
                   <LinkCard
                     links={activeItem}
+                    updateLink={updateLink}
                     removeLink={removeLink}
                     forceDragging
                   />

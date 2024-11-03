@@ -10,7 +10,7 @@ import {
 // import { ScrollArea } from "../ui/scroll-area";
 
 import { Fragment, useState } from "react";
-import { Label } from "../ui/label";
+import { Label } from "../../../../components/ui/label";
 import GithubIcon from "./Icons/github";
 import FrontendMentorIcon from "./Icons/frontend-mentor";
 import TwitterIcon from "./Icons/twitter";
@@ -99,7 +99,15 @@ const platforms = [
   },
 ];
 
-export default function LinkPlatform({ platform }: { platform: string }) {
+type LinkSelectPlatformProps = {
+  platform: string;
+  onPlatformChange: (platform: string) => void;
+};
+
+export default function LinkSelectPlatform({
+  platform,
+  onPlatformChange,
+}: LinkSelectPlatformProps) {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const handleSelectOpen = () => {
@@ -110,7 +118,12 @@ export default function LinkPlatform({ platform }: { platform: string }) {
       <Label htmlFor="platform" className="leading-[150%] text-card-foreground">
         Platform
       </Label>
-      <Select defaultValue={platform} onOpenChange={handleSelectOpen}>
+      <Select
+        // defaultValue={platform}
+        value={platform}
+        onValueChange={onPlatformChange}
+        onOpenChange={handleSelectOpen}
+      >
         <SelectTrigger id="platform" isOpen={isSelectOpen} className="">
           <SelectValue placeholder="" />
         </SelectTrigger>
