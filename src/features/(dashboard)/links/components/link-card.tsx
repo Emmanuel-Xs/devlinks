@@ -30,9 +30,13 @@ export default function LinkCard({
     id: links.order,
   });
 
-   const handlePlatformChange = (newPlatform: string) => {
-     updateLink(links.id, { platform: newPlatform });
-   };
+  const handlePlatformChange = (newPlatform: string) => {
+    updateLink(links.id, { platform: newPlatform });
+  };
+
+  const handleLinkChange = (newLink: string) => {
+    updateLink(links.id, { link: newLink });
+  };
 
   const parentStyles = {
     transform: CSS.Transform.toString(transform),
@@ -66,8 +70,11 @@ export default function LinkCard({
           remove
         </p>
       </div>
-      <LinkPlatform platform={links.platform} onPlatformChange={handlePlatformChange}/>
-      <LinkInput link={links.link} />
+      <LinkPlatform
+        platform={links.platform}
+        onPlatformChange={handlePlatformChange}
+      />
+      <LinkInput link={links.link} onLinkChange={handleLinkChange} />
     </div>
   );
 }
