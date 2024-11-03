@@ -3,7 +3,12 @@ import { Label } from "../../../../components/ui/label";
 import { LinkIcon } from "lucide-react";
 import { Input } from "../../../../components/ui/input";
 
-export default function LinkInput({ link }: { link?: string }) {
+type LinkInputProps = {
+  link: string;
+  onLinkChange: (link: string) => void;
+};
+
+export default function LinkInput({ link, onLinkChange }: LinkInputProps) {
   return (
     <div className="space-y-1">
       <Label htmlFor="link" className="leading-[150%] text-card-foreground">
@@ -11,7 +16,8 @@ export default function LinkInput({ link }: { link?: string }) {
       </Label>
       <Input
         id="link"
-        defaultValue={link}
+        value={link}
+        onChange={(e) => onLinkChange(e.target.value)}
         placeholder="m@example.com"
         icon={<LinkIcon width={20} height={20} className="text-foreground" />}
       />
