@@ -1,12 +1,14 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
-import { Input, InputProps } from "../ui/input";
+// import { Input, InputProps } from "../../../components/ui/input";
 import { ReactNode, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { Input, InputProps } from "../../../components/ui/input";
 
 interface AuthPasswordProps extends InputProps {
   id: string;
   label: string;
+  placeholder: string;
   forgetPassword?: ReactNode;
 }
 
@@ -14,6 +16,7 @@ export default function AuthPassword({
   id,
   label,
   forgetPassword,
+  placeholder,
   ...props
 }: AuthPasswordProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,6 +36,7 @@ export default function AuthPassword({
         <Input
           id={id}
           type={showPassword ? "text" : "password"}
+          placeholder={placeholder}
           autoComplete={forgetPassword ? "current-password" : "new-password"}
           {...props}
         />

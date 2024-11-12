@@ -1,6 +1,7 @@
 import LinksList from "@/components/Links/links-list";
 import PageHeading from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
+import LinksList from "@/features/(dashboard)/links/components/links-list";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

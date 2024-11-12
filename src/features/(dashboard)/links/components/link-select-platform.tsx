@@ -7,8 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+// import { ScrollArea } from "../ui/scroll-area";
 
 import { Fragment, useState } from "react";
+import { Label } from "../../../../components/ui/label";
 import GithubIcon from "./Icons/github";
 import FrontendMentorIcon from "./Icons/frontend-mentor";
 import TwitterIcon from "./Icons/twitter";
@@ -23,7 +25,6 @@ import FreeCodeCampIcon from "./Icons/freecodecamp";
 import GitlabIcon from "./Icons/gitlab";
 import HashnodeIcon from "./Icons/hashnode";
 import StackOverFlowIcon from "./Icons/stack-overflow";
-import { Label } from "../ui/label";
 
 const platforms = [
   {

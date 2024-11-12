@@ -1,7 +1,7 @@
 import { Label } from "@radix-ui/react-label";
-import { Input } from "../ui/input";
+import { Input } from "../../../components/ui/input";
 
-import { InputProps } from "../ui/input";
+import { InputProps } from "../../../components/ui/input";
 
 interface AuthEmailProps extends InputProps {}
 
