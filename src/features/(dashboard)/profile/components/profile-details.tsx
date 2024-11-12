@@ -1,6 +1,5 @@
-import ImageIcon from "./icons/image-icon";
-import ProfileDetailsForm from "./ProfileDetailsForm";
-import ProfilePictureCard from "./ProfilePictureCard";
+import ProfileDetailsForm from "./profile-details-form";
+import ProfilePictureCard from "./profile-picture-card";
 
 export default function ProfileDetails() {
   return (

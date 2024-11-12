@@ -1,5 +1,5 @@
-import LinksList from "@/components/Links/links-list";
-import PageHeading from "@/components/PageHeading";
+import LinksList from "@/features/(dashboard)/links/components/links-list";
+import PageHeading from "@/features/(dashboard)/components/page-heading";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 

@@ -1,4 +1,4 @@
-import ImageIcon from "./icons/image-icon";
+import ImageIcon from "./image-icon";
 
 export default function ProfilePictureCard() {
   return (

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../../../components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import LinkCard from "./link-card";
 import LinksPrompt from "./links-prompt";

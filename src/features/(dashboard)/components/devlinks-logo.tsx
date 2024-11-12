@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export default function DevlinksLogo({ className }: { className?: string }) {
   // const isSmUp = useMediaQuery("only screen and (min-width : 500px)");

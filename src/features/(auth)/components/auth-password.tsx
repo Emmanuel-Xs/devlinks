@@ -1,6 +1,6 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
-import { Input, InputProps } from "../ui/input";
+import { Input, InputProps } from "../../../components/ui/input";
 import { ReactNode, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 

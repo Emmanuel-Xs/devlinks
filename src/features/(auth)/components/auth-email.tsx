@@ -1,11 +1,9 @@
 import { Label } from "@radix-ui/react-label";
-import { Input } from "../ui/input";
+import { Input } from "../../../components/ui/input";
 
-import { InputProps } from "../ui/input";
+import { InputProps } from "../../../components/ui/input";
 
-interface AuthEmailProps extends InputProps {}
-
-export default function AuthEmail({ ...props }: AuthEmailProps) {
+export default function AuthEmail({ ...props }: InputProps) {
   return (
     <div className="grid gap-1">
       <Label htmlFor="email" className="leading-[150%] text-card-foreground">

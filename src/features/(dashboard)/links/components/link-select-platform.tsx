@@ -9,21 +9,21 @@ import {
 } from "@/components/ui/select";
 
 import { Fragment, useState } from "react";
-import GithubIcon from "../Icons/github";
-import FrontendMentorIcon from "../Icons/frontend-mentor";
-import TwitterIcon from "../Icons/twitter";
-import LinkedInIcon from "../Icons/linkedin";
-import YouTubeIcon from "../Icons/youtube";
-import FacebookIcon from "../Icons/facebook";
-import TwitchIcon from "../Icons/twitch";
-import DevDotToIcon from "../Icons/dev-to";
-import CodewarsIcon from "../Icons/codewars";
-import CodepenIcon from "../Icons/codepen";
-import FreeCodeCampIcon from "../Icons/freecodecamp";
-import GitlabIcon from "../Icons/gitlab";
-import HashnodeIcon from "../Icons/hashnode";
-import StackOverFlowIcon from "../Icons/stack-overflow";
-import { Label } from "../ui/label";
+import GithubIcon from "../../../../components/Icons/github";
+import FrontendMentorIcon from "../../../../components/Icons/frontend-mentor";
+import TwitterIcon from "../../../../components/Icons/twitter";
+import LinkedInIcon from "../../../../components/Icons/linkedin";
+import YouTubeIcon from "../../../../components/Icons/youtube";
+import FacebookIcon from "../../../../components/Icons/facebook";
+import TwitchIcon from "../../../../components/Icons/twitch";
+import DevDotToIcon from "../../../../components/Icons/dev-to";
+import CodewarsIcon from "../../../../components/Icons/codewars";
+import CodepenIcon from "../../../../components/Icons/codepen";
+import FreeCodeCampIcon from "../../../../components/Icons/freecodecamp";
+import GitlabIcon from "../../../../components/Icons/gitlab";
+import HashnodeIcon from "../../../../components/Icons/hashnode";
+import StackOverFlowIcon from "../../../../components/Icons/stack-overflow";
+import { Label } from "../../../../components/ui/label";
 
 const platforms = [
   {

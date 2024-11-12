@@ -1,8 +1,8 @@
 import React from "react";
-import DevlinksLogo from "../ui/devlinks-logo";
+import DevlinksLogo from "./devlinks-logo";
 import { CircleUserRoundIcon, LinkIcon } from "lucide-react";
-import NavItem from "./NavItem";
-import PreviewButton from "./PreviewButton";
+import NavItem from "./nav-item";
+import PreviewButton from "./preview-button";
 
 export default function Navbar() {
   return (

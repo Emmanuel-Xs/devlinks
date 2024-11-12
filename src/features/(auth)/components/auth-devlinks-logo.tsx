@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
 
 export default function DevlinksLogo({ className }: { className?: string }) {
   return (

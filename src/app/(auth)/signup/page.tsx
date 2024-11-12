@@ -1,5 +1,5 @@
-import { SignupForm } from "@/components/Auth/SignupForm";
-import DevlinksLogo from "@/components/ui/auth-devlinks-logo";
+import { SignupForm } from "@/features/(auth)/signup/components/signup-form";
+import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
