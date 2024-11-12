@@ -1,8 +1,8 @@
-import { Instrument_Sans } from "next/font/google";
+import localFont from "next/font/local";
 
-export const insSans = Instrument_Sans({
-  weight: ["400", "700"],
-  subsets: ["latin"],
+export const insSans = localFont({
+  src: "../app/fonts/InstrumentSans-VariableFont_wdth,wght.ttf",
   variable: "--font-ins-sans",
-  display: "swap",
+  weight: "400 700",
+  preload: true,
 });
