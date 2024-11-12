@@ -9,20 +9,20 @@ import {
 } from "@/components/ui/select";
 
 import { Fragment, useState } from "react";
-import GithubIcon from "./Icons/github";
-import FrontendMentorIcon from "./Icons/frontend-mentor";
-import TwitterIcon from "./Icons/twitter";
-import LinkedInIcon from "./Icons/linkedin";
-import YouTubeIcon from "./Icons/youtube";
-import FacebookIcon from "./Icons/facebook";
-import TwitchIcon from "./Icons/twitch";
-import DevDotToIcon from "./Icons/dev-to";
-import CodewarsIcon from "./Icons/codewars";
-import CodepenIcon from "./Icons/codepen";
-import FreeCodeCampIcon from "./Icons/freecodecamp";
-import GitlabIcon from "./Icons/gitlab";
-import HashnodeIcon from "./Icons/hashnode";
-import StackOverFlowIcon from "./Icons/stack-overflow";
+import GithubIcon from "../Icons/github";
+import FrontendMentorIcon from "../Icons/frontend-mentor";
+import TwitterIcon from "../Icons/twitter";
+import LinkedInIcon from "../Icons/linkedin";
+import YouTubeIcon from "../Icons/youtube";
+import FacebookIcon from "../Icons/facebook";
+import TwitchIcon from "../Icons/twitch";
+import DevDotToIcon from "../Icons/dev-to";
+import CodewarsIcon from "../Icons/codewars";
+import CodepenIcon from "../Icons/codepen";
+import FreeCodeCampIcon from "../Icons/freecodecamp";
+import GitlabIcon from "../Icons/gitlab";
+import HashnodeIcon from "../Icons/hashnode";
+import StackOverFlowIcon from "../Icons/stack-overflow";
 import { Label } from "../ui/label";
 
 const platforms = [
