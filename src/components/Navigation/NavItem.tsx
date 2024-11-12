@@ -1,6 +1,6 @@
 "use client";
 
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+// import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,7 +15,7 @@ export default function NavItem({
   href: string;
   label: string;
 }) {
-  const isSmUp = useMediaQuery("only screen and (min-width : 720px)");
+  // const isSmUp = useMediaQuery("only screen and (min-width : 720px)");
   const pathname = usePathname();
   const isActive = pathname === href;
 
@@ -29,10 +29,10 @@ export default function NavItem({
             ? "bg-active-link text-primary"
             : "text-card-foreground hover:text-primary",
         )}
-        title={isSmUp ? "" : label}
+        title={label}
       >
         {icon}
-        {isSmUp && label}
+        <span className="hidden min-[720px]:inline">{label}</span>
       </Link>
     </li>
   );
