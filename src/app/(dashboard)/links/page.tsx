@@ -1,8 +1,7 @@
-import LinksForm from "@/components/Links/LinksList";
+import LinksList from "@/components/Links/links-list";
 import PageHeading from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
-import React from "react";
 
 export const metadata: Metadata = {
   title: "user links",
@@ -17,7 +16,7 @@ export default function Page() {
           description="Add/edit/remove links below and then share all your profiles with
             the world!"
         />
-        <LinksForm />
+        <LinksList />
       </div>
       <div className="flex justify-end p-6 sm:px-10">
         <Button disabled className="max-sm:w-full">
