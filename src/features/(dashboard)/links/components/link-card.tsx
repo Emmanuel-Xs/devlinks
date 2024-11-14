@@ -1,7 +1,7 @@
 import { EqualIcon } from "lucide-react";
 import LinkPlatform from "./link-select-platform";
 import LinkInput from "./link-input";
-import { LinkCardProps } from "@/lib/types";
+import { LinkCardProps } from "@/types/links";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 

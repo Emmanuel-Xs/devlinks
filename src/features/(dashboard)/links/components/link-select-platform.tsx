@@ -9,98 +9,14 @@ import {
 } from "@/components/ui/select";
 
 import { Fragment, useState } from "react";
-import GithubIcon from "../../../../components/Icons/github";
-import FrontendMentorIcon from "../../../../components/Icons/frontend-mentor";
-import TwitterIcon from "../../../../components/Icons/twitter";
-import LinkedInIcon from "../../../../components/Icons/linkedin";
-import YouTubeIcon from "../../../../components/Icons/youtube";
-import FacebookIcon from "../../../../components/Icons/facebook";
-import TwitchIcon from "../../../../components/Icons/twitch";
-import DevDotToIcon from "../../../../components/Icons/dev-to";
-import CodewarsIcon from "../../../../components/Icons/codewars";
-import CodepenIcon from "../../../../components/Icons/codepen";
-import FreeCodeCampIcon from "../../../../components/Icons/freecodecamp";
-import GitlabIcon from "../../../../components/Icons/gitlab";
-import HashnodeIcon from "../../../../components/Icons/hashnode";
-import StackOverFlowIcon from "../../../../components/Icons/stack-overflow";
-import { Label } from "../../../../components/ui/label";
 
-const platforms = [
-  {
-    key: "github",
-    label: "Github",
-    icon: <GithubIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "frontendmentor",
-    label: "Frontend Mentor",
-    icon: <FrontendMentorIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "twitter",
-    label: "Twitter",
-    icon: <TwitterIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "linkedIn",
-    label: "LinkedIn",
-    icon: <LinkedInIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "youtube",
-    label: "YouTube",
-    icon: <YouTubeIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "facebook",
-    label: "Facebook",
-    icon: <FacebookIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "Twitch",
-    label: "Twitch",
-    icon: <TwitchIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "dev.to",
-    label: "Dev.to",
-    icon: <DevDotToIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "codewars",
-    label: "Codewars",
-    icon: <CodewarsIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "codepen",
-    label: "Codepen",
-    icon: <CodepenIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "freecodecamp",
-    label: "FreeCodeCamp",
-    icon: <FreeCodeCampIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "gitlab",
-    label: "GitLab",
-    icon: <GitlabIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "hashnode",
-    label: "Hashnode",
-    icon: <HashnodeIcon className="group-hover/item:fill-primary" />,
-  },
-  {
-    key: "stackoverflow",
-    label: "Stack Overflow",
-    icon: <StackOverFlowIcon className="group-hover/item:fill-primary" />,
-  },
-];
+import { PlatformKey } from "@/types/platform";
+import { Label } from "@/components/ui/label";
+import { platformsArray } from "@/data/platforms";
 
 type LinkSelectPlatformProps = {
-  platform: string;
-  onPlatformChange: (platform: string) => void;
+  platform: PlatformKey;
+  onPlatformChange: (platform: PlatformKey) => void;
 };
 
 export default function LinkSelectPlatform({
@@ -127,15 +43,15 @@ export default function LinkSelectPlatform({
           <SelectValue placeholder="" />
         </SelectTrigger>
         <SelectContent>
-          {platforms.map((platform, index) => (
+          {platformsArray.map((platform, index) => (
             <Fragment key={platform.key}>
               <SelectItem value={platform.key} className="group/item">
                 <div className="flex items-center gap-3">
-                  {platform.icon}
+                  {platform.getIcon("group-hover/item:fill-primary")}
                   {platform.label}
                 </div>
               </SelectItem>
-              {index < platforms.length - 1 && <SelectSeparator />}
+              {index < platformsArray.length - 1 && <SelectSeparator />}
             </Fragment>
           ))}
         </SelectContent>

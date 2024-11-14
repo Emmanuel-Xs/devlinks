@@ -4,7 +4,7 @@ import { Button } from "../../../../components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import LinkCard from "./link-card";
 import LinksPrompt from "./links-prompt";
-import { LinkCardProps } from "@/lib/types";
+import { LinkCardProps } from "@/types/links";
 import dynamic from "next/dynamic";
 import {
   closestCenter,
