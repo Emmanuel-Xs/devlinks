@@ -5,6 +5,7 @@ const config: Config = {
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/features/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/data/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -54,6 +55,22 @@ const config: Config = {
           "3": "hsl(var(--chart-3))",
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
+        },
+        platform: {
+          github: "hsl(var(--github-color))",
+          frontendmentor: "hsl(var(--frontendmentor-color))",
+          twitter: "hsl(var(--twitter-color))",
+          linkedin: "hsl(var(--linkedin-color))",
+          youtube: "hsl(var(--youtube-color))",
+          facebook: "hsl(var(--facebook-color))",
+          twitch: "hsl(var(--twitch-color))",
+          devto: "hsl(var(--devto-color))",
+          codewars: "hsl(var(--codewars-color))",
+          codepen: "hsl(var(--codepen-color))",
+          freecodecamp: "hsl(var(--freecodecamp-color))",
+          gitlab: "hsl(var(--gitlab-color))",
+          hashnode: "hsl(var(--hashnode-color))",
+          stackoverflow: "hsl(var(--stackoverflow-color))",
         },
       },
       borderRadius: {

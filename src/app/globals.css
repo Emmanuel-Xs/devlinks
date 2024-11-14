@@ -32,6 +32,21 @@
     --active-link: 252 100% 96%;
     --shadow: 0px 0px 32px 0px;
     --radius: 0.5rem;
+    /* Platform Colors */
+    --github-color: 0 0% 9%;
+    --frontendmentor-color: 227 45% 44%;
+    --twitter-color: 203 89% 53%;
+    --linkedin-color: 209 90% 40%;
+    --youtube-color: 0 100% 50%;
+    --facebook-color: 214 89% 52%;
+    --twitch-color: 264 100% 64%;
+    --devto-color: 0 0% 4%;
+    --codewars-color: 9 70% 40%;
+    --codepen-color: 0 0% 0%;
+    --freecodecamp-color: 240 47% 7%;
+    --gitlab-color: 21 97% 57%;
+    --hashnode-color: 217 100% 58%;
+    --stackoverflow-color: 27 91% 55%;
   }
   .dark {
     --background: 240 10% 3.9%;
