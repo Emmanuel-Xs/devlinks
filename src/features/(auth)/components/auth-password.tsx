@@ -1,8 +1,8 @@
 "use client";
-import { Label } from "@radix-ui/react-label";
 import { Input, InputProps } from "../../../components/ui/input";
 import { ReactNode, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 interface AuthPasswordProps extends InputProps {
   id: string;
