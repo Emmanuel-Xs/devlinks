@@ -9,11 +9,12 @@ export const timestamps = {
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  githubId: integer().unique(),
   firstName: text(),
   lastName: text(),
-  password: text().notNull(),
+  password: text(),
   username: text().notNull().unique(),
-  email: text().notNull().unique(),
+  email: text().unique(),
 });
 
 export const sessionsTable = pgTable("session", {
