@@ -5,4 +5,4 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { env } from "@/lib/serverEnv";
 
 const sql = neon(env.DATABASE_URL);
-export const db = drizzle(sql, { logger: true });
+export const db = drizzle(sql, { logger: true, casing: "snake_case" });
