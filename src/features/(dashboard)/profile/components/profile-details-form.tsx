@@ -4,7 +4,7 @@ import { Label } from "../../../../components/ui/label";
 export default function ProfileDetailsForm() {
   return (
     <div className="flex flex-col gap-6 rounded-xl border-input bg-background p-[20px]">
-      <div className="items-center justify-between gap-4 max-sm:space-y-2 sm:flex">
+      <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
         <Label
           htmlFor="firstName"
           className="leading-[150%] text-card-foreground"
@@ -18,7 +18,7 @@ export default function ProfileDetailsForm() {
           wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
         />
       </div>
-      <div className="items-center justify-between gap-4 max-sm:space-y-2 sm:flex">
+      <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
         <Label
           htmlFor="lastName"
           className="leading-[150%] text-card-foreground"
@@ -32,7 +32,7 @@ export default function ProfileDetailsForm() {
           wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
         />
       </div>
-      <div className="items-center justify-between gap-4 max-sm:space-y-2 sm:flex">
+      <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
         <Label htmlFor="email" className="leading-[150%] text-card-foreground">
           Email*
         </Label>
@@ -41,6 +41,17 @@ export default function ProfileDetailsForm() {
           type="email"
           autoComplete="email"
           placeholder="e.g. email@example.com"
+          wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
+        />
+      </div>
+      <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
+        <Label htmlFor="email" className="leading-[150%] text-card-foreground">
+          Username*
+        </Label>
+        <Input
+          id="firstName"
+          autoComplete="username"
+          placeholder="Apple001"
           wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
         />
       </div>
