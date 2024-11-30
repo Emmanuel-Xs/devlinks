@@ -3,17 +3,19 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader } from "@/components/ui/card";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
+import DashWith from "../../components/dash-with";
+import OAuthButtons from "../../components/oauth-buttons";
 
 export function SignupForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[496px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[496px] space-y-8 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:py-7 sm:text-card-foreground sm:shadow",
       )}
     >
       <CardHeader className="space-y-2">
@@ -37,19 +39,20 @@ export function SignupForm() {
           />
           <AuthPassword
             id="confirm-password"
-            placeholder="At least 8 characters"
+            placeholder="Password must match the ones above"
             icon={
               <LockKeyhole width={24} height={24} className="text-foreground" />
             }
             label="Confirm Password"
           />
-          <p className="text text-sm">
-            Password must contain at least 8 characters
-          </p>
           <Button type="submit" className="w-full">
             Create new account
           </Button>
         </form>
+      </CardContent>
+      <CardFooter className="grid gap-6">
+        <DashWith what="OR SIGNUP WITH" />
+        <OAuthButtons />
         <p className="text text-center">
           Already have an account?{" "}
           <Link
@@ -59,7 +62,7 @@ export function SignupForm() {
             Login
           </Link>
         </p>
-      </CardContent>
+      </CardFooter>
     </div>
   );
 }

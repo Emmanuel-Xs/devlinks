@@ -4,7 +4,7 @@ import Link from "next/link";
 import Form from "next/form";
 
 import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader } from "@/components/ui/card";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AuthEmail from "../../components/auth-email";
@@ -15,6 +15,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/lib/auth-validation";
 import { z } from "zod";
+import OAuthButtons from "../../components/oauth-buttons";
+import DashWith from "../../components/dash-with";
 
 export function LoginForm() {
   const [formState, formAction] = useActionState(loginAction, {
@@ -56,7 +58,7 @@ export function LoginForm() {
       });
       setFocus("email");
     }
-  }, [reset, isSubmitSuccessful, formState.errors, setError, setFocus]);
+  }, [reset, formState.errors, setError, setFocus]);
 
   return (
     <div
@@ -117,6 +119,10 @@ export function LoginForm() {
             Login
           </Button>
         </Form>
+      </CardContent>
+      <CardFooter className="grid gap-6">
+        <DashWith what="OR CONTINUE WITH" />
+        <OAuthButtons />
         <p className="text text-center">
           Don&apos;t have an account?{" "}
           <Link
@@ -126,7 +132,7 @@ export function LoginForm() {
             Create account
           </Link>
         </p>
-      </CardContent>
+      </CardFooter>
     </div>
   );
 }
