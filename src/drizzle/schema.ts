@@ -3,7 +3,6 @@ import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-const email = text().notNull().unique();
 const userId = integer()
   .notNull()
   .references(() => usersTable.id);
@@ -15,7 +14,7 @@ const expiresAt = timestamp({ withTimezone: true, mode: "date" }).notNull();
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  email,
+  email: text().notNull().unique(),
   emailVerified: integer()
     .notNull()
     .$default(() => 0),
@@ -30,16 +29,16 @@ export const usersTable = pgTable("users", {
   updatedAt,
 });
 
-export const sessionsTable = pgTable("session", {
+export const sessionsTable = pgTable("sessions", {
   id: text().primaryKey(),
   userId,
   expiresAt,
 });
 
-export const emailVerificationRequest = pgTable("email_verification_request", {
+export const emailVerificationRequest = pgTable("email_verification_requests", {
   id: text().primaryKey(),
   userId,
-  email,
+  email: text().notNull().unique(),
   code: text().notNull(),
   expiresAt,
 });
