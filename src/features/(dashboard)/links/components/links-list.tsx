@@ -45,7 +45,7 @@ export default function LinksList() {
         {
           id: Date.now(),
           order: prev.length + 1,
-          platform: "github",
+          platform: "github" as const,
           link: "",
         },
         ...prev,
