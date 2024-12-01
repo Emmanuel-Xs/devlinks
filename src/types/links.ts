@@ -1,6 +1,8 @@
+import { PlatformKey } from "./platform";
+
 export type LinkCardProps = {
   id: number;
   order: number;
-  platform: string;
+  platform: PlatformKey;
   link: string;
 };

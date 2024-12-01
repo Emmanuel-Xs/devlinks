@@ -4,6 +4,7 @@ import LinkInput from "./link-input";
 import { LinkCardProps } from "@/types/links";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { PlatformKey } from "@/types/platform";
 
 type LinkCard = {
   links: LinkCardProps;
@@ -30,7 +31,7 @@ export default function LinkCard({
     id: links.order,
   });
 
-  const handlePlatformChange = (newPlatform: string) => {
+  const handlePlatformChange = (newPlatform: PlatformKey) => {
     updateLink(links.id, { platform: newPlatform });
   };
 
