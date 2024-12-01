@@ -7,7 +7,23 @@ import { github } from "@/lib/server/oauth";
 import { cookies } from "next/headers";
 
 import type { OAuth2Tokens } from "arctic";
-import { createUserFromGithub, getUserFromGithubId } from "@/drizzle/queries";
+import {
+  createUserFromGithub,
+  getUserFromGithubId,
+} from "@/drizzle/query/users";
+
+type GithubUser = {
+  id: number;
+  login: string;
+  avatar_url: string;
+};
+
+type GithubEmail = {
+  email: string;
+  primary: boolean;
+  verified: boolean;
+  visibility: string | null;
+};
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -45,9 +61,32 @@ export async function GET(request: Request): Promise<Response> {
     },
   });
 
-  const githubUser = await githubUserResponse.json();
+  const githubUser: GithubUser = await githubUserResponse.json();
+
+  console.log("github user object: ", githubUser);
+
+  // Fetch user's email addresses
+  const githubEmailResponse = await fetch(
+    "https://api.github.com/user/emails",
+    {
+      headers: {
+        Authorization: `Bearer ${tokens.accessToken()}`,
+      },
+    },
+  );
+
+  const emails: GithubEmail[] = await githubEmailResponse.json();
+
+  console.log("github emails object: ", emails);
+  const primaryEmail = emails.find((email) => email.primary)?.email ?? null;
+
+  if (!primaryEmail) {
+    return new Response("No primary email found", { status: 400 });
+  }
+
   const githubUserId = githubUser.id;
   const githubUsername = githubUser.login;
+  const githubAvatarUrl = githubUser.avatar_url;
 
   const existingUser = await getUserFromGithubId(githubUserId);
 
@@ -63,7 +102,13 @@ export async function GET(request: Request): Promise<Response> {
     });
   }
 
-  const user = await createUserFromGithub(githubUserId, githubUsername);
+  const user = await createUserFromGithub(
+    githubUserId,
+    githubUsername,
+    primaryEmail,
+    githubAvatarUrl,
+    1,
+  );
 
   const sessionToken = generateSessionToken();
   const session = await createSession(sessionToken, user[0].id);
