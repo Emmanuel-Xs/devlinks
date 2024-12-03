@@ -8,6 +8,7 @@ export default function LinksPrompt() {
         alt="placeholder image showing a finger tapping on a mobile phone indicating adding a ink"
         width={249.53}
         height={160}
+        priority
         style={{ width: "auto" }}
       />
       <div className="w-full max-w-[488px] space-y-6 text-center">
