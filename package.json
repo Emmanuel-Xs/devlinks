@@ -50,7 +50,7 @@
     "@types/react-dom": "npm:types-react-dom@rc",
     "babel-plugin-react-compiler": "19.0.0-beta-0dec889-20241115",
     "drizzle-kit": "^0.28.1",
-    "eslint": "^8",
+    "eslint": "^9.16.0",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-react-compiler": "19.0.0-beta-0dec889-20241115",
     "postcss": "^8",
