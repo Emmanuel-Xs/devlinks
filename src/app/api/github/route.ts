@@ -4,7 +4,10 @@ import { cookies } from "next/headers";
 
 export async function GET(): Promise<Response> {
   const state = generateState();
-  const url = github.createAuthorizationURL(state, []);
+  console.log("Generated state:", state);
+
+  const url = github.createAuthorizationURL(state, ["user:email"]);
+  console.log("Generated GitHub URL:", url.toString());
 
   const cookieStore = await cookies();
   cookieStore.set("github_oauth_state", state, {

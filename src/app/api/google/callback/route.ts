@@ -1,6 +1,5 @@
 import {
   generateSessionToken,
-  createSession,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { google } from "@/lib/server/oauth";
@@ -10,8 +9,11 @@ import { decodeIdToken } from "arctic";
 import type { OAuth2Tokens } from "arctic";
 import {
   createUserFromGoogle,
-  getUserFromGoogleId,
+  getUserByEmail,
+  updateGoogleId,
 } from "@/drizzle/query/users";
+import { createSession } from "@/drizzle/query/sessions";
+import { refineOAuthUsername } from "@/lib/server/users";
 
 type GoogleIdTokenClaims = {
   sub: string;
@@ -28,6 +30,7 @@ export async function GET(request: Request): Promise<Response> {
 
   const cookieStore = await cookies();
   const storedState = cookieStore.get("google_oauth_state")?.value ?? null;
+
   const codeVerifier = cookieStore.get("google_code_verifier")?.value ?? null;
 
   if (
@@ -36,25 +39,20 @@ export async function GET(request: Request): Promise<Response> {
     storedState === null ||
     codeVerifier === null
   ) {
-    return new Response(null, {
-      status: 400,
-    });
+    return new Response("Missing required parameters", { status: 400 });
   }
 
   if (state !== storedState) {
-    return new Response(null, {
-      status: 400,
-    });
+    return new Response("Invalid state parameter", { status: 400 });
   }
 
   let tokens: OAuth2Tokens;
 
   try {
     tokens = await google.validateAuthorizationCode(code, codeVerifier);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
-    // Invalid code or client credentials
-    return new Response(null, {
+    console.error("Error validating authorization code:", e);
+    return new Response("Failed to validate authorization code", {
       status: 400,
     });
   }
@@ -66,37 +64,49 @@ export async function GET(request: Request): Promise<Response> {
   const avatarUrl = claims.picture || null;
   const emailVerified = claims.email_verified ? 1 : 0;
 
-  console.log("google claims object: ", claims);
+  const existingUser = await getUserByEmail(email);
 
-  const existingUser = await getUserFromGoogleId(googleUserId);
+  if (!existingUser.length) {
+    const refinedUserName = await refineOAuthUsername(username, googleUserId);
 
-  if (existingUser !== null) {
+    const user = await createUserFromGoogle(
+      googleUserId,
+      refinedUserName,
+      email,
+      avatarUrl,
+      emailVerified,
+    );
+
+    if (!user[0]) {
+      console.error("Failed to create user:", { username, email });
+      return new Response("Failed to create user", { status: 500 });
+    }
+
     const sessionToken = generateSessionToken();
-    const session = await createSession(sessionToken, existingUser[0].id);
+    const session = await createSession(sessionToken, user[0].id);
     await setSessionTokenCookie(sessionToken, session.expiresAt);
+
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: "/links",
       },
     });
   }
 
-  const user = await createUserFromGoogle(
-    googleUserId,
-    username,
-    email,
-    avatarUrl,
-    emailVerified,
-  );
+  if (!existingUser[0].googleId) {
+    await updateGoogleId(existingUser[0].id, googleUserId);
+  }
 
   const sessionToken = generateSessionToken();
-  const session = await createSession(sessionToken, user[0].id);
+  const session = await createSession(sessionToken, existingUser[0].id);
   await setSessionTokenCookie(sessionToken, session.expiresAt);
+
+
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/",
+      Location: "/links",
     },
   });
 }
