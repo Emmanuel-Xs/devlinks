@@ -1,6 +1,28 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db";
-import { usersTable } from "../schema";
+import { returningUserData, usersTable } from "../schema";
+
+export async function getUserByEmail(email: string) {
+  return db
+    .select({
+      ...returningUserData,
+      googleId: usersTable.googleId,
+      githubId: usersTable.githubId,
+    })
+    .from(usersTable)
+    .where(eq(usersTable.email, email))
+    .limit(1);
+}
+
+export async function isUsernameTaken(username: string) {
+  const result = await db
+    .select()
+    .from(usersTable)
+    .where(eq(usersTable.username, username))
+    .limit(1);
+
+  return result.length > 0;
+}
 
 export const getUserFromGithubId = async (id: number) => {
   return db
@@ -11,13 +33,7 @@ export const getUserFromGithubId = async (id: number) => {
 
 export const getUserFromGoogleId = async (id: string) => {
   return db
-    .select({
-      id: usersTable.id,
-      firstName: usersTable.firstName,
-      lastName: usersTable.lastName,
-      username: usersTable.username,
-      email: usersTable.email,
-    })
+    .select(returningUserData)
     .from(usersTable)
     .where(eq(usersTable.googleId, id));
 };
@@ -48,12 +64,16 @@ export const createUserFromGoogle = async (
     .returning(returningUserData);
 };
 
-const returningUserData = {
-  id: usersTable.id,
-  firstName: usersTable.firstName,
-  lastName: usersTable.lastName,
-  username: usersTable.username,
-  email: usersTable.email,
-  avatarUrl: usersTable.avatarUrl,
-  emailVerified: usersTable.emailVerified,
-};
+export async function updateGithubId(userId: number, githubId: number) {
+  await db
+    .update(usersTable)
+    .set({ githubId })
+    .where(eq(usersTable.id, userId));
+}
+
+export async function updateGoogleId(userId: number, googleId: string) {
+  await db
+    .update(usersTable)
+    .set({ googleId })
+    .where(eq(usersTable.id, userId));
+}
