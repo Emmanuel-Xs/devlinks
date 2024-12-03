@@ -1,11 +1,6 @@
 import { InferSelectModel } from "drizzle-orm";
 import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
 
-const userId = integer()
-  .notNull()
-  .references(() => usersTable.id);
 const createdAt = timestamp({ withTimezone: true, mode: "date" })
   .defaultNow()
   .notNull();
@@ -31,27 +26,34 @@ export const usersTable = pgTable("users", {
 
 export const sessionsTable = pgTable("sessions", {
   id: text().primaryKey(),
-  userId,
+  userId: integer()
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   expiresAt,
 });
 
 export const emailVerificationRequest = pgTable("email_verification_requests", {
   id: text().primaryKey(),
-  userId,
+  userId: integer()
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   email: text().notNull().unique(),
   code: text().notNull(),
   expiresAt,
 });
 
-export const selectUserSchema = createSelectSchema(usersTable).pick({
-  id: true,
-  firstName: true,
-  lastName: true,
-  username: true,
-  email: true,
-  avatarUrl: true,
-  emailVerified: true,
-});
+export const returningUserData = {
+  id: usersTable.id,
+  firstName: usersTable.firstName,
+  lastName: usersTable.lastName,
+  username: usersTable.username,
+  email: usersTable.email,
+  avatarUrl: usersTable.avatarUrl,
+  emailVerified: usersTable.emailVerified,
+};
 
-export type User = z.infer<typeof selectUserSchema>;
+export type User = Pick<
+  InferSelectModel<typeof usersTable>,
+  keyof typeof returningUserData
+>;
 export type Session = InferSelectModel<typeof sessionsTable>;
