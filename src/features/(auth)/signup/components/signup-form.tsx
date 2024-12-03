@@ -1,4 +1,5 @@
 "use client";
+"use no memo";
 
 import Link from "next/link";
 
