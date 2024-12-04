@@ -7,6 +7,8 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
+    GITHUB_CLIENT_ID_DEV: z.string(),
+    GITHUB_CLIENT_SECRET_DEV: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     DATABASE_URL_UNPOOLED: z.string(),
