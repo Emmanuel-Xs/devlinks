@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -11,8 +10,62 @@ import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
 import DashWith from "../../components/dash-with";
 import OAuthButtons from "../../components/oauth-buttons";
+import { signUpAction } from "../server/action";
+import { startTransition, useActionState, useEffect, useRef } from "react";
+import Form from "next/form";
+import { signupSchema } from "@/lib/auth-validation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoadingButton from "@/components/loading-button";
 
 export function SignupForm() {
+  const [formState, formAction] = useActionState(signUpAction, {
+    success: false,
+  });
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    setFocus,
+    formState: { errors: rhfErrors, isSubmitSuccessful },
+  } = useForm<z.output<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      ...(formState?.fields ?? {}),
+    },
+    mode: "onTouched",
+  });
+
+  useEffect(() => {
+    if (isSubmitSuccessful && formState.success) {
+      reset();
+    }
+  }, [reset, isSubmitSuccessful, formState.success]);
+
+  // email taken or password compromised
+  useEffect(() => {
+    if (formState.errors?.email) {
+      setError("email", {
+        message: formState.errors.email.join(", "),
+      });
+      setFocus("email");
+    }
+    if (formState.errors?.password) {
+      setError("password", {
+        message: formState.errors.password.join(", "),
+      });
+      setFocus("password");
+    }
+  }, [reset, formState.errors, setError, setFocus]);
+
   return (
     <div
       className={cn(
@@ -24,11 +77,31 @@ export function SignupForm() {
         <p className="text">Let&apos;s get you started sharing your links!</p>
       </CardHeader>
       <CardContent className="grid gap-6">
-        <form className="grid gap-6">
+        {formState?.errors && !formState.success ? (
+          <p className="text text-pretty text-destructive">
+            {formState?.errors?.message}
+          </p>
+        ) : null}
+        <Form
+          action={formAction}
+          className="grid gap-6"
+          ref={formRef}
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            handleSubmit(() => {
+              startTransition(() => formAction(new FormData(formRef.current!)));
+            })(evt);
+          }}
+        >
           <AuthEmail
             icon={<Mail width={24} height={24} className="text-foreground" />}
             placeholder="e.g. alex@email.com"
-            // error="wrong email address"
+            error={
+              rhfErrors.email?.message || formState?.errors?.email?.join(", ")
+            }
+            required
+            defaultValue={formState.fields?.email}
+            {...register("email")}
           />
           <AuthPassword
             id="password"
@@ -37,6 +110,12 @@ export function SignupForm() {
               <LockKeyhole width={24} height={24} className="text-foreground" />
             }
             label="Create Password"
+            error={
+              rhfErrors.password?.message ||
+              formState?.errors?.password?.join(", ")
+            }
+            defaultValue={formState.fields?.password}
+            {...register("password")}
           />
           <AuthPassword
             id="confirm-password"
@@ -45,11 +124,15 @@ export function SignupForm() {
               <LockKeyhole width={24} height={24} className="text-foreground" />
             }
             label="Confirm Password"
+            error={
+              rhfErrors.confirmPassword?.message ||
+              formState?.errors?.confirmPassword?.join(", ")
+            }
+            defaultValue={formState.fields?.confirmPassword}
+            {...register("confirmPassword")}
           />
-          <Button type="submit" className="w-full">
-            Create new account
-          </Button>
-        </form>
+          <LoadingButton text=" Create new account" />
+        </Form>
       </CardContent>
       <CardFooter className="grid gap-6">
         <DashWith what="OR SIGNUP WITH" />

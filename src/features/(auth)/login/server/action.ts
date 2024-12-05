@@ -1,5 +1,14 @@
 "use server";
+import { createSession } from "@/drizzle/query/sessions";
+import { getUserByEmail, getUserPasswordHash } from "@/drizzle/query/users";
 import { loginSchema } from "@/lib/auth-validation";
+import { verifyPasswordHash } from "@/lib/server/password";
+import {
+  generateSessionToken,
+  setSessionTokenCookie,
+} from "@/lib/server/sessions";
+import { permanentRedirect } from "next/navigation";
+import { headers } from "next/headers";
 import "server-only";
 
 type FormState = {
@@ -9,19 +18,16 @@ type FormState = {
 };
 
 export async function loginAction(
-  prevState: FormState,
+  _prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
-  console.log("data received", data);
-
   if (!(data instanceof FormData)) {
     return {
       success: false,
-      errors: { error: ["Invalid Form Data"] },
+      errors: { message: ["Invalid Form Data"] },
     };
   }
   const formData = Object.fromEntries(data);
-  console.log("form data", formData);
 
   const parsed = loginSchema.safeParse(formData);
 
@@ -32,8 +38,6 @@ export async function loginAction(
     for (const key of Object.keys(formData)) {
       fields[key] = formData[key].toString();
     }
-    console.log("error returned data", data);
-    console.log("error returned error", errors);
     return {
       success: false,
       fields,
@@ -41,17 +45,54 @@ export async function loginAction(
     };
   }
 
-  if (parsed.data.email.includes("a")) {
+  const email = parsed.data.email;
+  const password = parsed.data.password;
+
+  const user = await getUserByEmail(email);
+
+  if (!user.length) {
     return {
       success: false,
-      errors: { email: ["Invalid email"] },
-      fields: parsed.data,
+      errors: { message: ["Account does not exist"] },
+      fields: undefined,
     };
   }
 
-  console.log("parsed data", parsed.data);
-  return {
-    success: true,
-    fields: undefined,
-  };
+  const passwordHash = await getUserPasswordHash(user[0].id);
+  const passwordHashNotNull = passwordHash[0].password;
+
+  if (passwordHashNotNull === null) {
+    return {
+      success: false,
+      errors: {
+        message: [
+          "Account does not have password, try forget password or login with any oauth options",
+        ],
+      },
+      fields: undefined,
+    };
+  }
+
+  const validPassword = await verifyPasswordHash(passwordHashNotNull, password);
+
+  if (!validPassword) {
+    return {
+      success: false,
+      errors: { message: ["Invalid credentials"] },
+      fields: undefined,
+    };
+  }
+
+  const sessionToken = generateSessionToken();
+  const session = await createSession(sessionToken, user[0].id);
+  setSessionTokenCookie(sessionToken, session.expiresAt);
+
+  const header = await headers();
+  const redirectUrl = header.get("redirect") || "links";
+
+  if (!user[0].emailVerified) {
+    permanentRedirect("/verify-email");
+  }
+
+  permanentRedirect(redirectUrl);
 }

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Form from "next/form";
 
-import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,6 +16,7 @@ import { loginSchema } from "@/lib/auth-validation";
 import { z } from "zod";
 import OAuthButtons from "../../components/oauth-buttons";
 import DashWith from "../../components/dash-with";
+import LoadingButton from "@/components/loading-button";
 
 export function LoginForm() {
   const [formState, formAction] = useActionState(loginAction, {
@@ -29,8 +29,6 @@ export function LoginForm() {
     register,
     handleSubmit,
     reset,
-    setError,
-    setFocus,
     formState: { errors: rhfErrors, isSubmitSuccessful },
   } = useForm<z.output<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -42,23 +40,11 @@ export function LoginForm() {
     mode: "onTouched",
   });
 
-  console.log(formState);
-  console.log("fields returned: ", { ...(formState?.fields ?? {}) });
-
   useEffect(() => {
     if (isSubmitSuccessful && formState.success) {
       reset();
     }
   }, [reset, isSubmitSuccessful, formState.success]);
-
-  useEffect(() => {
-    if (formState.errors?.email) {
-      setError("email", {
-        message: formState.errors.email.join(", "),
-      });
-      setFocus("email");
-    }
-  }, [reset, formState.errors, setError, setFocus]);
 
   return (
     <div
@@ -71,6 +57,11 @@ export function LoginForm() {
         <p className="text">Add your details below to get back into the app</p>
       </CardHeader>
       <CardContent className="grid gap-6">
+        {formState?.errors && !formState.success ? (
+          <p className="text text-pretty text-destructive">
+            {formState?.errors?.message}
+          </p>
+        ) : null}
         <Form
           ref={formRef}
           className="grid gap-6"
@@ -115,9 +106,7 @@ export function LoginForm() {
             defaultValue={formState.fields?.password}
             {...register("password")}
           />
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
+          <LoadingButton text="Login" />
         </Form>
       </CardContent>
       <CardFooter className="grid gap-6">
