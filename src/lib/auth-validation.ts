@@ -2,7 +2,11 @@ import { z } from "zod";
 
 const email = z.string().trim().min(2, "min char is 2").email();
 
-const password = z.string().trim().min(8, "min char is 8");
+const password = z
+  .string()
+  .trim()
+  .min(8, "min char is 8")
+  .max(255, "max char is 255");
 
 const signupSchema = z
   .object({
@@ -11,7 +15,7 @@ const signupSchema = z
     confirmPassword: password,
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
+    message: "Passwords don't match",
     path: ["confirmPassword"],
   });
 
@@ -20,4 +24,8 @@ const loginSchema = z.object({
   password,
 });
 
-export { signupSchema, loginSchema };
+const verifyEmailSchema = z.object({
+  code: z.string().min(8, "Your one-time password must be 6 characters."),
+});
+
+export { signupSchema, loginSchema, verifyEmailSchema };
