@@ -57,3 +57,7 @@ export type User = Pick<
   keyof typeof returningUserData
 >;
 export type Session = InferSelectModel<typeof sessionsTable>;
+
+export type EmailVerificationRequest = InferSelectModel<
+  typeof emailVerificationRequest
+>;

@@ -24,6 +24,16 @@ export async function isUsernameTaken(username: string) {
   return result.length > 0;
 }
 
+export async function isEmailTaken(email: string) {
+  const result = await db
+    .select()
+    .from(usersTable)
+    .where(eq(usersTable.email, email))
+    .limit(1);
+
+  return result.length > 0;
+}
+
 export const getUserFromGithubId = async (id: number) => {
   return db
     .select(returningUserData)
@@ -64,6 +74,18 @@ export const createUserFromGoogle = async (
     .returning(returningUserData);
 };
 
+export const createUser = async (
+  username: string,
+  email: string,
+  passwordHash: string,
+  emailVerified = 0,
+) => {
+  return await db
+    .insert(usersTable)
+    .values({ username, email, password: passwordHash, emailVerified })
+    .returning(returningUserData);
+};
+
 export async function updateGithubId(userId: number, githubId: number) {
   await db
     .update(usersTable)
@@ -75,5 +97,22 @@ export async function updateGoogleId(userId: number, googleId: string) {
   await db
     .update(usersTable)
     .set({ googleId })
+    .where(eq(usersTable.id, userId));
+}
+
+export async function updateUserEmailAndSetEmailAsVerified(
+  userId: number,
+  email: string,
+) {
+  await db
+    .update(usersTable)
+    .set({ email, emailVerified: 1 })
+    .where(eq(usersTable.id, userId));
+}
+
+export async function getUserPasswordHash(userId: number) {
+  return await db
+    .select({ password: usersTable.password })
+    .from(usersTable)
     .where(eq(usersTable.id, userId));
 }
