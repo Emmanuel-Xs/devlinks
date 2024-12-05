@@ -1,3 +1,4 @@
+"use client";
 import { resendEmailVerificationCodeAction } from "../server/actions";
 import { useActionState } from "react";
 import Form from "next/form";
