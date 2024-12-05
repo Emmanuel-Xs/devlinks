@@ -26,6 +26,8 @@ export const env = createEnv({
     POSTGRES_URL_NO_SSL: z.string(),
     POSTGRES_PRISMA_URL: z.string(),
     HOME_URL: z.string(),
+    OAUTH_CALLBACK: z.string(),
+    LOCALHOST: z.string(),
   },
   experimental__runtimeEnv: process.env,
 });
