@@ -7,8 +7,7 @@ import {
   generateSessionToken,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
-import { permanentRedirect } from "next/navigation";
-import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import "server-only";
 
 type FormState = {
@@ -87,12 +86,9 @@ export async function loginAction(
   const session = await createSession(sessionToken, user[0].id);
   setSessionTokenCookie(sessionToken, session.expiresAt);
 
-  const header = await headers();
-  const redirectUrl = header.get("redirect") || "links";
-
   if (!user[0].emailVerified) {
-    permanentRedirect("/verify-email");
+    redirect("/verify-email");
   }
 
-  permanentRedirect(redirectUrl);
+  redirect("/links");
 }

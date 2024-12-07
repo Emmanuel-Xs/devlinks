@@ -10,10 +10,9 @@ import {
   deleteEmailVerificationRequestCookie,
   getUserEmailVerificationRequestFromRequest,
   setEmailVerificationRequestCookie,
-} from "@/lib/server/email-verifcation";
+} from "@/lib/server/email-verification";
 import { getCurrentSession } from "@/lib/server/sessions";
-import { headers } from "next/headers";
-import { permanentRedirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import "server-only";
 
 type FormState = {
@@ -76,17 +75,11 @@ export async function verifyEmailAction(
     };
   }
 
-  await Promise.all([
-    deleteUserEmailVerificationRequest(user.id),
-    updateUserEmailAndSetEmailAsVerified(user.id, request.email),
-    deleteEmailVerificationRequestCookie(),
-  ]);
+  deleteUserEmailVerificationRequest(user.id);
+  updateUserEmailAndSetEmailAsVerified(user.id, request.email);
+  deleteEmailVerificationRequestCookie();
 
-  const header = await headers();
-
-  const redirectUrl = header.get("redirect") || "links";
-
-  permanentRedirect(redirectUrl);
+  return redirect("/links");
 }
 
 async function handleExpiredVerificationCode(userId: number, email: string) {
