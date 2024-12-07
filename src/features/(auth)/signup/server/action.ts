@@ -6,7 +6,7 @@ import {
 import { createSession } from "@/drizzle/query/sessions";
 import { createUser, isEmailTaken } from "@/drizzle/query/users";
 import { signupSchema } from "@/lib/auth-validation";
-import { setEmailVerificationRequestCookie } from "@/lib/server/email-verifcation";
+import { setEmailVerificationRequestCookie } from "@/lib/server/email-verification";
 import { checkPasswordSecurity, hashPassword } from "@/lib/server/password";
 import {
   generateSessionToken,
@@ -55,7 +55,7 @@ export async function signUpAction(
 
   const isEmailAvailable = await isEmailTaken(email);
 
-  if (!isEmailAvailable) {
+  if (isEmailAvailable) {
     return {
       success: false,
       errors: { email: ["email taken"] },
