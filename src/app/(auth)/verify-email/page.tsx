@@ -1,7 +1,7 @@
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
 import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
-import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email-verifcation";
+import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email-verification";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { redirect } from "next/navigation";
 import React from "react";

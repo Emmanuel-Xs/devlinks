@@ -1,13 +1,8 @@
 import { env } from "@/lib/server/serverEnv";
-import { getCurrentSession } from "@/lib/server/sessions";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const allowedOrigins = [env.HOME_URL, env.LOCALHOST];
-
-const protectedRoutes = ["/links", "/profile", "verify-email"];
-const publicRoutes = ["/login", "/signup", "/"];
-
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   // Bypass CSRF for OAuth endpoints
   if (
@@ -61,33 +56,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     };
 
     return NextResponse.json({}, { headers: preflightHeaders });
-  }
-
-  const path = request.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
-
-  const { session, user } = await getCurrentSession();
-
-  if (!session && !user && isProtectedRoute) {
-    NextResponse.next().headers.append("redirect", request.nextUrl.pathname);
-    return NextResponse.redirect(
-      new URL(`/login?redirect=${request.nextUrl.pathname}`, request.nextUrl),
-    );
-  }
-
-  if (user && !user.emailVerified) {
-    NextResponse.next().headers.append("redirect", request.nextUrl.pathname);
-    return NextResponse.redirect(
-      new URL(
-        `/verify-email?redirect=${request.nextUrl.pathname}`,
-        request.nextUrl,
-      ),
-    );
-  }
-
-  if (session && user && isPublicRoute) {
-    return NextResponse.redirect(new URL("/", request.nextUrl));
   }
 
   // Handle simple requests

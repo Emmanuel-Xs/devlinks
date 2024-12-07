@@ -3,12 +3,15 @@ import ProfileDetails from "@/features/(dashboard)/profile/components/profile-de
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import React from "react";
+import { goToLoginOrEmailVerified } from "@/lib/server/sessions";
 
 export const metadata: Metadata = {
   title: "user profile",
 };
 
-export default function Page() {
+export default async function Page() {
+  await goToLoginOrEmailVerified();
+
   return (
     <section className="grid h-full w-full grid-rows-[1fr,_95px] divide-y divide-input rounded-xl bg-card">
       <div className="space-y-10 p-6 sm:p-10">
