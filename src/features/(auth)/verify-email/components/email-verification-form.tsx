@@ -16,6 +16,7 @@ export default function EmailVerificationForm() {
   const [formState, formAction] = useActionState(verifyEmailAction, {
     success: false,
   });
+
   return (
     <div
       className={cn(
@@ -29,7 +30,7 @@ export default function EmailVerificationForm() {
         </p>
       </CardHeader>
       <Form action={formAction} className="grid justify-center gap-6">
-        <InputOTP maxLength={8} id="form-otp" required autoFocus>
+        <InputOTP maxLength={8} id="form-otp" autoFocus required name="code">
           <InputOTPGroup>
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
