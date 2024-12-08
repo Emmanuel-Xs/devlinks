@@ -2,15 +2,15 @@
 import {
   createEmailVerificationRequest,
   deleteUserEmailVerificationRequest,
-  sendVerificationEmail,
 } from "@/drizzle/query/email-verifcation";
 import { updateUserEmailAndSetEmailAsVerified } from "@/drizzle/query/users";
 import { verifyEmailSchema } from "@/lib/auth-validation";
 import {
   deleteEmailVerificationRequestCookie,
   getUserEmailVerificationRequestFromRequest,
+  sendVerificationEmail,
   setEmailVerificationRequestCookie,
-} from "@/lib/server/email-verification";
+} from "@/lib/server/email";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { redirect } from "next/navigation";
 import "server-only";

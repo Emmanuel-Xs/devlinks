@@ -42,7 +42,3 @@ export async function deleteUserEmailVerificationRequest(userId: number) {
     .delete(emailVerificationRequest)
     .where(eq(emailVerificationRequest.userId, userId));
 }
-
-export function sendVerificationEmail(email: string, code: string): void {
-  console.log(`To ${email}: Your verification code is ${code}`);
-}

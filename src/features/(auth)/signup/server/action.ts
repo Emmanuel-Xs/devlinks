@@ -1,12 +1,12 @@
 "use server";
-import {
-  createEmailVerificationRequest,
-  sendVerificationEmail,
-} from "@/drizzle/query/email-verifcation";
+import { createEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
 import { createSession } from "@/drizzle/query/sessions";
 import { createUser, isEmailTaken } from "@/drizzle/query/users";
 import { signupSchema } from "@/lib/auth-validation";
-import { setEmailVerificationRequestCookie } from "@/lib/server/email-verification";
+import {
+  sendVerificationEmail,
+  setEmailVerificationRequestCookie,
+} from "@/lib/server/email";
 import { checkPasswordSecurity, hashPassword } from "@/lib/server/password";
 import {
   generateSessionToken,
