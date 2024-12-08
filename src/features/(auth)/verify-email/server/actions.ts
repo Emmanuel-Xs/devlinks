@@ -123,10 +123,13 @@ export async function resendEmailVerificationCodeAction(): Promise<FormState> {
       user.email,
     );
   }
-  sendVerificationEmail(
+  await sendVerificationEmail(
     verificationRequest[0].email,
     verificationRequest[0].code,
   );
+
+  // console.log("res data", res.data);
+  // console.log("res error", res.error);
   setEmailVerificationRequestCookie(verificationRequest[0]);
   return {
     success: true,

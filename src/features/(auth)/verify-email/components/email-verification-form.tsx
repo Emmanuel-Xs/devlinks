@@ -26,7 +26,8 @@ export default function EmailVerificationForm() {
       <CardHeader className="space-y-2 text-center">
         <h1 className="heading">Verify your email address</h1>
         <p className="text">
-          We sent an 8-digit code to Your email check your Inbox.
+          We sent an 8-digit code to your email. Please check your inbox, and if
+          you don&apos;t see it, be sure to check your spam folder.
         </p>
       </CardHeader>
       <Form action={formAction} className="grid justify-center gap-6">

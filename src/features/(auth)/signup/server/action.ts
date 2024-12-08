@@ -86,6 +86,9 @@ export async function signUpAction(
     emailVerificationRequest[0].email,
     emailVerificationRequest[0].code,
   );
+
+  // console.log("res data", res.data);
+  // console.log("res error", res.error);
   setEmailVerificationRequestCookie(emailVerificationRequest[0]);
 
   const sessionToken = generateSessionToken();

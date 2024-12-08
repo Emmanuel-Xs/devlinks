@@ -28,6 +28,8 @@ export const env = createEnv({
     HOME_URL: z.string(),
     OAUTH_CALLBACK: z.string(),
     LOCALHOST: z.string(),
+    RESEND_KEY: z.string(),
+    EMAIL_AUTH_PASS: z.string(),
   },
   experimental__runtimeEnv: process.env,
 });
