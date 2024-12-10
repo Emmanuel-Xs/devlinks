@@ -8,19 +8,17 @@ export interface InputProps
   wrapperClassName?: string;
 }
 
-const Input = (
-  {
-    ref,
-    className,
-    wrapperClassName,
-    error,
-    icon,
-    type = "text",
-    ...props
-  }: InputProps & {
-    ref: React.RefObject<HTMLInputElement>;
-  }
-) => {
+const Input = ({
+  ref,
+  className,
+  wrapperClassName,
+  error,
+  icon,
+  type = "text",
+  ...props
+}: InputProps & {
+  ref?: React.RefObject<HTMLInputElement>;
+}) => {
   return (
     <div
       className={cn(
