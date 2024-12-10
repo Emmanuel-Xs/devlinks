@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { getCurrentSession } from "./sessions";
 import { getUserEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
 import { render } from "@react-email/components";
-// @ts-expect-error-error
 import nodemailer from "nodemailer";
 import EmailVerification from "../../../emails/email-verification";
 import { env } from "./serverEnv";
