@@ -13,7 +13,7 @@ import Form from "next/form";
 import LoadingButton from "@/components/loading-button";
 
 export default function EmailVerificationForm() {
-  const [formState, formAction] = useActionState(verifyEmailAction, {
+  const [formState, formAction, isPending] = useActionState(verifyEmailAction, {
     success: false,
   });
 
@@ -31,7 +31,15 @@ export default function EmailVerificationForm() {
         </p>
       </CardHeader>
       <Form action={formAction} className="grid justify-center gap-6">
-        <InputOTP maxLength={8} id="form-otp" autoFocus required name="code">
+        <InputOTP
+          maxLength={8}
+          id="form-otp"
+          autoFocus
+          required
+          name="code"
+          type="text"
+          autoComplete="one-time-code"
+        >
           <InputOTPGroup>
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
@@ -47,7 +55,7 @@ export default function EmailVerificationForm() {
           </InputOTPGroup>
         </InputOTP>
         <LoadingButton text="Verify" />
-        {formState?.errors && !formState.success ? (
+        {formState?.errors && !formState.success && !isPending ? (
           <p className="text text-pretty text-center text-destructive">
             {formState?.errors?.message}
           </p>

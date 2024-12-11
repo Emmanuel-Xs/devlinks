@@ -4,7 +4,7 @@
 import Link from "next/link";
 
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Loader, LockKeyhole, Mail } from "lucide-react";
+import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
@@ -17,8 +17,7 @@ import { signupSchema } from "@/lib/auth-validation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import LoadingButton from "@/components/loading-button";
-import { Button } from "@/components/ui/button";
+import LoadingButton from "@/components/loading-button";
 
 export function SignupForm() {
   const [formState, formAction, isPending] = useActionState(signUpAction, {
@@ -132,13 +131,7 @@ export function SignupForm() {
             defaultValue={formState.fields?.confirmPassword}
             {...register("confirmPassword")}
           />
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? (
-              <Loader className="animate-spin text-foreground" size={25} />
-            ) : (
-              "Create new account"
-            )}
-          </Button>
+          <LoadingButton text="Create new account" isPending={isPending} />
         </Form>
       </CardContent>
       <CardFooter className="grid gap-6">

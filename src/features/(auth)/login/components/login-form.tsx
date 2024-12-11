@@ -4,7 +4,7 @@ import Link from "next/link";
 import Form from "next/form";
 
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Loader, LockKeyhole, Mail } from "lucide-react";
+import { LockKeyhole, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
@@ -16,7 +16,7 @@ import { loginSchema } from "@/lib/auth-validation";
 import { z } from "zod";
 import OAuthButtons from "../../components/oauth-buttons";
 import DashWith from "../../components/dash-with";
-import { Button } from "@/components/ui/button";
+import LoadingButton from "@/components/loading-button";
 
 export function LoginForm() {
   const [formState, formAction, isPending] = useActionState(loginAction, {
@@ -106,13 +106,7 @@ export function LoginForm() {
             defaultValue={formState.fields?.password}
             {...register("password")}
           />
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? (
-              <Loader className="animate-spin text-foreground" size={25} />
-            ) : (
-              "Login"
-            )}
-          </Button>
+          <LoadingButton text="Login" isPending={isPending} />
         </Form>
       </CardContent>
       <CardFooter className="grid gap-6">
