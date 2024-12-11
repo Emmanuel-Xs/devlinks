@@ -13,6 +13,9 @@ const config: Config = {
       sans: ["var(--font-ins-sans)"],
     },
     extend: {
+      backgroundImage: {
+        radial: "radial-gradient(var(--tw-gradient-stops))",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
