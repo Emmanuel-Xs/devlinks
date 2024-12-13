@@ -1,3 +1,5 @@
+"use server";
+
 import { invalidateUserPasswordResetSessions } from "@/drizzle/query/password-reset";
 import {
   createSession,
