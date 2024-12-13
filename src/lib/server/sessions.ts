@@ -1,7 +1,6 @@
 import { validateSessionToken } from "@/drizzle/query/sessions";
 import { Session, User } from "@/drizzle/schema";
 import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
@@ -52,23 +51,3 @@ export const getCurrentSession = cache(
     return result;
   },
 );
-
-export async function goToLoginOrEmailVerified() {
-  const { session, user } = await getCurrentSession();
-  if (session === null) {
-    return redirect("/login");
-  }
-  if (!user.emailVerified) {
-    return redirect("/verify-email");
-  }
-}
-
-export async function goToEmailVerifyOrLinks() {
-  const { session, user } = await getCurrentSession();
-  if (session !== null) {
-    if (!user.emailVerified) {
-      return redirect("/verify-email");
-    }
-    return redirect("/links");
-  }
-}

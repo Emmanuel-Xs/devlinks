@@ -1,4 +1,4 @@
-import { goToLoginOrEmailVerified } from "@/lib/server/sessions";
+import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 import { redirect } from "next/navigation";
 
 export default async function Home() {

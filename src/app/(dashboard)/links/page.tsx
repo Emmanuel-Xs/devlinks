@@ -2,7 +2,7 @@ import LinksList from "@/features/(dashboard)/links/components/links-list";
 import PageHeading from "@/features/(dashboard)/components/page-heading";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
-import { goToLoginOrEmailVerified } from "@/lib/server/sessions";
+import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 
 export const metadata: Metadata = {
   title: "user links",

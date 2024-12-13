@@ -3,7 +3,7 @@ import ProfileDetails from "@/features/(dashboard)/profile/components/profile-de
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import React from "react";
-import { goToLoginOrEmailVerified } from "@/lib/server/sessions";
+import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 
 export const metadata: Metadata = {
   title: "user profile",
