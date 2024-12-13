@@ -1,3 +1,6 @@
+"use client";
+"use no memo";
+
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { LockKeyhole } from "lucide-react";
