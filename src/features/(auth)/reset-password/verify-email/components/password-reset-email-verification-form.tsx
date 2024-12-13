@@ -1,3 +1,5 @@
+"use client";
+
 import { CardHeader } from "@/components/ui/card";
 import {
   InputOTP,
