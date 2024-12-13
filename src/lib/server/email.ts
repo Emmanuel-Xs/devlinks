@@ -50,7 +50,7 @@ export async function getUserEmailVerificationRequestFromRequest() {
 }
 
 // Create a transporter using Gmail SMTP
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "devlinks.abc@gmail.com",

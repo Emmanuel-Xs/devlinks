@@ -8,7 +8,7 @@ const password = z
   .min(8, "min char is 8")
   .max(255, "max char is 255");
 
-const signupSchema = z
+export const signupSchema = z
   .object({
     email,
     password,
@@ -19,13 +19,29 @@ const signupSchema = z
     path: ["confirmPassword"],
   });
 
-const loginSchema = z.object({
+export const loginSchema = z.object({
   email,
   password,
 });
 
-const verifyEmailSchema = z.object({
-  code: z.string().min(8, "Your one-time password must be 6 characters."),
+export const verifyEmailSchema = z.object({
+  code: z.string().min(8, "Your OTP must be 8 chars."),
 });
 
-export { signupSchema, loginSchema, verifyEmailSchema };
+export const verifyPasswordResetEmailSchema = z.object({
+  code: z.string().min(8, "Your OTP must be 8 chars."),
+});
+
+export const passwordForgetSchema = z.object({
+  email,
+});
+
+export const passwordResetSchema = z
+  .object({
+    password,
+    confirmPassword: password,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });

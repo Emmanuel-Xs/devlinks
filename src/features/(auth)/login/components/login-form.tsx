@@ -57,8 +57,8 @@ export function LoginForm() {
         <p className="text">Add your details below to get back into the app</p>
       </CardHeader>
       <CardContent className="grid gap-6">
-        {formState?.errors && !formState.success ? (
-          <p className="text text-pretty text-destructive">
+        {formState?.errors?.message && !formState.success && !isPending ? (
+          <p className="text text-pretty text-center text-destructive">
             {formState?.errors?.message}
           </p>
         ) : null}

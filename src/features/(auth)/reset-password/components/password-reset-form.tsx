@@ -1,28 +1,28 @@
-"use client";
-"use no memo";
-
-import Link from "next/link";
-
-import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { LockKeyhole, Mail } from "lucide-react";
+import { CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import AuthEmail from "../../components/auth-email";
-import AuthPassword from "../../components/auth-password";
-import DashWith from "../../components/dash-with";
-import OAuthButtons from "../../components/oauth-buttons";
-import { signUpAction } from "../server/action";
-import { startTransition, useActionState, useEffect, useRef } from "react";
+import { LockKeyhole } from "lucide-react";
 import Form from "next/form";
-import { signupSchema } from "@/lib/auth-validation";
+import React, {
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+} from "react";
+import AuthPassword from "../../components/auth-password";
+import { resetPasswordAction } from "../server/action";
+import LoadingButton from "@/components/loading-button";
+import { passwordResetSchema } from "@/lib/auth-validation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import LoadingButton from "@/components/loading-button";
 
-export function SignupForm() {
-  const [formState, formAction, isPending] = useActionState(signUpAction, {
-    success: false,
-  });
+export default function PasswordResetForm() {
+  const [formState, formAction, isPending] = useActionState(
+    resetPasswordAction,
+    {
+      success: false,
+    },
+  );
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -33,10 +33,9 @@ export function SignupForm() {
     setError,
     setFocus,
     formState: { errors: rhfErrors, isSubmitSuccessful },
-  } = useForm<z.output<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
+  } = useForm<z.output<typeof passwordResetSchema>>({
+    resolver: zodResolver(passwordResetSchema),
     defaultValues: {
-      email: "",
       password: "",
       confirmPassword: "",
       ...(formState?.fields ?? {}),
@@ -50,14 +49,8 @@ export function SignupForm() {
     }
   }, [reset, isSubmitSuccessful, formState.success]);
 
-  // email taken or password compromised
+  // password compromised
   useEffect(() => {
-    if (formState.errors?.email) {
-      setError("email", {
-        message: formState.errors.email.join(", "),
-      });
-      setFocus("email");
-    }
     if (formState.errors?.password) {
       setError("password", {
         message: formState.errors.password.join(", "),
@@ -65,16 +58,15 @@ export function SignupForm() {
       setFocus("password");
     }
   }, [reset, formState.errors, setError, setFocus]);
-
   return (
     <div
       className={cn(
-        "mx-auto max-w-[496px] space-y-8 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:py-7 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
       )}
     >
-      <CardHeader className="space-y-2">
-        <h1 className="heading">Create account</h1>
-        <p className="text">Let&apos;s get you started sharing your links!</p>
+      <CardHeader className="space-y-2 text-center">
+        <h1 className="heading">Enter your new Password</h1>
+        <p className="text">Enter a password you won&apos;t easily.</p>
       </CardHeader>
       <CardContent className="grid gap-6">
         {formState?.errors?.message && !formState.success && !isPending ? (
@@ -84,7 +76,7 @@ export function SignupForm() {
         ) : null}
         <Form
           action={formAction}
-          className="grid gap-6"
+          className="grid justify-center gap-6"
           ref={formRef}
           onSubmit={(evt) => {
             evt.preventDefault();
@@ -93,16 +85,6 @@ export function SignupForm() {
             })(evt);
           }}
         >
-          <AuthEmail
-            icon={<Mail width={24} height={24} className="text-foreground" />}
-            placeholder="e.g. alex@email.com"
-            error={
-              rhfErrors.email?.message || formState?.errors?.email?.join(", ")
-            }
-            required
-            defaultValue={formState.fields?.email}
-            {...register("email")}
-          />
           <AuthPassword
             id="password"
             placeholder="At least 8 characters"
@@ -119,7 +101,7 @@ export function SignupForm() {
           />
           <AuthPassword
             id="confirm-password"
-            placeholder="Password must match the ones above"
+            placeholder="Passwords must match"
             icon={
               <LockKeyhole width={24} height={24} className="text-foreground" />
             }
@@ -131,22 +113,9 @@ export function SignupForm() {
             defaultValue={formState.fields?.confirmPassword}
             {...register("confirmPassword")}
           />
-          <LoadingButton text="Create new account" isPending={isPending} />
+          <LoadingButton text="Reset Password" />
         </Form>
       </CardContent>
-      <CardFooter className="grid gap-6">
-        <DashWith what="OR SIGNUP WITH" />
-        <OAuthButtons />
-        <p className="text text-center">
-          Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-primary hover:underline focus-visible:underline"
-          >
-            Login
-          </Link>
-        </p>
-      </CardFooter>
     </div>
   );
 }
