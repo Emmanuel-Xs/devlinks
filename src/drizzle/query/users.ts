@@ -116,3 +116,10 @@ export async function getUserPasswordHash(userId: number) {
     .from(usersTable)
     .where(eq(usersTable.id, userId));
 }
+
+export async function updateUserPassword(
+  userId: number,
+  password: string,
+): Promise<void> {
+  db.update(usersTable).set({ password }).where(eq(usersTable.id, userId));
+}
