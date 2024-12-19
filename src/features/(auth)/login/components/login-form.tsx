@@ -95,7 +95,7 @@ export function LoginForm() {
             }
             forgetPassword={
               <Link
-                href="/forget-password"
+                href="/forgot-password"
                 className="ml-auto inline-block text-sm underline"
               >
                 Forgot your password?

@@ -16,6 +16,7 @@ import "server-only";
 
 type FormState = {
   success: boolean;
+  fields?: Record<string, string>;
   errors?: Record<string, string[]>;
 };
 
@@ -35,8 +36,15 @@ export async function forgetPasswordAction(
 
   if (!parsedForm.success) {
     const errors = parsedForm.error.flatten().fieldErrors;
+    const fields: Record<string, string> = {};
+
+    for (const key of Object.keys(submittedFormData)) {
+      fields[key] = submittedFormData[key].toString();
+    }
+
     return {
       success: false,
+      fields,
       errors,
     };
   }
@@ -45,22 +53,28 @@ export async function forgetPasswordAction(
 
   const user = await getUserByEmail(email);
 
-  if (user.length) {
+  if (user.length < 1) {
     return {
       success: false,
+      fields: { email },
       errors: { message: ["Account does not exist"] },
     };
   }
 
-  invalidateUserPasswordResetSessions(user[0].id);
+  await invalidateUserPasswordResetSessions(user[0].id);
+
   const sessionToken = generateSessionToken();
-  const session = createPasswordResetSession(
+  const session = await createPasswordResetSession(
     sessionToken,
     user[0].id,
     user[0].email,
   );
+
+  console.log("newly created session token", sessionToken);
+  console.log("newly created session", session);
+
   await sendPasswordResetEmail(session.email, session.code);
-  setPasswordResetSessionTokenCookie(sessionToken, session.expiresAt);
+  await setPasswordResetSessionTokenCookie(sessionToken, session.expiresAt);
 
   redirect("/reset-password/verify-email");
 }
