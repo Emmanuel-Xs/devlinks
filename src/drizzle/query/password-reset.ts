@@ -10,26 +10,31 @@ import {
 import { generateRandomOTP } from "@/lib/server/utils";
 import { db } from "../db";
 import { eq } from "drizzle-orm";
+import { env } from "@/lib/server/serverEnv";
 
 export type PasswordResetSessionValidationResult =
   | { session: PasswordResetSession; user: User }
   | { session: null; user: null };
 
-export function createPasswordResetSession(
+export async function createPasswordResetSession(
   token: string,
   userId: number,
   email: string,
-): PasswordResetSession {
+) {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+
   const session: PasswordResetSession = {
     id: sessionId,
     userId,
     email,
-    expiresAt: new Date(Date.now() + 1000 * 60 * 10),
+    expiresAt: new Date(
+      Date.now() + 1000 * 60 * parseInt(env.PASSWORD_RESET_EXPIRES_IN_MINS, 10),
+    ),
     code: generateRandomOTP(),
   };
 
-  db.insert(passwordResetSessions).values(session);
+  await db.insert(passwordResetSessions).values(session).returning();
+
   return session;
 }
 
@@ -45,6 +50,7 @@ export async function validatePasswordResetSessionToken(
     .where(eq(passwordResetSessions.id, sessionId));
 
   if (result.length < 1) {
+    console.warn("No session found for token:", sessionId, "token", token);
     return { session: null, user: null };
   }
 
@@ -56,8 +62,12 @@ export async function validatePasswordResetSessionToken(
     await db
       .delete(passwordResetSessions)
       .where(eq(passwordResetSessions.id, session.id));
+    console.log("deleting expired session from db", session);
+
     return { session: null, user: null };
   }
+
+  console.log("password session in db", token);
 
   return { session, user };
 }

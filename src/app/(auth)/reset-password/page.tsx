@@ -1,11 +1,11 @@
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import PasswordResetForm from "@/features/(auth)/reset-password/components/password-reset-form";
-import { validatePasswordResetSessionRequest } from "@/lib/server/password-reset";
+import { getCurrentPasswordSession } from "@/lib/server/password-reset";
 import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function Page() {
-  const { session } = await validatePasswordResetSessionRequest();
+  const { session } = await getCurrentPasswordSession();
   if (session === null) {
     redirect("/forgot-password");
   }

@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
 import React, { useActionState } from "react";
-import { Form } from "react-hook-form";
 import { verifyPasswordResetEmailAction } from "../server/action";
 import LoadingButton from "@/components/loading-button";
+import Form from "next/form";
+import { env } from "@/lib/server/serverEnv";
 
 export default function PasswordResetEmailVerificationForm() {
   const [formState, formAction, isPending] = useActionState(
@@ -61,6 +62,12 @@ export default function PasswordResetEmailVerificationForm() {
         {formState?.errors && !formState.success && !isPending ? (
           <p className="text text-pretty text-center text-destructive">
             {formState?.errors?.message}
+          </p>
+        ) : null}
+        {!formState?.errors && !formState.success && !isPending ? (
+          <p className="text text-pretty text-center text-sm text-foreground">
+            the code only last for <strong>{env.PASSWORD_RESET_EXPIRES_IN_MINS} minutes </strong> remember to go
+            back to forget password to request another code
           </p>
         ) : null}
       </Form>

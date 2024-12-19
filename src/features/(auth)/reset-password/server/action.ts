@@ -54,10 +54,17 @@ export async function resetPasswordAction(
 
   if (!parsedForm.success) {
     const errors = parsedForm.error.flatten().fieldErrors;
+    const fields: Record<string, string> = {};
+
+    for (const key of Object.keys(submittedFormData)) {
+      fields[key] = submittedFormData[key].toString();
+    }
+    console.log("parsedForm data", parsedForm.data);
+    console.log("submitted data", fields);
     return {
       success: false,
+      fields,
       errors,
-      fields: parsedForm.data,
     };
   }
 

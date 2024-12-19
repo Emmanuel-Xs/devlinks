@@ -1,11 +1,11 @@
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import PasswordResetEmailVerificationForm from "@/features/(auth)/reset-password/verify-email/components/password-reset-email-verification-form";
-import { validatePasswordResetSessionRequest } from "@/lib/server/password-reset";
+import { getCurrentPasswordSession } from "@/lib/server/password-reset";
 import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function Page() {
-  const { session } = await validatePasswordResetSessionRequest();
+  const { session } = await getCurrentPasswordSession();
   if (session === null) {
     redirect("/forgot-password");
   }
@@ -15,7 +15,6 @@ export default async function Page() {
       <div className="w-full max-w-[496px] space-y-[51px]">
         <DevlinksLogo className="mx-auto" />
         <PasswordResetEmailVerificationForm />
-        {/* <ResendEmailVerificationCodeForm /> */}
       </div>
     </main>
   );

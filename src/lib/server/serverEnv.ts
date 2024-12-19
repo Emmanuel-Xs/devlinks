@@ -30,6 +30,7 @@ export const env = createEnv({
     LOCALHOST: z.string(),
     RESEND_KEY: z.string(),
     EMAIL_AUTH_PASS: z.string(),
+    PASSWORD_RESET_EXPIRES_IN_MINS: z.string(),
   },
   experimental__runtimeEnv: process.env,
 });

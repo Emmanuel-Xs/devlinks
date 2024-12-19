@@ -18,6 +18,7 @@ import { passwordResetSchema } from "@/lib/auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { env } from "@/lib/server/serverEnv";
 
 export default function PasswordResetForm() {
   const [formState, formAction, isPending] = useActionState(
@@ -64,7 +65,7 @@ export default function PasswordResetForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[496px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:text-card-foreground sm:shadow",
       )}
     >
       <CardHeader className="space-y-2 text-center">
@@ -79,7 +80,7 @@ export default function PasswordResetForm() {
         ) : null}
         <Form
           action={formAction}
-          className="grid justify-center gap-6"
+          className="grid gap-6"
           ref={formRef}
           onSubmit={(evt) => {
             evt.preventDefault();
@@ -99,6 +100,7 @@ export default function PasswordResetForm() {
               rhfErrors.password?.message ||
               formState?.errors?.password?.join(", ")
             }
+            required
             defaultValue={formState.fields?.password}
             {...register("password")}
           />
@@ -113,11 +115,19 @@ export default function PasswordResetForm() {
               rhfErrors.confirmPassword?.message ||
               formState?.errors?.confirmPassword?.join(", ")
             }
+            required
             defaultValue={formState.fields?.confirmPassword}
             {...register("confirmPassword")}
           />
-          <LoadingButton text="Reset Password" />
+          <LoadingButton text="Reset Password" isPending={isPending} />
         </Form>
+        {!formState?.errors && !formState.success && !isPending ? (
+          <p className="text text-pretty text-center text-sm text-foreground">
+            the code only last for
+            <strong> {env.PASSWORD_RESET_EXPIRES_IN_MINS} minutes </strong>
+            remember to go back to forget password to request another code.
+          </p>
+        ) : null}
       </CardContent>
     </div>
   );
