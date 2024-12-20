@@ -1,4 +1,4 @@
-import { env } from "@/lib/server/serverEnv";
+import { env } from "@/lib/server/server-env";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({

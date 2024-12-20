@@ -6,7 +6,7 @@ import { getUserEmailVerificationRequest } from "@/drizzle/query/email-verifcati
 import { render } from "@react-email/components";
 import nodemailer from "nodemailer";
 import EmailVerification from "@/emails/email-verification";
-import { env } from "./serverEnv";
+import { env } from "./server-env";
 
 export async function setEmailVerificationRequestCookie(
   request: EmailVerificationRequest,

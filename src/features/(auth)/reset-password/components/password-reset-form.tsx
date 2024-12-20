@@ -18,7 +18,7 @@ import { passwordResetSchema } from "@/lib/auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { env } from "@/lib/server/serverEnv";
+import { env } from "@/lib/client-env";
 
 export default function PasswordResetForm() {
   const [formState, formAction, isPending] = useActionState(
@@ -124,7 +124,9 @@ export default function PasswordResetForm() {
         {!formState?.errors && !formState.success && !isPending ? (
           <p className="text text-pretty text-center text-sm text-foreground">
             the code only last for
-            <strong> {env.PASSWORD_RESET_EXPIRES_IN_MINS} minutes </strong>
+            <strong>
+              {env.NEXT_PUBLIC_PASSWORD_RESET_EXPIRES_IN_MINS} minutes{" "}
+            </strong>
             remember to go back to forget password to request another code.
           </p>
         ) : null}

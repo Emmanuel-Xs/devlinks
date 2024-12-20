@@ -10,7 +10,7 @@ import {
 import { generateRandomOTP } from "@/lib/server/utils";
 import { db } from "../db";
 import { eq } from "drizzle-orm";
-import { env } from "@/lib/server/serverEnv";
+import { env } from "@/lib/server/server-env";
 
 export type PasswordResetSessionValidationResult =
   | { session: PasswordResetSession; user: User }

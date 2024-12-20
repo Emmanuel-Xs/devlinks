@@ -1,5 +1,5 @@
 import { GitHub, Google } from "arctic";
-import { env } from "./serverEnv";
+import { env } from "./server-env";
 
 export const github = new GitHub(
   process.env.NODE_ENV === "production"
