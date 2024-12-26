@@ -9,6 +9,7 @@ import type { OAuth2Tokens } from "arctic";
 import {
   createUserFromGithub,
   getUserByEmail,
+  updateAvatarUrl,
   updateGithubId,
 } from "@/drizzle/query/users";
 import { createSession } from "@/drizzle/query/sessions";
@@ -111,8 +112,13 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, { status: 302, headers: { Location: "/links" } });
   }
 
+  //if there's an existing user without oauth
   if (!existingUser[0].githubId) {
     await updateGithubId(existingUser[0].id, githubUserId);
+  }
+
+  if (!existingUser[0].avatarUrl) {
+    await updateAvatarUrl(existingUser[0].id, githubAvatarUrl);
   }
 
   const sessionToken = generateSessionToken();

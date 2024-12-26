@@ -100,6 +100,16 @@ export async function updateGoogleId(userId: number, googleId: string) {
     .where(eq(usersTable.id, userId));
 }
 
+export async function updateAvatarUrl(
+  userId: number,
+  avatarUrl: string | null,
+) {
+  await db
+    .update(usersTable)
+    .set({ avatarUrl })
+    .where(eq(usersTable.id, userId));
+}
+
 export async function updateUserEmailAndSetEmailAsVerified(
   userId: number,
   email: string,

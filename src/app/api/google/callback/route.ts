@@ -10,6 +10,7 @@ import type { OAuth2Tokens } from "arctic";
 import {
   createUserFromGoogle,
   getUserByEmail,
+  updateAvatarUrl,
   updateGoogleId,
 } from "@/drizzle/query/users";
 import { createSession } from "@/drizzle/query/sessions";
@@ -94,14 +95,18 @@ export async function GET(request: Request): Promise<Response> {
     });
   }
 
+  //if there's an existing user without oauth
   if (!existingUser[0].googleId) {
     await updateGoogleId(existingUser[0].id, googleUserId);
+  }
+
+  if (!existingUser[0].avatarUrl) {
+    await updateAvatarUrl(existingUser[0].id, avatarUrl);
   }
 
   const sessionToken = generateSessionToken();
   const session = await createSession(sessionToken, existingUser[0].id);
   await setSessionTokenCookie(sessionToken, session.expiresAt);
-
 
   return new Response(null, {
     status: 302,
