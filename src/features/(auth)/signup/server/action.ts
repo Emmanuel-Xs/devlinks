@@ -8,11 +8,14 @@ import {
   setEmailVerificationRequestCookie,
 } from "@/lib/server/email";
 import { checkPasswordSecurity, hashPassword } from "@/lib/server/password";
+import { RefillingTokenBucket } from "@/lib/server/rate-limit";
+import { globalPOSTRateLimit } from "@/lib/server/request";
 import {
   generateSessionToken,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { generateDefaultUsername } from "@/lib/server/users";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import "server-only";
 
@@ -22,10 +25,28 @@ type FormState = {
   errors?: Record<string, string[]>;
 };
 
+const ipBucket = new RefillingTokenBucket<string>(3, 10);
+
 export async function signUpAction(
   _prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
+  if (!globalPOSTRateLimit()) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+
+  const requestHeaders = await headers();
+  const clientIP = requestHeaders.get("x-forwarded-for");
+  if (clientIP !== null && !ipBucket.check(clientIP, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+
   if (!(data instanceof FormData)) {
     return {
       success: false,
@@ -53,9 +74,9 @@ export async function signUpAction(
   const email = parsed.data.email;
   const password = parsed.data.password;
 
-  const isEmailAvailable = await isEmailTaken(email);
+  const isEmailAlreadyTaken = await isEmailTaken(email);
 
-  if (isEmailAvailable) {
+  if (isEmailAlreadyTaken) {
     return {
       success: false,
       errors: { email: ["email taken"] },
@@ -70,6 +91,13 @@ export async function signUpAction(
       success: false,
       errors: { password: ["Password compromised"] },
       fields: parsed.data,
+    };
+  }
+
+  if (clientIP !== null && !ipBucket.consume(clientIP, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
     };
   }
 

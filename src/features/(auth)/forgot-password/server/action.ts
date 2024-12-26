@@ -10,7 +10,10 @@ import {
   sendPasswordResetEmail,
   setPasswordResetSessionTokenCookie,
 } from "@/lib/server/password-reset";
+import { RefillingTokenBucket } from "@/lib/server/rate-limit";
+import { globalPOSTRateLimit } from "@/lib/server/request";
 import { generateSessionToken } from "@/lib/server/sessions";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import "server-only";
 
@@ -20,10 +23,29 @@ type FormState = {
   errors?: Record<string, string[]>;
 };
 
+const passwordResetEmailIPBucket = new RefillingTokenBucket<string>(3, 60);
+const passwordResetEmailUserBucket = new RefillingTokenBucket<number>(3, 60);
+
 export async function forgetPasswordAction(
   _prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
+  if (!globalPOSTRateLimit()) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+
+  const requestHeaders = await headers();
+  const clientIP = requestHeaders.get("x-forwarded-for");
+  if (clientIP !== null && !passwordResetEmailIPBucket.check(clientIP, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+
   if (!(data instanceof FormData)) {
     return {
       success: false,
@@ -58,6 +80,19 @@ export async function forgetPasswordAction(
       success: false,
       fields: { email },
       errors: { message: ["Account does not exist"] },
+    };
+  }
+
+  if (clientIP !== null && !passwordResetEmailIPBucket.consume(clientIP, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+  if (!passwordResetEmailUserBucket.consume(user[0].id, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
     };
   }
 

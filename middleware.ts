@@ -1,9 +1,17 @@
+import { globalGETRateLimit, globalPOSTRateLimit } from "@/lib/server/request";
 import { env } from "@/lib/server/server-env";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const allowedOrigins = [env.HOME_URL, env.LOCALHOST];
 export async function middleware(request: NextRequest): Promise<NextResponse> {
+  if (!globalGETRateLimit()) {
+    return new NextResponse("Too many requests", { status: 429 });
+  }
+
+  if (!globalPOSTRateLimit()) {
+    return new NextResponse("Too many requests", { status: 429 });
+  }
   // Bypass CSRF for OAuth endpoints
   if (
     request.nextUrl.pathname.startsWith("/api/github") ||

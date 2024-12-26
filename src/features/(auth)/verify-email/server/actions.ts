@@ -11,6 +11,8 @@ import {
   sendVerificationEmail,
   setEmailVerificationRequestCookie,
 } from "@/lib/server/email";
+import { ExpiringTokenBucket } from "@/lib/server/rate-limit";
+import { globalPOSTRateLimit } from "@/lib/server/request";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { redirect } from "next/navigation";
 import "server-only";
@@ -20,13 +22,23 @@ type FormState = {
   errors?: Record<string, string[]>;
 };
 
+const bucket = new ExpiringTokenBucket<number>(5, 60 * 30);
+const sendVerificationEmailBucket = new ExpiringTokenBucket<number>(3, 60 * 10);
+
 export async function verifyEmailAction(
   _prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
-  const { user } = await getCurrentSession();
+  if (!globalPOSTRateLimit()) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
 
-  if (user === null) {
+  const { session, user } = await getCurrentSession();
+
+  if (session === null) {
     return {
       success: false,
       errors: { message: ["Not authenticated"] },
@@ -37,6 +49,13 @@ export async function verifyEmailAction(
     return {
       success: false,
       errors: { message: ["Invalid Form Data"] },
+    };
+  }
+
+  if (!bucket.check(user.id, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
     };
   }
 
@@ -63,6 +82,13 @@ export async function verifyEmailAction(
 
   const code = parsedForm.data.code;
   const request = verificationRequest[0];
+
+  if (!bucket.consume(user.id, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
 
   if (Date.now() >= request.expiresAt.getTime()) {
     return await handleExpiredVerificationCode(request.userId, request.email);
@@ -96,18 +122,32 @@ async function handleExpiredVerificationCode(userId: number, email: string) {
 }
 
 export async function resendEmailVerificationCodeAction(): Promise<FormState> {
-  const { user } = await getCurrentSession();
+  const { session, user } = await getCurrentSession();
 
-  if (user === null) {
+  if (session === null) {
     return {
       success: false,
       errors: { message: ["Not authenticated"] },
     };
   }
+
+  if (!sendVerificationEmailBucket.check(user.id, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+
   let verificationRequest = await getUserEmailVerificationRequestFromRequest();
 
   if (verificationRequest === null) {
     if (user.emailVerified) {
+      return {
+        success: false,
+        errors: { message: ["Forbidden"] },
+      };
+    }
+    if (!sendVerificationEmailBucket.consume(user.id, 1)) {
       return {
         success: false,
         errors: { message: ["Forbidden"] },
@@ -118,6 +158,12 @@ export async function resendEmailVerificationCodeAction(): Promise<FormState> {
       user.email,
     );
   } else {
+    if (!sendVerificationEmailBucket.consume(user.id, 1)) {
+      return {
+        success: false,
+        errors: { message: ["Forbidden"] },
+      };
+    }
     verificationRequest = await createEmailVerificationRequest(
       user.id,
       user.email,
