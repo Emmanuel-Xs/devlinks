@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const email = z.string().trim().min(2, "min char is 2").email();
+const email = z.string().trim().min(2, "min char is 2").email().toLowerCase();
 
 const password = z
   .string()
