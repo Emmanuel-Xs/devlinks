@@ -15,6 +15,7 @@ import {
   deletePasswordResetSessionTokenCookie,
   validatePasswordResetSessionRequest,
 } from "@/lib/server/password-reset";
+import { globalPOSTRateLimit } from "@/lib/server/request";
 import {
   generateSessionToken,
   setSessionTokenCookie,
@@ -32,6 +33,13 @@ export async function resetPasswordAction(
   _prevState: FormState,
   data: FormData,
 ): Promise<FormState> {
+  if (!globalPOSTRateLimit()) {
+    return {
+      success: false,
+      errors: { message: ["Too many requests"] },
+    };
+  }
+
   const { session: passwordResetSession, user } =
     await validatePasswordResetSessionRequest();
 

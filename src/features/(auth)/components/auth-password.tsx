@@ -30,12 +30,7 @@ export default function AuthPassword({
         {forgetPassword && forgetPassword}
       </div>
       <div className="flex items-center gap-2">
-        <Input
-          id={id}
-          type={showPassword ? "text" : "password"}
-          autoComplete={forgetPassword ? "current-password" : "new-password"}
-          {...props}
-        />
+        <Input id={id} type={showPassword ? "text" : "password"} {...props} />
         {showPassword ? (
           <Eye
             onClick={() => setShowPassword(false)}

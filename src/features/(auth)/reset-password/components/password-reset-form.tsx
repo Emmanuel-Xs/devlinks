@@ -102,6 +102,7 @@ export default function PasswordResetForm() {
             }
             required
             defaultValue={formState.fields?.password}
+            autoComplete="new-password"
             {...register("password")}
           />
           <AuthPassword
@@ -117,6 +118,7 @@ export default function PasswordResetForm() {
             }
             required
             defaultValue={formState.fields?.confirmPassword}
+            autoComplete="new-password"
             {...register("confirmPassword")}
           />
           <LoadingButton text="Reset Password" isPending={isPending} />

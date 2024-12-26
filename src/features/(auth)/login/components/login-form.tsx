@@ -104,6 +104,7 @@ export function LoginForm() {
             label="Password"
             required
             defaultValue={formState.fields?.password}
+            autoComplete="current-password"
             {...register("password")}
           />
           <LoadingButton text="Login" isPending={isPending} />

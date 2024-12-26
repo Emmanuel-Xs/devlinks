@@ -115,6 +115,7 @@ export function SignupForm() {
               formState?.errors?.password?.join(", ")
             }
             defaultValue={formState.fields?.password}
+            autoComplete="new-password"
             {...register("password")}
           />
           <AuthPassword
@@ -129,6 +130,7 @@ export function SignupForm() {
               formState?.errors?.confirmPassword?.join(", ")
             }
             defaultValue={formState.fields?.confirmPassword}
+            autoComplete="new-password"
             {...register("confirmPassword")}
           />
           <LoadingButton text="Create new account" isPending={isPending} />
