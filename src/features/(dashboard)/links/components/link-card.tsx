@@ -1,15 +1,14 @@
-import { EqualIcon } from "lucide-react";
+import { EqualIcon, X } from "lucide-react";
 import LinkPlatform from "./link-select-platform";
 import LinkInput from "./link-input";
-import { LinkCardProps } from "@/types/links";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { PlatformKey } from "@/types/platform";
+import { Link, PlatformKey } from "@/drizzle/schema";
 
 type LinkCard = {
-  links: LinkCardProps;
+  links: Link;
   removeLink: (id: number) => void;
-  updateLink: (id: number, updates: Partial<LinkCardProps>) => void;
+  updateLink: (id: number, updates: Partial<Link>) => void;
   forceDragging?: boolean;
 };
 
@@ -28,15 +27,15 @@ export default function LinkCard({
     transform,
     transition,
   } = useSortable({
-    id: links.order,
+    id: links.sequence,
   });
 
   const handlePlatformChange = (newPlatform: PlatformKey) => {
     updateLink(links.id, { platform: newPlatform });
   };
 
-  const handleLinkChange = (newLink: string) => {
-    updateLink(links.id, { link: newLink });
+  const handleLinkChange = (newUrl: string) => {
+    updateLink(links.id, { url: newUrl });
   };
 
   const parentStyles = {
@@ -63,19 +62,19 @@ export default function LinkCard({
             {...attributes}
             {...listeners}
           >
-            <EqualIcon size={20} />
+            <EqualIcon size={20} className="touch-none" />
           </div>
-          <h3 className="text">Link #{links.order}</h3>
+          <h3 className="text">Link #{links.sequence}</h3>
         </div>
-        <p className="cursor-pointer" onClick={() => removeLink(links.id)}>
-          remove
-        </p>
+        <span className="cursor-pointer" onClick={() => removeLink(links.id)}>
+          <X size={18} className="text-red-900" />
+        </span>
       </div>
       <LinkPlatform
         platform={links.platform}
         onPlatformChange={handlePlatformChange}
       />
-      <LinkInput link={links.link} onLinkChange={handleLinkChange} />
+      <LinkInput url={links.url} onLinkChange={handleLinkChange} />
     </div>
   );
 }

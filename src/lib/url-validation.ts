@@ -1,5 +1,6 @@
 // utils/url-validation.ts
-import { PlatformKey } from "@/types/platform";
+
+import { PlatformKey } from "@/drizzle/schema";
 
 // Platform-specific URL patterns
 const PLATFORM_URL_PATTERNS: Record<PlatformKey, RegExp> = {

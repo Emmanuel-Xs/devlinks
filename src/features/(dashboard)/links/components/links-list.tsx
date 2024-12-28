@@ -4,14 +4,14 @@ import { Button } from "../../../../components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import LinkCard from "./link-card";
 import LinksPrompt from "./links-prompt";
-import { LinkCardProps } from "@/types/links";
 import dynamic from "next/dynamic";
 import {
   closestCenter,
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
-  PointerSensor,
+  KeyboardSensor,
+  MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -20,40 +20,47 @@ import {
 import {
   arrayMove,
   SortableContext,
+  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { Link, User } from "@/drizzle/schema";
 
 const DndContextWithNoSSR = dynamic(
   () => import("@dnd-kit/core").then((mod) => mod.DndContext),
   { ssr: false },
 );
 
-export default function LinksList() {
-  const [linksArray, setLinksArray] = useState<LinkCardProps[]>([]);
-  const [activeItem, setActiveItem] = useState<LinkCardProps | undefined>(
-    undefined,
-  );
+export default function LinksList({ user }: { user: User }) {
+  const [linksArray, setLinksArray] = useState<Link[]>([]);
+  const [activeItem, setActiveItem] = useState<Link | undefined>(undefined);
 
   // for input methods detection
-  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
 
   const addNewLink = () => {
     setLinksArray((prev) =>
       [
         {
           id: Date.now(),
-          order: prev.length + 1,
+          userId: user.id,
+          sequence: prev.length + 1,
+          url: "",
           platform: "github" as const,
-          link: "",
         },
         ...prev,
-      ].sort((a, b) => b.order - a.order),
+      ].sort((a, b) => b.sequence - a.sequence),
     );
   };
 
-  const updateLink = (id: number, updates: Partial<LinkCardProps>) => {
+  const updateLink = (id: number, updates: Partial<Link>) => {
     setLinksArray((prevLinks) =>
       prevLinks.map((link) =>
         link.id === id ? { ...link, ...updates } : link,
@@ -64,15 +71,15 @@ export default function LinksList() {
   const removeLink = (id: number) => {
     const updatedLinksArray = linksArray
       .filter((link) => link.id !== id)
-      .map((link, i) => ({ ...link, order: i + 1 }))
-      .sort((a, b) => b.order - a.order);
+      .map((link, i) => ({ ...link, sequence: i + 1 }))
+      .sort((a, b) => b.sequence - a.sequence);
 
     setLinksArray(updatedLinksArray);
   };
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
-    setActiveItem(linksArray?.find((link) => link.order === active.id));
+    setActiveItem(linksArray?.find((link) => link.sequence === active.id));
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -80,8 +87,8 @@ export default function LinksList() {
 
     if (!over) return;
 
-    const activeIndex = linksArray.findIndex((ex) => ex.order === active.id);
-    const overIndex = linksArray.findIndex((ex) => ex.order === over.id);
+    const activeIndex = linksArray.findIndex((ex) => ex.sequence === active.id);
+    const overIndex = linksArray.findIndex((ex) => ex.sequence === over.id);
 
     if (activeIndex !== overIndex) {
       setLinksArray((prev) => {
@@ -90,9 +97,9 @@ export default function LinksList() {
         const updatedArray = movedArray
           .map((item, index) => ({
             ...item,
-            order: movedArray.length - index,
+            sequence: movedArray.length - index,
           }))
-          .sort((a, b) => b.order - a.order);
+          .sort((a, b) => b.sequence - a.sequence);
 
         return updatedArray;
       });
@@ -128,7 +135,7 @@ export default function LinksList() {
               modifiers={[restrictToVerticalAxis]}
             >
               <SortableContext
-                items={linksArray.map((link) => link.order)}
+                items={linksArray.map((link) => link.sequence)}
                 strategy={verticalListSortingStrategy}
               >
                 {linksArray.map((link) => (

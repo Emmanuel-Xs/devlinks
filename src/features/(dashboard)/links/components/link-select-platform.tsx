@@ -10,9 +10,9 @@ import {
 
 import { Fragment, useState } from "react";
 
-import { PlatformKey } from "@/types/platform";
 import { Label } from "@/components/ui/label";
 import { platformsArray } from "@/data/platforms";
+import { PlatformKey } from "@/drizzle/schema";
 
 type LinkSelectPlatformProps = {
   platform: PlatformKey;

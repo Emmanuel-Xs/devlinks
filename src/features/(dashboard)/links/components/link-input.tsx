@@ -4,11 +4,11 @@ import { Label } from "../../../../components/ui/label";
 import { Input } from "../../../../components/ui/input";
 
 type LinkInputProps = {
-  link: string;
-  onLinkChange: (link: string) => void;
+  url: string;
+  onLinkChange: (url: string) => void;
 };
 
-export default function LinkInput({ link, onLinkChange }: LinkInputProps) {
+export default function LinkInput({ url, onLinkChange }: LinkInputProps) {
   return (
     <div className="space-y-1">
       <Label htmlFor="link" className="leading-[150%] text-card-foreground">
@@ -16,7 +16,7 @@ export default function LinkInput({ link, onLinkChange }: LinkInputProps) {
       </Label>
       <Input
         id="link"
-        value={link}
+        value={url}
         onChange={(e) => onLinkChange(e.target.value)}
         placeholder="m@example.com"
         icon={<LinkIcon width={20} height={20} className="text-foreground" />}
