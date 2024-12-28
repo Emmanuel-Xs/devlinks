@@ -1,0 +1,1 @@
+ALTER TABLE "links" ALTER COLUMN "platform" SET NOT NULL;

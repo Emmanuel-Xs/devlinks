@@ -96,7 +96,7 @@ export const links = pgTable(
       .references(() => usersTable.id, { onDelete: "cascade" }),
     sequence: integer().notNull(),
     url: text().notNull(),
-    platform: platformEnum().default("github"),
+    platform: platformEnum().default("github").notNull(),
     createdAt,
     updatedAt,
   },
@@ -105,6 +105,14 @@ export const links = pgTable(
     index("links_platform_idx").on(table.platform),
   ],
 );
+
+export const returningLink = {
+  id: links.id,
+  userId: links.userId,
+  sequence: links.sequence,
+  url: links.url,
+  platform: links.platform,
+};
 
 // DB TYPES
 
@@ -121,6 +129,13 @@ export type EmailVerificationRequest = InferSelectModel<
 export type PasswordResetSession = InferSelectModel<
   typeof passwordResetSessions
 >;
+
+export type Link = Pick<
+  InferSelectModel<typeof links>,
+  keyof typeof returningLink
+>;
+// In your schema file
+export type PlatformKey = (typeof platformEnum.enumValues)[number];
 
 // RELATIONS
 
