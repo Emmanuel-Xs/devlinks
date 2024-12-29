@@ -24,7 +24,7 @@ export default function PasswordResetEmailVerificationForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
+        "mx-auto space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
       )}
     >
       <CardHeader className="space-y-2 text-center">

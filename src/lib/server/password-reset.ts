@@ -68,9 +68,9 @@ export async function sendPasswordResetEmail(email: string, code: string) {
   const emailHtml = await render(PasswordReset({ code }));
 
   const options = {
-    from: "devlinks.abc@gmail.com",
+    from: `"devlinks" <devlinks.abc@gmail.com>`,
     to: email,
-    subject: "Reset your password",
+    subject: "Password Reset Code",
     html: emailHtml,
   };
 

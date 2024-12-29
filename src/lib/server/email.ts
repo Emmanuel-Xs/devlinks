@@ -62,9 +62,9 @@ export async function sendVerificationEmail(email: string, code: string) {
   const emailHtml = await render(EmailVerification({ code }));
 
   const options = {
-    from: "devlinks.abc@gmail.com",
+    from: `"devlinks" <devlinks.abc@gmail.com>`,
     to: email,
-    subject: "Verify your email address",
+    subject: "Email Verification Code",
     html: emailHtml,
   };
 
