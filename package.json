@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "email": "email dev --port 3600",
+    "check:types": "tsc --pretty --noEmit",
+    "check:format": "prettier --check .",
+    "format": "npx prettier --write .",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },
