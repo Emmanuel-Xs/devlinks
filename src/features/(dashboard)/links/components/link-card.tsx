@@ -7,7 +7,7 @@ import { Link, PlatformKey } from "@/drizzle/schema";
 import LinkInput from "./link-input";
 import LinkPlatform from "./link-select-platform";
 
-type LinkCard = {
+type LinkCardProp = {
   links: Link;
   removeLink: (id: number) => void;
   updateLink: (id: number, updates: Partial<Link>) => void;
@@ -19,7 +19,7 @@ export default function LinkCard({
   forceDragging = false,
   updateLink,
   removeLink,
-}: LinkCard) {
+}: LinkCardProp) {
   const {
     attributes,
     isDragging,

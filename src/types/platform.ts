@@ -1,4 +1,3 @@
-// types/platform.ts
 import { ReactNode } from "react";
 
 import { PlatformKey } from "@/drizzle/schema";
