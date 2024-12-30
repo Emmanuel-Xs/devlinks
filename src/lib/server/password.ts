@@ -14,18 +14,18 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPasswordHash(
   hash: string,
-  password: string,
+  password: string
 ): Promise<boolean> {
   return await verify(hash, password);
 }
 
 export async function checkPasswordSecurity(
-  password: string,
+  password: string
 ): Promise<boolean> {
   const hash = encodeHexLowerCase(sha1(new TextEncoder().encode(password)));
   const hashPrefix = hash.slice(0, 5);
   const response = await fetch(
-    `https://api.pwnedpasswords.com/range/${hashPrefix}`,
+    `https://api.pwnedpasswords.com/range/${hashPrefix}`
   );
   const data = await response.text();
   const items = data.split("\n");

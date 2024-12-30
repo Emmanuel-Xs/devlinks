@@ -1,9 +1,12 @@
 import React from "react";
-import { Button, buttonVariants } from "./ui/button";
+
+import { VariantProps } from "class-variance-authority";
 import { Loader } from "lucide-react";
 import { useFormStatus } from "react-dom";
+
 import { cn } from "@/lib/utils";
-import { VariantProps } from "class-variance-authority";
+
+import { Button, buttonVariants } from "./ui/button";
 
 interface LoadingButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -37,7 +40,7 @@ export default function LoadingButton({
         <Loader
           className={cn(
             "animate-spin text-card",
-            outline ? "text-primary" : "",
+            outline ? "text-primary" : ""
           )}
           size={25}
         />

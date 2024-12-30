@@ -1,4 +1,10 @@
 "use server";
+
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+import "server-only";
+
 import { createEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
 import { createSession } from "@/drizzle/query/sessions";
 import { createUser, isEmailTaken } from "@/drizzle/query/users";
@@ -15,9 +21,6 @@ import {
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { generateDefaultUsername } from "@/lib/server/users";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-import "server-only";
 
 type FormState = {
   success: boolean;
@@ -29,7 +32,7 @@ const ipBucket = new RefillingTokenBucket<string>(3, 10);
 
 export async function signUpAction(
   _prevState: FormState,
-  data: FormData,
+  data: FormData
 ): Promise<FormState> {
   if (!globalPOSTRateLimit()) {
     return {
@@ -108,11 +111,11 @@ export async function signUpAction(
 
   const emailVerificationRequest = await createEmailVerificationRequest(
     user[0].id,
-    user[0].email,
+    user[0].email
   );
   sendVerificationEmail(
     emailVerificationRequest[0].email,
-    emailVerificationRequest[0].code,
+    emailVerificationRequest[0].code
   );
 
   // console.log("res data", res.data);

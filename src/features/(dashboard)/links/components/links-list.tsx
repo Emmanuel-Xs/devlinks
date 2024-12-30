@@ -1,35 +1,38 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "../../../../components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import LinkCard from "./link-card";
-import LinksPrompt from "./links-prompt";
+
 import dynamic from "next/dynamic";
+import React, { useState } from "react";
+
 import {
-  closestCenter,
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
+  closestCenter,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
-  arrayMove,
   SortableContext,
+  arrayMove,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link, User } from "@/drizzle/schema";
+
+import { Button } from "../../../../components/ui/button";
+
+import LinkCard from "./link-card";
+import LinksPrompt from "./links-prompt";
 
 const DndContextWithNoSSR = dynamic(
   () => import("@dnd-kit/core").then((mod) => mod.DndContext),
-  { ssr: false },
+  { ssr: false }
 );
 
 export default function LinksList({ user }: { user: User }) {
@@ -42,7 +45,7 @@ export default function LinksList({ user }: { user: User }) {
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    })
   );
 
   const addNewLink = () => {
@@ -56,15 +59,13 @@ export default function LinksList({ user }: { user: User }) {
           platform: "github" as const,
         },
         ...prev,
-      ].sort((a, b) => b.sequence - a.sequence),
+      ].sort((a, b) => b.sequence - a.sequence)
     );
   };
 
   const updateLink = (id: number, updates: Partial<Link>) => {
     setLinksArray((prevLinks) =>
-      prevLinks.map((link) =>
-        link.id === id ? { ...link, ...updates } : link,
-      ),
+      prevLinks.map((link) => (link.id === id ? { ...link, ...updates } : link))
     );
   };
 

@@ -1,8 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+
+import { cn } from "@/lib/utils";
 
 export default function DevlinksLogo({ className }: { className?: string }) {
   // const isSmUp = useMediaQuery("only screen and (min-width : 500px)");

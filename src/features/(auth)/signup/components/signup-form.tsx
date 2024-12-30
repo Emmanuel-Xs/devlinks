@@ -1,23 +1,25 @@
 "use client";
 "use no memo";
 
+import Form from "next/form";
 import Link from "next/link";
+import { startTransition, useActionState, useEffect, useRef } from "react";
 
-import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole, Mail } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import LoadingButton from "@/components/loading-button";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { signupSchema } from "@/lib/auth-validation";
 import { cn } from "@/lib/utils";
+
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
 import DashWith from "../../components/dash-with";
 import OAuthButtons from "../../components/oauth-buttons";
 import { signUpAction } from "../server/action";
-import { startTransition, useActionState, useEffect, useRef } from "react";
-import Form from "next/form";
-import { signupSchema } from "@/lib/auth-validation";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import LoadingButton from "@/components/loading-button";
 
 export function SignupForm() {
   const [formState, formAction, isPending] = useActionState(signUpAction, {
@@ -69,7 +71,7 @@ export function SignupForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[496px] space-y-8 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:py-7 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[496px] space-y-8 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:py-7 sm:text-card-foreground sm:shadow"
       )}
     >
       <CardHeader className="space-y-2">

@@ -1,12 +1,13 @@
 "use server";
 
-import { verifyPasswordResetEmailSchema } from "@/lib/auth-validation";
+import { redirect } from "next/navigation";
 
+import "server-only";
+
+import { verifyPasswordResetEmailSchema } from "@/lib/auth-validation";
 import { validatePasswordResetSessionRequest } from "@/lib/server/password-reset";
 import { ExpiringTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
-import { redirect } from "next/navigation";
-import "server-only";
 
 type FormState = {
   success: boolean;
@@ -17,7 +18,7 @@ const emailVerificationBucket = new ExpiringTokenBucket<number>(5, 60 * 30);
 
 export async function verifyPasswordResetEmailAction(
   _prevState: FormState,
-  data: FormData,
+  data: FormData
 ): Promise<FormState> {
   if (!globalPOSTRateLimit()) {
     return {

@@ -1,10 +1,11 @@
+import { redirect } from "next/navigation";
+import React from "react";
+
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
 import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
 import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email";
 import { getCurrentSession } from "@/lib/server/sessions";
-import { redirect } from "next/navigation";
-import React from "react";
 
 export default async function Page() {
   const { user } = await getCurrentSession();

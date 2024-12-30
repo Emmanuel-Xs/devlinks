@@ -1,16 +1,19 @@
 "use client";
-import { resendEmailVerificationCodeAction } from "../server/actions";
-import { useActionState } from "react";
+
 import Form from "next/form";
+import { useActionState } from "react";
+
 import LoadingButton from "@/components/loading-button";
 import { useCoolDown } from "@/hooks/use-cool-down";
+
+import { resendEmailVerificationCodeAction } from "../server/actions";
 
 export function ResendEmailVerificationCodeForm({ initialCountDown = true }) {
   const [formState, formAction, isPending] = useActionState(
     resendEmailVerificationCodeAction,
     {
       success: false,
-    },
+    }
   );
   let shouldCount = initialCountDown;
 
@@ -19,7 +22,7 @@ export function ResendEmailVerificationCodeForm({ initialCountDown = true }) {
   }
 
   const { coolDown, startCoolDown } = useCoolDown(
-    shouldCount || formState?.success,
+    shouldCount || formState?.success
   );
 
   return (

@@ -1,8 +1,9 @@
+import { redirect } from "next/navigation";
+import React from "react";
+
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import PasswordResetEmailVerificationForm from "@/features/(auth)/reset-password/verify-email/components/password-reset-email-verification-form";
 import { getCurrentPasswordSession } from "@/lib/server/password-reset";
-import { redirect } from "next/navigation";
-import React from "react";
 
 export default async function Page() {
   const { session } = await getCurrentPasswordSession();

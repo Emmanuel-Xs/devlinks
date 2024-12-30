@@ -1,5 +1,9 @@
 "use client";
 
+import Form from "next/form";
+import React, { useActionState } from "react";
+
+import LoadingButton from "@/components/loading-button";
 import { CardHeader } from "@/components/ui/card";
 import {
   InputOTP,
@@ -7,24 +11,22 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { cn } from "@/lib/utils";
-import React, { useActionState } from "react";
-import { verifyPasswordResetEmailAction } from "../server/action";
-import LoadingButton from "@/components/loading-button";
-import Form from "next/form";
 import { env } from "@/lib/client-env";
+import { cn } from "@/lib/utils";
+
+import { verifyPasswordResetEmailAction } from "../server/action";
 
 export default function PasswordResetEmailVerificationForm() {
   const [formState, formAction, isPending] = useActionState(
     verifyPasswordResetEmailAction,
     {
       success: false,
-    },
+    }
   );
   return (
     <div
       className={cn(
-        "mx-auto space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
+        "mx-auto space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow"
       )}
     >
       <CardHeader className="space-y-2 text-center">

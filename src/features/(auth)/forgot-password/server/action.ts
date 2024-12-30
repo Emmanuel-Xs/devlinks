@@ -1,5 +1,10 @@
 "use server";
 
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+import "server-only";
+
 import {
   createPasswordResetSession,
   invalidateUserPasswordResetSessions,
@@ -13,9 +18,6 @@ import {
 import { RefillingTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
 import { generateSessionToken } from "@/lib/server/sessions";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-import "server-only";
 
 type FormState = {
   success: boolean;
@@ -28,7 +30,7 @@ const passwordResetEmailUserBucket = new RefillingTokenBucket<number>(3, 60);
 
 export async function forgetPasswordAction(
   _prevState: FormState,
-  data: FormData,
+  data: FormData
 ): Promise<FormState> {
   if (!globalPOSTRateLimit()) {
     return {
@@ -102,7 +104,7 @@ export async function forgetPasswordAction(
   const session = await createPasswordResetSession(
     sessionToken,
     user[0].id,
-    user[0].email,
+    user[0].email
   );
 
   console.log("newly created session token", sessionToken);

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+
 import { getCurrentSession } from "./sessions";
 
 export async function goToLoginOrEmailVerified() {

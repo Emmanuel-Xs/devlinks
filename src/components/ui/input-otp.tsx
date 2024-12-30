@@ -1,9 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { OTPInput, OTPInputContext } from "input-otp";
-import { cn } from "@/lib/utils";
+
 import { MinusIcon } from "@radix-ui/react-icons";
+import { OTPInput, OTPInputContext } from "input-otp";
+
+import { cn } from "@/lib/utils";
 
 const InputOTP = ({
   ref,
@@ -17,7 +19,7 @@ const InputOTP = ({
     ref={ref}
     containerClassName={cn(
       "flex items-center gap-2 has-[:disabled]:opacity-50 justify-center",
-      containerClassName,
+      containerClassName
     )}
     className={cn("disabled:cursor-not-allowed", className)}
     {...props}
@@ -54,7 +56,7 @@ const InputOTPSlot = ({
       className={cn(
         "relative flex h-[48px] w-[46px] items-center justify-center border-y-2 border-r-2 border-input text-sm shadow-sm transition-all first:rounded-l-md first:border-l-2 last:rounded-r-md max-[450px]:h-11 max-[450px]:w-[38px] max-[400px]:h-10 max-[400px]:w-[32px] max-[330px]:w-[30px]",
         isActive && "z-10 border-none ring-2 ring-primary",
-        className,
+        className
       )}
       {...props}
     >

@@ -1,12 +1,15 @@
+import { cookies } from "next/headers";
+import { cache } from "react";
+
+import { render } from "@react-email/components";
+
 import {
   PasswordResetSessionValidationResult,
   validatePasswordResetSessionToken,
 } from "@/drizzle/query/password-reset";
 import { PasswordReset } from "@/emails/password-reset";
-import { render } from "@react-email/components";
-import { cookies } from "next/headers";
+
 import { transporter } from "./email";
-import { cache } from "react";
 
 export async function validatePasswordResetSessionRequest(): Promise<PasswordResetSessionValidationResult> {
   const cookieStore = await cookies();
@@ -31,12 +34,12 @@ export const getCurrentPasswordSession = cache(
     }
     const result = await validatePasswordResetSessionToken(token);
     return result;
-  },
+  }
 );
 
 export async function setPasswordResetSessionTokenCookie(
   token: string,
-  expiresAt: Date,
+  expiresAt: Date
 ) {
   const cookieStore = await cookies();
   console.log("Setting cookie:");

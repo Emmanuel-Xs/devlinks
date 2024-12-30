@@ -1,13 +1,14 @@
-import { Session, sessionsTable, usersTable } from "@/drizzle/schema";
-import { encodeHexLowerCase } from "@oslojs/encoding";
 import { sha256 } from "@oslojs/crypto/sha2";
-import { db } from "@/drizzle/db";
+import { encodeHexLowerCase } from "@oslojs/encoding";
 import { eq } from "drizzle-orm";
+
+import { db } from "@/drizzle/db";
+import { Session, sessionsTable, usersTable } from "@/drizzle/schema";
 import { SessionValidationResult } from "@/lib/server/sessions";
 
 export async function createSession(
   token: string,
-  userId: number,
+  userId: number
 ): Promise<Session> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: Session = {
@@ -20,7 +21,7 @@ export async function createSession(
 }
 
 export async function validateSessionToken(
-  token: string,
+  token: string
 ): Promise<SessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 

@@ -1,8 +1,10 @@
-import { validateSessionToken } from "@/drizzle/query/sessions";
-import { Session, User } from "@/drizzle/schema";
-import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
 import { cookies } from "next/headers";
 import { cache } from "react";
+
+import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
+
+import { validateSessionToken } from "@/drizzle/query/sessions";
+import { Session, User } from "@/drizzle/schema";
 
 export type SessionValidationResult =
   | { session: Session; user: User }
@@ -17,7 +19,7 @@ export function generateSessionToken(): string {
 
 export async function setSessionTokenCookie(
   token: string,
-  expiresAt: Date,
+  expiresAt: Date
 ): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set("session", token, {
@@ -49,5 +51,5 @@ export const getCurrentSession = cache(
     }
     const result = await validateSessionToken(token);
     return result;
-  },
+  }
 );

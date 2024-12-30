@@ -11,7 +11,7 @@ export function useMediaQuery(query: string, defaultSSRValue = false) {
         matchMedia.removeEventListener("change", callback);
       };
     },
-    [query],
+    [query]
   );
 
   const getSnapshot = () => {

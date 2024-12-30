@@ -1,6 +1,7 @@
-import { SignupForm } from "@/features/(auth)/signup/components/signup-form";
-import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import { Metadata } from "next";
+
+import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
+import { SignupForm } from "@/features/(auth)/signup/components/signup-form";
 import { goToEmailVerifyOrLinks } from "@/lib/server/auth-checks";
 
 export const metadata: Metadata = {

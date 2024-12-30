@@ -1,11 +1,12 @@
 import { isUsernameTaken } from "@/drizzle/query/users";
+
 import { getRandomDigits } from "./utils";
 
 const RESERVED_USERNAMES = ["admin", "support", "root"];
 
 export async function refineOAuthUsername(
   username: string,
-  id: string | number,
+  id: string | number
 ): Promise<string> {
   let refinedUsername = username.trim().replace(/[\s._]+/g, "-");
   refinedUsername = refinedUsername.replace(/[^a-zA-Z0-9-]/g, "");
@@ -32,7 +33,7 @@ export async function refineOAuthUsername(
 
   const fallbackUsername = `${refinedUsername}${Date.now()}${suffix}`;
   console.error(
-    `Failed to generate a unique OAuth username after ${maxAttempts} attempts. Fallback: ${fallbackUsername}`,
+    `Failed to generate a unique OAuth username after ${maxAttempts} attempts. Fallback: ${fallbackUsername}`
   );
   return fallbackUsername;
 }
@@ -70,7 +71,7 @@ export async function generateDefaultUsername(email: string): Promise<string> {
   const fallbackUsername = `${baseUsername}${Date.now()}`;
 
   console.error(
-    `Failed to generate a unique default username after ${maxAttempts} attempts. Fallback: ${fallbackUsername}`,
+    `Failed to generate a unique default username after ${maxAttempts} attempts. Fallback: ${fallbackUsername}`
   );
   return fallbackUsername;
 }

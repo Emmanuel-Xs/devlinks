@@ -1,22 +1,25 @@
 "use client";
 "use no memo";
-import Link from "next/link";
-import Form from "next/form";
 
-import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import Form from "next/form";
+import Link from "next/link";
+import { startTransition, useActionState, useEffect, useRef } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole, Mail } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import LoadingButton from "@/components/loading-button";
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { loginSchema } from "@/lib/auth-validation";
 import { cn } from "@/lib/utils";
+
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
-import { loginAction } from "../server/action";
-import { startTransition, useActionState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/lib/auth-validation";
-import { z } from "zod";
-import OAuthButtons from "../../components/oauth-buttons";
 import DashWith from "../../components/dash-with";
-import LoadingButton from "@/components/loading-button";
+import OAuthButtons from "../../components/oauth-buttons";
+import { loginAction } from "../server/action";
 
 export function LoginForm() {
   const [formState, formAction, isPending] = useActionState(loginAction, {
@@ -49,7 +52,7 @@ export function LoginForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[496px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[496px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:text-card-foreground sm:shadow"
       )}
     >
       <CardHeader className="space-y-2">

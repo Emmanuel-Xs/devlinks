@@ -1,8 +1,12 @@
 "use client";
-import { Input, InputProps } from "../../../components/ui/input";
+
 import { ReactNode, useState } from "react";
+
 import { Eye, EyeOff } from "lucide-react";
+
 import { Label } from "@/components/ui/label";
+
+import { Input, InputProps } from "../../../components/ui/input";
 
 interface AuthPasswordProps extends InputProps {
   id: string;

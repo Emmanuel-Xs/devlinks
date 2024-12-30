@@ -1,16 +1,19 @@
 "use client";
+
+import Form from "next/form";
+import { useActionState } from "react";
+
+import LoadingButton from "@/components/loading-button";
 import { CardHeader } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useActionState } from "react";
+import { cn } from "@/lib/utils";
+
 import { verifyEmailAction } from "../server/actions";
-import Form from "next/form";
-import LoadingButton from "@/components/loading-button";
 
 export default function EmailVerificationForm() {
   const [formState, formAction, isPending] = useActionState(verifyEmailAction, {
@@ -20,7 +23,7 @@ export default function EmailVerificationForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow"
       )}
     >
       <CardHeader className="space-y-2 text-center">

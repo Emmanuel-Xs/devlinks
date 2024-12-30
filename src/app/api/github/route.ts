@@ -1,6 +1,8 @@
-import { generateState } from "arctic";
-import { github } from "@/lib/server/oauth";
 import { cookies } from "next/headers";
+
+import { generateState } from "arctic";
+
+import { github } from "@/lib/server/oauth";
 
 export async function GET(): Promise<Response> {
   const state = generateState();

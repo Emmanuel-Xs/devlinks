@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
+
 import { insSans } from "@/lib/font";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: {

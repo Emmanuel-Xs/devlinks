@@ -1,4 +1,8 @@
 "use client";
+
+import { Fragment, useState } from "react";
+
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -7,10 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { Fragment, useState } from "react";
-
-import { Label } from "@/components/ui/label";
 import { platformsArray } from "@/data/platforms";
 import { PlatformKey } from "@/drizzle/schema";
 

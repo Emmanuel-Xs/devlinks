@@ -45,12 +45,8 @@
           "name": "email_verification_requests_user_id_users_id_fk",
           "tableFrom": "email_verification_requests",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -60,9 +56,7 @@
         "email_verification_requests_email_unique": {
           "name": "email_verification_requests_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -152,12 +146,8 @@
           "name": "links_user_id_users_id_fk",
           "tableFrom": "links",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -167,10 +157,7 @@
         "links_userId_sequence_unique": {
           "name": "links_userId_sequence_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id",
-            "sequence"
-          ]
+          "columns": ["user_id", "sequence"]
         }
       },
       "policies": {},
@@ -218,12 +205,8 @@
           "name": "password_reset_sessions_user_id_users_id_fk",
           "tableFrom": "password_reset_sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -233,9 +216,7 @@
         "password_reset_sessions_email_unique": {
           "name": "password_reset_sessions_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -271,12 +252,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -383,30 +360,22 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "users_githubId_unique": {
           "name": "users_githubId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "github_id"
-          ]
+          "columns": ["github_id"]
         },
         "users_googleId_unique": {
           "name": "users_googleId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "google_id"
-          ]
+          "columns": ["google_id"]
         },
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {},

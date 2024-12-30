@@ -1,12 +1,14 @@
+import { encodeBase32 } from "@oslojs/encoding";
 import { and, eq } from "drizzle-orm";
+
+import { generateRandomOTP } from "@/lib/server/utils";
+
 import { db } from "../db";
 import { EmailVerificationRequest, emailVerificationRequest } from "../schema";
-import { generateRandomOTP } from "@/lib/server/utils";
-import { encodeBase32 } from "@oslojs/encoding";
 
 export async function getUserEmailVerificationRequest(
   userId: number,
-  id: string,
+  id: string
 ): Promise<EmailVerificationRequest[]> {
   return await db
     .select()
@@ -14,14 +16,14 @@ export async function getUserEmailVerificationRequest(
     .where(
       and(
         eq(emailVerificationRequest.id, id),
-        eq(emailVerificationRequest.userId, userId),
-      ),
+        eq(emailVerificationRequest.userId, userId)
+      )
     );
 }
 
 export async function createEmailVerificationRequest(
   userId: number,
-  email: string,
+  email: string
 ): Promise<EmailVerificationRequest[]> {
   await deleteUserEmailVerificationRequest(userId);
   const idBytes = new Uint8Array(20);

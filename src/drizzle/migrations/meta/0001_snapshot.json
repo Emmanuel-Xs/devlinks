@@ -45,12 +45,8 @@
           "name": "email_verification_requests_user_id_users_id_fk",
           "tableFrom": "email_verification_requests",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -60,9 +56,7 @@
         "email_verification_requests_email_unique": {
           "name": "email_verification_requests_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -98,12 +92,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -210,30 +200,22 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "users_githubId_unique": {
           "name": "users_githubId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "github_id"
-          ]
+          "columns": ["github_id"]
         },
         "users_googleId_unique": {
           "name": "users_googleId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "google_id"
-          ]
+          "columns": ["google_id"]
         },
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {},

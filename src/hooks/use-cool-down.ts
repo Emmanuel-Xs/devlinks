@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export function useCoolDown(
   initialCoolDown: boolean = false,
-  coolDownTime: number = 30,
+  coolDownTime: number = 30
 ) {
   const [coolDown, setCoolDown] = useState(initialCoolDown ? coolDownTime : 0);
 

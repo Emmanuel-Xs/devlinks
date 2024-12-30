@@ -1,4 +1,5 @@
 import { GitHub, Google } from "arctic";
+
 import { env } from "./server-env";
 
 export const github = new GitHub(
@@ -8,7 +9,7 @@ export const github = new GitHub(
   process.env.NODE_ENV === "production"
     ? env.GITHUB_CLIENT_SECRET
     : env.GITHUB_CLIENT_SECRET_DEV,
-  null,
+  null
 );
 
 export const google = new Google(
@@ -16,5 +17,5 @@ export const google = new Google(
   env.GOOGLE_CLIENT_SECRET,
   process.env.NODE_ENV === "production"
     ? `${env.HOME_URL}${env.OAUTH_CALLBACK}`
-    : `${env.LOCALHOST}${env.OAUTH_CALLBACK}`,
+    : `${env.LOCALHOST}${env.OAUTH_CALLBACK}`
 );

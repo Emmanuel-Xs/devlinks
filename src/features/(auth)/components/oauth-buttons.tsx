@@ -1,7 +1,9 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
+
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Mail } from "lucide-react";
-import React from "react";
+
+import { Button } from "@/components/ui/button";
 
 export default function OAuthButtons() {
   return (

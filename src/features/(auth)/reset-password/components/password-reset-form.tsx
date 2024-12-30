@@ -1,9 +1,6 @@
 "use client";
 "use no memo";
 
-import { CardContent, CardHeader } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { LockKeyhole } from "lucide-react";
 import Form from "next/form";
 import React, {
   startTransition,
@@ -11,21 +8,27 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import AuthPassword from "../../components/auth-password";
-import { resetPasswordAction } from "../server/action";
-import LoadingButton from "@/components/loading-button";
-import { passwordResetSchema } from "@/lib/auth-validation";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LockKeyhole } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import LoadingButton from "@/components/loading-button";
+import { CardContent, CardHeader } from "@/components/ui/card";
+import { passwordResetSchema } from "@/lib/auth-validation";
 import { env } from "@/lib/client-env";
+import { cn } from "@/lib/utils";
+
+import AuthPassword from "../../components/auth-password";
+import { resetPasswordAction } from "../server/action";
 
 export default function PasswordResetForm() {
   const [formState, formAction, isPending] = useActionState(
     resetPasswordAction,
     {
       success: false,
-    },
+    }
   );
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -65,7 +68,7 @@ export default function PasswordResetForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[496px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[496px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:text-card-foreground sm:shadow"
       )}
     >
       <CardHeader className="space-y-2 text-center">

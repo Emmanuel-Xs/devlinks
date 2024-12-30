@@ -1,19 +1,20 @@
-import {
-  generateSessionToken,
-  setSessionTokenCookie,
-} from "@/lib/server/sessions";
-import { google } from "@/lib/server/oauth";
 import { cookies } from "next/headers";
-import { decodeIdToken } from "arctic";
 
+import { decodeIdToken } from "arctic";
 import type { OAuth2Tokens } from "arctic";
+
+import { createSession } from "@/drizzle/query/sessions";
 import {
   createUserFromGoogle,
   getUserByEmail,
   updateAvatarUrl,
   updateGoogleId,
 } from "@/drizzle/query/users";
-import { createSession } from "@/drizzle/query/sessions";
+import { google } from "@/lib/server/oauth";
+import {
+  generateSessionToken,
+  setSessionTokenCookie,
+} from "@/lib/server/sessions";
 import { refineOAuthUsername } from "@/lib/server/users";
 
 type GoogleIdTokenClaims = {
@@ -75,7 +76,7 @@ export async function GET(request: Request): Promise<Response> {
       refinedUserName,
       email,
       avatarUrl,
-      emailVerified,
+      emailVerified
     );
 
     if (!user[0]) {

@@ -1,4 +1,5 @@
 import React from "react";
+
 import PhoneFrame from "./phone-frame";
 
 export default function Sidebar() {

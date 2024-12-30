@@ -1,16 +1,18 @@
-import { encodeHexLowerCase } from "@oslojs/encoding";
 import { sha256 } from "@oslojs/crypto/sha2";
+import { encodeHexLowerCase } from "@oslojs/encoding";
+import { eq } from "drizzle-orm";
+
+import { env } from "@/lib/server/server-env";
+import { generateRandomOTP } from "@/lib/server/utils";
+
+import { db } from "../db";
 import {
   PasswordResetSession,
+  User,
   passwordResetSessions,
   returningUserData,
-  User,
   usersTable,
 } from "../schema";
-import { generateRandomOTP } from "@/lib/server/utils";
-import { db } from "../db";
-import { eq } from "drizzle-orm";
-import { env } from "@/lib/server/server-env";
 
 export type PasswordResetSessionValidationResult =
   | { session: PasswordResetSession; user: User }
@@ -19,7 +21,7 @@ export type PasswordResetSessionValidationResult =
 export async function createPasswordResetSession(
   token: string,
   userId: number,
-  email: string,
+  email: string
 ) {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 
@@ -28,7 +30,7 @@ export async function createPasswordResetSession(
     userId,
     email,
     expiresAt: new Date(
-      Date.now() + 1000 * 60 * parseInt(env.PASSWORD_RESET_EXPIRES_IN_MINS, 10),
+      Date.now() + 1000 * 60 * parseInt(env.PASSWORD_RESET_EXPIRES_IN_MINS, 10)
     ),
     code: generateRandomOTP(),
   };
@@ -39,7 +41,7 @@ export async function createPasswordResetSession(
 }
 
 export async function validatePasswordResetSessionToken(
-  token: string,
+  token: string
 ): Promise<PasswordResetSessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 

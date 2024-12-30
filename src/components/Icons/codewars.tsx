@@ -17,6 +17,3 @@ export default function CodewarsIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
-
-

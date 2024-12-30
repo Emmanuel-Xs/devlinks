@@ -1,7 +1,8 @@
-import PreviewLinks from "@/features/preview/components/preview-links";
-import PreviewNavbar from "@/features/preview/components/preview-navbar";
 import Image from "next/image";
 import React from "react";
+
+import PreviewLinks from "@/features/preview/components/preview-links";
+import PreviewNavbar from "@/features/preview/components/preview-navbar";
 
 export default function Page() {
   return (

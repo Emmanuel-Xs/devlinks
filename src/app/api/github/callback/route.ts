@@ -1,18 +1,19 @@
-import {
-  generateSessionToken,
-  setSessionTokenCookie,
-} from "@/lib/server/sessions";
-import { github } from "@/lib/server/oauth";
 import { cookies } from "next/headers";
 
 import type { OAuth2Tokens } from "arctic";
+
+import { createSession } from "@/drizzle/query/sessions";
 import {
   createUserFromGithub,
   getUserByEmail,
   updateAvatarUrl,
   updateGithubId,
 } from "@/drizzle/query/users";
-import { createSession } from "@/drizzle/query/sessions";
+import { github } from "@/lib/server/oauth";
+import {
+  generateSessionToken,
+  setSessionTokenCookie,
+} from "@/lib/server/sessions";
 import { refineOAuthUsername } from "@/lib/server/users";
 
 type GithubUser = {
@@ -70,7 +71,7 @@ export async function GET(request: Request): Promise<Response> {
       headers: {
         Authorization: `Bearer ${tokens.accessToken()}`,
       },
-    },
+    }
   );
 
   if (!githubEmailResponse.ok) {
@@ -80,7 +81,7 @@ export async function GET(request: Request): Promise<Response> {
   const emails = await githubEmailResponse.json();
 
   const email: string = emails.find(
-    (email: { primary: boolean }) => email.primary,
+    (email: { primary: boolean }) => email.primary
   )?.email;
 
   const existingUser = await getUserByEmail(email);
@@ -89,7 +90,7 @@ export async function GET(request: Request): Promise<Response> {
   if (!existingUser.length) {
     const refinedUserName = await refineOAuthUsername(
       githubUsername,
-      githubUserId,
+      githubUserId
     );
 
     const user = await createUserFromGithub(
@@ -97,7 +98,7 @@ export async function GET(request: Request): Promise<Response> {
       refinedUserName,
       email,
       githubAvatarUrl,
-      1,
+      1
     );
 
     if (!user[0]) {

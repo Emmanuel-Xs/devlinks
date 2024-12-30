@@ -1,18 +1,19 @@
 // config/platforms.tsx
-import GithubIcon from "@/components/Icons/github";
-import FrontendMentorIcon from "@/components/Icons/frontend-mentor";
-import TwitterIcon from "@/components/Icons/twitter";
-import LinkedInIcon from "@/components/Icons/linkedin";
-import YouTubeIcon from "@/components/Icons/youtube";
-import FacebookIcon from "@/components/Icons/facebook";
-import TwitchIcon from "@/components/Icons/twitch";
-import DevDotToIcon from "@/components/Icons/dev-to";
-import CodewarsIcon from "@/components/Icons/codewars";
 import CodepenIcon from "@/components/Icons/codepen";
+import CodewarsIcon from "@/components/Icons/codewars";
+import DevDotToIcon from "@/components/Icons/dev-to";
+import FacebookIcon from "@/components/Icons/facebook";
 import FreeCodeCampIcon from "@/components/Icons/freecodecamp";
+import FrontendMentorIcon from "@/components/Icons/frontend-mentor";
+import GithubIcon from "@/components/Icons/github";
 import GitlabIcon from "@/components/Icons/gitlab";
 import HashnodeIcon from "@/components/Icons/hashnode";
+import LinkedInIcon from "@/components/Icons/linkedin";
 import StackOverFlowIcon from "@/components/Icons/stack-overflow";
+import TwitchIcon from "@/components/Icons/twitch";
+import TwitterIcon from "@/components/Icons/twitter";
+import YouTubeIcon from "@/components/Icons/youtube";
+
 import { Platform, PlatformConfig } from "../types/platform";
 
 export const platforms: PlatformConfig = {

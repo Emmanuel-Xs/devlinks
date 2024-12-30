@@ -1,21 +1,25 @@
 "use client";
+
+import Form from "next/form";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useActionState } from "react";
+
+import { Mail } from "lucide-react";
+
 import LoadingButton from "@/components/loading-button";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import React, { useActionState } from "react";
+
 import AuthEmail from "../../components/auth-email";
-import { Mail } from "lucide-react";
-import Link from "next/link";
 import { forgetPasswordAction } from "../server/action";
-import Form from "next/form";
-import { useRouter } from "next/navigation";
 
 export default function ForgetPasswordForm() {
   const [formState, formAction, isPending] = useActionState(
     forgetPasswordAction,
     {
       success: false,
-    },
+    }
   );
 
   const router = useRouter();
@@ -23,7 +27,7 @@ export default function ForgetPasswordForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[500px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow",
+        "mx-auto max-w-[500px] space-y-10 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow"
       )}
     >
       <CardHeader className="space-y-2 text-center">

@@ -1,7 +1,8 @@
-import { globalGETRateLimit, globalPOSTRateLimit } from "@/lib/server/request";
-import { env } from "@/lib/server/server-env";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
+import { globalGETRateLimit, globalPOSTRateLimit } from "@/lib/server/request";
+import { env } from "@/lib/server/server-env";
 
 const allowedOrigins = [env.HOME_URL, env.LOCALHOST];
 export async function middleware(request: NextRequest): Promise<NextResponse> {

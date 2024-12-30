@@ -1,7 +1,9 @@
 // app/api/google/route.ts
-import { generateState, generateCodeVerifier } from "arctic";
-import { google } from "@/lib/server/oauth";
 import { cookies } from "next/headers";
+
+import { generateCodeVerifier, generateState } from "arctic";
+
+import { google } from "@/lib/server/oauth";
 
 export async function GET(): Promise<Response> {
   const state = generateState();

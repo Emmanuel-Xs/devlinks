@@ -1,9 +1,11 @@
-import { EqualIcon, X } from "lucide-react";
-import LinkPlatform from "./link-select-platform";
-import LinkInput from "./link-input";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { EqualIcon, X } from "lucide-react";
+
 import { Link, PlatformKey } from "@/drizzle/schema";
+
+import LinkInput from "./link-input";
+import LinkPlatform from "./link-select-platform";
 
 type LinkCard = {
   links: Link;

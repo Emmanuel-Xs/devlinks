@@ -1,5 +1,4 @@
 // utils/url-validation.ts
-
 import { PlatformKey } from "@/drizzle/schema";
 
 // Platform-specific URL patterns
@@ -30,7 +29,7 @@ interface UrlValidationResult {
 
 export const validatePlatformUrl = (
   url: string,
-  platform: PlatformKey,
+  platform: PlatformKey
 ): UrlValidationResult => {
   // Return early if URL is empty
   if (!url.trim()) {
@@ -77,7 +76,7 @@ export const validatePlatformUrl = (
 // Helper function to extract username from valid platform URL
 export const extractUsername = (
   url: string,
-  platform: PlatformKey,
+  platform: PlatformKey
 ): string | null => {
   try {
     const urlObj = new URL(url);

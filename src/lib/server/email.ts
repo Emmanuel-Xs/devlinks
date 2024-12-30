@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EmailVerificationRequest } from "@/drizzle/schema";
 import { cookies } from "next/headers";
-import { getCurrentSession } from "./sessions";
-import { getUserEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
+
 import { render } from "@react-email/components";
 import nodemailer from "nodemailer";
+
+import { getUserEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
+import { EmailVerificationRequest } from "@/drizzle/schema";
 import EmailVerification from "@/emails/email-verification";
+
 import { env } from "./server-env";
+import { getCurrentSession } from "./sessions";
 
 export async function setEmailVerificationRequestCookie(
-  request: EmailVerificationRequest,
+  request: EmailVerificationRequest
 ): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set("email_verification", request.id, {

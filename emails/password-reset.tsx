@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import {
   Body,
   Column,
@@ -13,7 +15,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-import * as React from "react";
 
 interface PasswordResetProp {
   code?: string;

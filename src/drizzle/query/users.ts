@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+
 import { db } from "../db";
 import { returningUserData, usersTable } from "../schema";
 
@@ -53,7 +54,7 @@ export const createUserFromGithub = async (
   username: string,
   email: string,
   avatarUrl: string | null,
-  emailVerified: number,
+  emailVerified: number
 ) => {
   return db
     .insert(usersTable)
@@ -66,7 +67,7 @@ export const createUserFromGoogle = async (
   username: string,
   email: string,
   avatarUrl: string | null,
-  emailVerified: number,
+  emailVerified: number
 ) => {
   return db
     .insert(usersTable)
@@ -78,7 +79,7 @@ export const createUser = async (
   username: string,
   email: string,
   passwordHash: string,
-  emailVerified = 0,
+  emailVerified = 0
 ) => {
   return await db
     .insert(usersTable)
@@ -102,7 +103,7 @@ export async function updateGoogleId(userId: number, googleId: string) {
 
 export async function updateAvatarUrl(
   userId: number,
-  avatarUrl: string | null,
+  avatarUrl: string | null
 ) {
   await db
     .update(usersTable)
@@ -112,7 +113,7 @@ export async function updateAvatarUrl(
 
 export async function updateUserEmailAndSetEmailAsVerified(
   userId: number,
-  email: string,
+  email: string
 ) {
   await db
     .update(usersTable)
@@ -129,7 +130,7 @@ export async function getUserPasswordHash(userId: number) {
 
 export async function updateUserPassword(
   userId: number,
-  password: string,
+  password: string
 ): Promise<void> {
   db.update(usersTable).set({ password }).where(eq(usersTable.id, userId));
 }

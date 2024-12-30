@@ -1,8 +1,9 @@
-import PageHeading from "@/features/(dashboard)/components/page-heading";
-import ProfileDetails from "@/features/(dashboard)/profile/components/profile-details";
-import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import React from "react";
+
+import { Button } from "@/components/ui/button";
+import PageHeading from "@/features/(dashboard)/components/page-heading";
+import ProfileDetails from "@/features/(dashboard)/profile/components/profile-details";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 
 export const metadata: Metadata = {

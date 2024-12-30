@@ -1,4 +1,10 @@
 "use server";
+
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+import "server-only";
+
 import { createSession } from "@/drizzle/query/sessions";
 import { getUserByEmail, getUserPasswordHash } from "@/drizzle/query/users";
 import { loginSchema } from "@/lib/auth-validation";
@@ -9,9 +15,6 @@ import {
   generateSessionToken,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-import "server-only";
 
 type FormState = {
   success: boolean;
@@ -24,7 +27,7 @@ const ipBucket = new RefillingTokenBucket<string>(20, 1);
 
 export async function loginAction(
   _prevState: FormState,
-  data: FormData,
+  data: FormData
 ): Promise<FormState> {
   if (!globalPOSTRateLimit()) {
     return {

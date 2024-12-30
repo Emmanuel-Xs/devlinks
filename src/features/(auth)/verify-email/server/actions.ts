@@ -1,4 +1,9 @@
 "use server";
+
+import { redirect } from "next/navigation";
+
+import "server-only";
+
 import {
   createEmailVerificationRequest,
   deleteUserEmailVerificationRequest,
@@ -14,8 +19,6 @@ import {
 import { ExpiringTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
 import { getCurrentSession } from "@/lib/server/sessions";
-import { redirect } from "next/navigation";
-import "server-only";
 
 type FormState = {
   success: boolean;
@@ -27,7 +30,7 @@ const sendVerificationEmailBucket = new ExpiringTokenBucket<number>(3, 60 * 10);
 
 export async function verifyEmailAction(
   _prevState: FormState,
-  data: FormData,
+  data: FormData
 ): Promise<FormState> {
   if (!globalPOSTRateLimit()) {
     return {
@@ -155,7 +158,7 @@ export async function resendEmailVerificationCodeAction(): Promise<FormState> {
     }
     verificationRequest = await createEmailVerificationRequest(
       user.id,
-      user.email,
+      user.email
     );
   } else {
     if (!sendVerificationEmailBucket.consume(user.id, 1)) {
@@ -166,12 +169,12 @@ export async function resendEmailVerificationCodeAction(): Promise<FormState> {
     }
     verificationRequest = await createEmailVerificationRequest(
       user.id,
-      user.email,
+      user.email
     );
   }
   await sendVerificationEmail(
     verificationRequest[0].email,
-    verificationRequest[0].code,
+    verificationRequest[0].code
   );
 
   // console.log("res data", res.data);

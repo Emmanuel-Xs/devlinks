@@ -1,11 +1,15 @@
 "use client";
+
+import Link from "next/link";
+import React from "react";
+
+import { ArrowRight } from "lucide-react";
+
 import { getPlatformConfig } from "@/data/platforms";
 import { validatePlatformUrl } from "@/lib/url-validation";
 import { cn } from "@/lib/utils";
 import { ExtendedPlatformKey } from "@/types/platform";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+
 import UnknownPlatform from "./unknown-platform";
 
 type PreviewLinksProps = {
@@ -47,7 +51,7 @@ export default function PreviewLinks({
         className,
         !validation.isValid
           ? "cursor-not-allowed bg-gray-500 hover:opacity-50"
-          : "",
+          : ""
       )}
       aria-label={ariaLabel}
     >

@@ -1,6 +1,8 @@
-import * as schema from "./schema";
 import { sql } from "@vercel/postgres";
 import { drizzle } from "drizzle-orm/vercel-postgres";
+
+import * as schema from "./schema";
+
 // import { env } from "@/lib/server/serverEnv";
 // import { drizzle } from "drizzle-orm/node-postgres";
 // import { Pool } from "pg";

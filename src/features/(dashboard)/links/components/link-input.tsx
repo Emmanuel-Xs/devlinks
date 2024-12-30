@@ -1,7 +1,9 @@
 import React from "react";
+
 import { LinkIcon } from "lucide-react";
-import { Label } from "../../../../components/ui/label";
+
 import { Input } from "../../../../components/ui/input";
+import { Label } from "../../../../components/ui/label";
 
 type LinkInputProps = {
   url: string;

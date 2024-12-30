@@ -103,7 +103,7 @@ export const links = pgTable(
   (table) => [
     unique().on(table.userId, table.sequence),
     index("links_platform_idx").on(table.platform),
-  ],
+  ]
 );
 
 export const returningLink = {
@@ -160,7 +160,7 @@ export const emailVerificationRequestRelations = relations(
       fields: [emailVerificationRequest.userId],
       references: [usersTable.id],
     }),
-  }),
+  })
 );
 
 export const passwordResetSessionsRelations = relations(
@@ -170,7 +170,7 @@ export const passwordResetSessionsRelations = relations(
       fields: [passwordResetSessions.userId],
       references: [usersTable.id],
     }),
-  }),
+  })
 );
 
 export const linksRelations = relations(links, ({ one }) => ({

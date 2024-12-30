@@ -1,5 +1,9 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
+import "server-only";
+
 import { invalidateUserPasswordResetSessions } from "@/drizzle/query/password-reset";
 import {
   createSession,
@@ -20,8 +24,6 @@ import {
   generateSessionToken,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
-import { redirect } from "next/navigation";
-import "server-only";
 
 type FormState = {
   success: boolean;
@@ -31,7 +33,7 @@ type FormState = {
 
 export async function resetPasswordAction(
   _prevState: FormState,
-  data: FormData,
+  data: FormData
 ): Promise<FormState> {
   if (!globalPOSTRateLimit()) {
     return {
