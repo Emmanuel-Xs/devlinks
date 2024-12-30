@@ -16,6 +16,7 @@ import { PlatformKey } from "@/drizzle/schema";
 
 type LinkSelectPlatformProps = {
   platform: PlatformKey;
+  // eslint-disable-next-line no-unused-vars
   onPlatformChange: (platform: PlatformKey) => void;
 };
 
@@ -28,6 +29,7 @@ export default function LinkSelectPlatform({
   const handleSelectOpen = () => {
     setIsSelectOpen((prev) => !prev);
   };
+
   return (
     <div className="space-y-1">
       <Label htmlFor="platform" className="leading-[150%] text-card-foreground">

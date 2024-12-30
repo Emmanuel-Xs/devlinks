@@ -1,5 +1,3 @@
-import React from "react";
-
 import { LinkIcon } from "lucide-react";
 
 import { Input } from "../../../../components/ui/input";
@@ -7,6 +5,7 @@ import { Label } from "../../../../components/ui/label";
 
 type LinkInputProps = {
   url: string;
+  // eslint-disable-next-line no-unused-vars
   onLinkChange: (url: string) => void;
 };
 
