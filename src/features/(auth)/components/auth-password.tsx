@@ -24,15 +24,12 @@ export default function AuthPassword({
 
   return (
     <div className="grid gap-1">
-      <div className="flex items-center">
-        <Label
-          htmlFor={id}
-          className="text-sm leading-[150%] text-card-foreground"
-        >
-          {label}
-        </Label>
-        {forgetPassword && forgetPassword}
-      </div>
+      <Label
+        htmlFor={id}
+        className="text-sm leading-[150%] text-card-foreground"
+      >
+        {label}
+      </Label>
       <div className="flex items-center gap-2">
         <Input id={id} type={showPassword ? "text" : "password"} {...props} />
         {showPassword ? (
@@ -51,6 +48,7 @@ export default function AuthPassword({
           />
         )}
       </div>
+      {forgetPassword && forgetPassword}
     </div>
   );
 }

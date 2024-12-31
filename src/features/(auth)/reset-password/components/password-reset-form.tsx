@@ -2,12 +2,7 @@
 "use no memo";
 
 import Form from "next/form";
-import React, {
-  startTransition,
-  useActionState,
-  useEffect,
-  useRef,
-} from "react";
+import { startTransition, useActionState, useEffect, useRef } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole } from "lucide-react";
@@ -73,7 +68,7 @@ export default function PasswordResetForm() {
     >
       <CardHeader className="space-y-2 text-center">
         <h1 className="heading">Enter your new Password</h1>
-        <p className="text">Enter a password you won&apos;t easily.</p>
+        <p className="text">Enter a password you won&apos;t easily forget.</p>
       </CardHeader>
       <CardContent className="grid gap-6">
         {formState?.errors?.message && !formState.success && !isPending ? (

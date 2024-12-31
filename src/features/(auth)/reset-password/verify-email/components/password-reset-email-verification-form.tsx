@@ -1,16 +1,12 @@
 "use client";
+"use no memo";
 
 import Form from "next/form";
-import React, { useActionState } from "react";
+import { useActionState } from "react";
 
 import LoadingButton from "@/components/loading-button";
 import { CardHeader } from "@/components/ui/card";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
+import AuthOTP from "@/features/(auth)/components/auth-otp";
 import { env } from "@/lib/client-env";
 import { cn } from "@/lib/utils";
 
@@ -37,29 +33,7 @@ export default function PasswordResetEmailVerificationForm() {
         </p>
       </CardHeader>
       <Form action={formAction} className="grid justify-center gap-6">
-        <InputOTP
-          maxLength={8}
-          id="form-otp"
-          autoFocus
-          required
-          name="code"
-          type="text"
-          autoComplete="one-time-code"
-        >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-            <InputOTPSlot index={6} />
-            <InputOTPSlot index={7} />
-          </InputOTPGroup>
-        </InputOTP>
+        <AuthOTP />
         <LoadingButton text="Verify" />
         {formState?.errors && !formState.success && !isPending ? (
           <p className="text text-pretty text-center text-destructive">

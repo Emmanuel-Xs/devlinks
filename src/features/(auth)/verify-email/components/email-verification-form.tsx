@@ -1,18 +1,14 @@
 "use client";
+"use no memo";
 
 import Form from "next/form";
 import { useActionState } from "react";
 
 import LoadingButton from "@/components/loading-button";
 import { CardHeader } from "@/components/ui/card";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
 
+import AuthOTP from "../../components/auth-otp";
 import { verifyEmailAction } from "../server/actions";
 
 export default function EmailVerificationForm() {
@@ -34,29 +30,7 @@ export default function EmailVerificationForm() {
         </p>
       </CardHeader>
       <Form action={formAction} className="grid justify-center gap-6">
-        <InputOTP
-          maxLength={8}
-          id="form-otp"
-          autoFocus
-          required
-          name="code"
-          type="text"
-          autoComplete="one-time-code"
-        >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-            <InputOTPSlot index={6} />
-            <InputOTPSlot index={7} />
-          </InputOTPGroup>
-        </InputOTP>
+        <AuthOTP />
         <LoadingButton text="Verify" />
         {formState?.errors && !formState.success && !isPending ? (
           <p className="text text-pretty text-center text-destructive">
