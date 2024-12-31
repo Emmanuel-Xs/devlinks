@@ -8,7 +8,7 @@ import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 import { getCurrentSession } from "@/lib/server/sessions";
 
 export const metadata: Metadata = {
-  title: "user links",
+  title: "links",
 };
 
 export default async function Page() {
