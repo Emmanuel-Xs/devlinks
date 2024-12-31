@@ -9,7 +9,9 @@ import LinkPlatform from "./link-select-platform";
 
 type LinkCardProp = {
   links: Link;
+  // eslint-disable-next-line no-unused-vars
   removeLink: (id: number) => void;
+  // eslint-disable-next-line no-unused-vars
   updateLink: (id: number, updates: Partial<Link>) => void;
   forceDragging?: boolean;
 };

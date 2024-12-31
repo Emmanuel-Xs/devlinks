@@ -20,7 +20,8 @@
       {
         "vars": "all",
         "args": "after-used",
-        "ignoreRestSiblings": true
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/no-unused-expressions": [
