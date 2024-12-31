@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { logoutAction } from "../server/action";
 
 export default function LogoutButton() {
-  const [_, formAction, isPending] = useActionState(logoutAction, {
+  const [, formAction, isPending] = useActionState(logoutAction, {
     success: false,
   });
 
