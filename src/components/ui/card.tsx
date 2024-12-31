@@ -7,7 +7,7 @@ const Card = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
-  ref: React.RefObject<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDivElement>;
 }) => (
   <div
     ref={ref}
@@ -85,9 +85,9 @@ CardFooter.displayName = "CardFooter";
 
 export {
   Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
   CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 };

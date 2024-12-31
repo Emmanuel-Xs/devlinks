@@ -41,6 +41,7 @@ const eslintConfig = [
           args: "after-used",
           ignoreRestSiblings: true,
           argsIgnorePattern: "^_",
+          variableIgnorePattern: "^_",
         },
       ],
       "@typescript-eslint/no-unused-expressions": [
