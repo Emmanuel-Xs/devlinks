@@ -4,7 +4,9 @@
     "codewars",
     "freecodecamp",
     "nextui",
-    "stackoverflow"
+    "stackoverflow",
+    "userlinks",
+    "turbopack"
   ],
   // required in vscode-eslint < v3.0.10 only
   "eslint.useFlatConfig": true,
