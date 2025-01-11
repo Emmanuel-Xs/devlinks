@@ -23,7 +23,10 @@ export default function LogoutButton() {
         <LogOutIcon size={20} />
         <span className="font-semibold">Logout</span>
         {isPending ? (
-          <LoaderIcon className={cn("animate-spin text-card")} size={20} />
+          <LoaderIcon
+            className={cn("animate-spin text-card-foreground")}
+            size={20}
+          />
         ) : null}
       </button>
     </Form>
