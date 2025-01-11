@@ -61,15 +61,17 @@ export default function ForgetPasswordForm() {
           >
             Go Back
           </Link>
-          <span className="text">or</span>
-          {loggedIn ? (
-            <Link
-              href="/login"
-              className="text text-center hover:underline focus:underline"
-            >
-              Go to Login
-            </Link>
-          ) : null}
+          {loggedIn ? null : (
+            <>
+              <span className="text">or</span>
+              <Link
+                href="/login"
+                className="text text-center hover:underline focus:underline"
+              >
+                Go to Login
+              </Link>
+            </>
+          )}
         </div>
       </CardContent>
     </div>
