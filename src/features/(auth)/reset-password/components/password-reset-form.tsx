@@ -1,4 +1,5 @@
 "use client";
+"use no memo";
 
 import Form from "next/form";
 import { startTransition, useActionState, useEffect, useRef } from "react";
