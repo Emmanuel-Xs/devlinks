@@ -11,7 +11,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import LogoutButton from "@/features/(auth)/logout/components/logout-button";
+
+import LogoutButton from "./logout-button";
 
 export default function SettingsDropDownMenu() {
   return (
@@ -24,7 +25,7 @@ export default function SettingsDropDownMenu() {
       <DropdownMenuContent className="mx-2 w-32">
         <DropdownMenuLabel>Quick Settings</DropdownMenuLabel>
         <DropdownMenuItem>
-          <Link href="/forgot-password?auth=1">Reset Password</Link>
+          <Link href="/forgot-password">Reset Password</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/settings">Other Settings</Link>

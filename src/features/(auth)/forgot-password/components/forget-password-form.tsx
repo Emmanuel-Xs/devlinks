@@ -2,7 +2,7 @@
 
 import Form from "next/form";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 
 import { Mail } from "lucide-react";
@@ -23,8 +23,6 @@ export default function ForgetPasswordForm() {
   );
 
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const loggedIn = searchParams.has("auth");
 
   return (
     <div
@@ -61,17 +59,6 @@ export default function ForgetPasswordForm() {
           >
             Go Back
           </Link>
-          {loggedIn ? null : (
-            <>
-              <span className="text">or</span>
-              <Link
-                href="/login"
-                className="text text-center hover:underline focus:underline"
-              >
-                Go to Login
-              </Link>
-            </>
-          )}
         </div>
       </CardContent>
     </div>
