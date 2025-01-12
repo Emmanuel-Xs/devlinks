@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import PageHeading from "@/features/(dashboard)/components/page-heading";
 import LinksList from "@/features/(dashboard)/links/components/links-list";
+import { getUserLinksAction } from "@/features/(dashboard)/links/server/actions";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 import { getCurrentSession } from "@/lib/server/sessions";
 
@@ -18,6 +19,8 @@ export default async function Page() {
 
   if (!user) redirect("/login");
 
+  const userLinks = await getUserLinksAction(user.id);
+
   return (
     <section className="grid h-full w-full grid-rows-[1fr,_95px] divide-y divide-input rounded-xl bg-card">
       <div className="space-y-10 p-6 sm:p-10">
@@ -26,7 +29,7 @@ export default async function Page() {
           description="Add/edit/remove links below and then share all your profiles with
             the world!"
         />
-        <LinksList user={user} />
+        <LinksList user={user} userLinks={userLinks} />
       </div>
       <div className="flex justify-end p-6 sm:px-10">
         <Button disabled className="max-sm:w-full">

@@ -1,6 +1,8 @@
+import { useMemo } from "react";
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { EqualIcon, X } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, EqualIcon, X } from "lucide-react";
 
 import { Link, PlatformKey } from "@/drizzle/schema";
 
@@ -10,9 +12,11 @@ import LinkPlatform from "./link-select-platform";
 type LinkCardProp = {
   links: Link;
   // eslint-disable-next-line no-unused-vars
+  updateLink: (id: number, updates: Partial<Link>) => void;
+  // eslint-disable-next-line no-unused-vars
   removeLink: (id: number) => void;
   // eslint-disable-next-line no-unused-vars
-  updateLink: (id: number, updates: Partial<Link>) => void;
+  reorderLinks: (sequence: number, direction: "up" | "down") => void;
   forceDragging?: boolean;
 };
 
@@ -21,6 +25,7 @@ export default function LinkCard({
   forceDragging = false,
   updateLink,
   removeLink,
+  reorderLinks,
 }: LinkCardProp) {
   const {
     attributes,
@@ -42,15 +47,21 @@ export default function LinkCard({
     updateLink(links.id, { url: newUrl });
   };
 
-  const parentStyles = {
-    transform: CSS.Transform.toString(transform),
-    transition: transition || undefined,
-    opacity: isDragging ? "0.4" : "1",
-  };
+  const parentStyles = useMemo(
+    () => ({
+      transform: CSS.Transform.toString(transform),
+      transition: transition || undefined,
+      opacity: isDragging ? "0.4" : "1",
+    }),
+    [transform, transition, isDragging]
+  );
 
-  const draggableStyles = {
-    cursor: isDragging || forceDragging ? "grabbing" : "grab",
-  };
+  const draggableStyles = useMemo(
+    () => ({
+      cursor: isDragging || forceDragging ? "grabbing" : "grab",
+    }),
+    [isDragging, forceDragging]
+  );
 
   return (
     <div
@@ -66,9 +77,25 @@ export default function LinkCard({
             {...attributes}
             {...listeners}
           >
-            <EqualIcon size={20} className="touch-none" />
+            <EqualIcon size={20} className="touch-none text-primary" />
           </div>
-          <h3 className="text">Link #{links.sequence}</h3>
+          <h3 className="text text-card-foreground">Link #{links.sequence}</h3>
+        </div>
+        <div className="flex gap-4">
+          <button
+            className="rounded-lg p-2 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
+            onClick={() => reorderLinks(links.sequence, "up")}
+            aria-label="Move Link Card"
+          >
+            <ChevronUpIcon />
+          </button>
+          <button
+            className="rounded-lg p-2 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
+            onClick={() => reorderLinks(links.sequence, "down")}
+            aria-label="Move Link Card"
+          >
+            <ChevronDownIcon />
+          </button>
         </div>
         <span className="cursor-pointer" onClick={() => removeLink(links.id)}>
           <X size={18} className="text-red-900" />
