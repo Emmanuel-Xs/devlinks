@@ -7,8 +7,9 @@
     "plugin:n/recommended",
     "plugin:react/recommended"
   ],
-  "plugins": ["check-file", "n"],
+  "plugins": ["check-file", "n", "react-compiler"],
   "rules": {
+    "react-compiler/react-compiler": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "prefer-arrow-callback": ["error"],

@@ -2,6 +2,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import checkFile from "eslint-plugin-check-file";
 import n from "eslint-plugin-n";
+import reactCompiler from "eslint-plugin-react-compiler";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -26,8 +27,10 @@ const eslintConfig = [
     plugins: {
       "check-file": checkFile,
       n,
+      "react-compiler": reactCompiler,
     },
     rules: {
+      "react-compiler/react-compiler": "error",
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "prefer-arrow-callback": ["error"],
