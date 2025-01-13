@@ -41,7 +41,9 @@ const DndContextWithNoSSR = dynamic(
 
 const LinksList = memo(
   ({ user, userLinks }: { user: User; userLinks: Link[] }) => {
-    const [linksArray, setLinksArray] = useState<Link[]>(userLinks);
+    const [linksArray, setLinksArray] = useState<Link[]>(
+      userLinks.toSorted((a, b) => b.sequence - a.sequence)
+    );
     const [activeItem, setActiveItem] = useState<Link | undefined>(undefined);
 
     const sensors = useSensors(
@@ -53,16 +55,18 @@ const LinksList = memo(
     );
 
     const addNewLink = useCallback(() => {
-      setLinksArray((prev) => [
-        {
-          id: Date.now(),
-          userId: user.id,
-          sequence: prev.length + 1,
-          url: "",
-          platform: "github" as const,
-        },
-        ...prev,
-      ]);
+      setLinksArray((prev) =>
+        [
+          {
+            id: Date.now(),
+            userId: user.id,
+            sequence: prev.length + 1,
+            url: "",
+            platform: "github" as const,
+          },
+          ...prev,
+        ].toSorted((a, b) => b.sequence - a.sequence)
+      );
     }, [user.id]);
 
     const updateLink = useCallback((id: number, updates: Partial<Link>) => {
@@ -74,11 +78,12 @@ const LinksList = memo(
     }, []);
 
     const removeLink = useCallback((id: number) => {
-      setLinksArray((prev) =>
-        prev
-          .filter((link) => link.id !== id)
-          .map((link, i) => ({ ...link, sequence: i + 1 }))
-      );
+      setLinksArray((prev) => {
+        const filtered = prev.filter((link) => link.id !== id);
+        return filtered
+          .map((link, i) => ({ ...link, sequence: filtered.length - i }))
+          .toSorted((a, b) => b.sequence - a.sequence);
+      });
     }, []);
 
     const reorderLinks = useCallback(
@@ -94,12 +99,14 @@ const LinksList = memo(
             const newLinkIndex =
               direction === "up" ? linkIndex - 1 : linkIndex + 1;
             const newLinksArray = arrayMove(prevLinks, linkIndex, newLinkIndex);
-            return newLinksArray.map((link, index) => ({
-              ...link,
-              sequence: index + 1,
-            }));
+            return newLinksArray
+              .map((link, index) => ({
+                ...link,
+                sequence: newLinksArray.length - index,
+              }))
+              .toSorted((a, b) => b.sequence - a.sequence);
           }
-          return prevLinks;
+          return prevLinks.toSorted((a, b) => b.sequence - a.sequence);
         });
       },
       []
@@ -130,13 +137,14 @@ const LinksList = memo(
         const overIndex = linksArray.findIndex((ex) => ex.sequence === over.id);
 
         if (activeIndex !== overIndex) {
-          setLinksArray((prev) => {
-            const movedArray = arrayMove(prev, activeIndex, overIndex).map(
-              (ex, i) => ({ ...ex, sequence: i + 1 })
-            );
-
-            return movedArray;
-          });
+          setLinksArray((prev) =>
+            arrayMove(prev, activeIndex, overIndex)
+              .map((link, index) => ({
+                ...link,
+                sequence: prev.length - index,
+              }))
+              .toSorted((a, b) => b.sequence - a.sequence)
+          );
         }
 
         setActiveItem(undefined);
