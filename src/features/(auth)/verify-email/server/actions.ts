@@ -113,7 +113,9 @@ export async function verifyEmailAction(
 
 async function handleExpiredVerificationCode(userId: number, email: string) {
   const newRequest = await createEmailVerificationRequest(userId, email);
+
   sendVerificationEmail(email, newRequest[0].code);
+
   return {
     success: false,
     errors: {
@@ -143,43 +145,31 @@ export async function resendEmailVerificationCodeAction(): Promise<FormState> {
 
   let verificationRequest = await getUserEmailVerificationRequestFromRequest();
 
-  if (verificationRequest === null) {
-    if (user.emailVerified) {
-      return {
-        success: false,
-        errors: { message: ["Forbidden"] },
-      };
-    }
-    if (!sendVerificationEmailBucket.consume(user.id, 1)) {
-      return {
-        success: false,
-        errors: { message: ["Forbidden"] },
-      };
-    }
-    verificationRequest = await createEmailVerificationRequest(
-      user.id,
-      user.email
-    );
-  } else {
-    if (!sendVerificationEmailBucket.consume(user.id, 1)) {
-      return {
-        success: false,
-        errors: { message: ["Forbidden"] },
-      };
-    }
-    verificationRequest = await createEmailVerificationRequest(
-      user.id,
-      user.email
-    );
+  if (verificationRequest === null && user.emailVerified) {
+    return {
+      success: false,
+      errors: { message: ["Forbidden"] },
+    };
   }
+
+  if (!sendVerificationEmailBucket.consume(user.id, 1)) {
+    return {
+      success: false,
+      errors: { message: ["Forbidden"] },
+    };
+  }
+  verificationRequest = await createEmailVerificationRequest(
+    user.id,
+    user.email
+  );
+
   await sendVerificationEmail(
     verificationRequest[0].email,
     verificationRequest[0].code
   );
 
-  // console.log("res data", res.data);
-  // console.log("res error", res.error);
   setEmailVerificationRequestCookie(verificationRequest[0]);
+
   return {
     success: true,
     errors: { message: ["A new code was sent to your inbox."] },

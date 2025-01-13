@@ -12,6 +12,7 @@ import { signupSchema } from "@/lib/auth-validation";
 import {
   sendVerificationEmail,
   setEmailVerificationRequestCookie,
+  verifyEmailDomain,
 } from "@/lib/server/email";
 import { checkPasswordSecurity, hashPassword } from "@/lib/server/password";
 import { RefillingTokenBucket } from "@/lib/server/rate-limit";
@@ -75,6 +76,19 @@ export async function signUpAction(
   }
 
   const email = parsed.data.email;
+
+  const result = await verifyEmailDomain(email);
+
+  if (!result.success) {
+    console.error("Email domain verification failed:", result.message);
+    return {
+      success: result.success,
+      errors: { message: [result.message] },
+    };
+  }
+
+  console.log("Valid domain: ", result.message);
+
   const password = parsed.data.password;
 
   const isEmailAlreadyTaken = await isEmailTaken(email);
@@ -113,6 +127,7 @@ export async function signUpAction(
     user[0].id,
     user[0].email
   );
+
   sendVerificationEmail(
     emailVerificationRequest[0].email,
     emailVerificationRequest[0].code

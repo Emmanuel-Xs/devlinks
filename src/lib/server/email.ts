@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 
 import { render } from "@react-email/components";
+import dns from "dns";
 import nodemailer from "nodemailer";
 
 import { getUserEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
@@ -82,3 +83,26 @@ export async function sendVerificationEmail(email: string, code: string) {
     }
   });
 }
+
+export const verifyEmailDomain = (
+  email: string
+): Promise<{ success: boolean; message: string }> => {
+  return new Promise((resolve) => {
+    const domain = email.split("@")[1];
+    dns.resolveMx(domain, (err, addresses) => {
+      if (err || !addresses || addresses.length === 0) {
+        console.error("Invalid domain or no MX records found.");
+        resolve({
+          success: false,
+          message: "Invalid domain or no MX records found",
+        });
+      } else {
+        console.log("Valid domain:", addresses);
+        resolve({
+          success: true,
+          message: "Valid domain",
+        });
+      }
+    });
+  });
+};
