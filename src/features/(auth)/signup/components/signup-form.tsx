@@ -122,7 +122,7 @@ export function SignupForm() {
           />
           <AuthPassword
             id="confirm-password"
-            placeholder="Password must match the ones above"
+            placeholder="Must match the above"
             icon={
               <LockKeyhole width={24} height={24} className="text-foreground" />
             }

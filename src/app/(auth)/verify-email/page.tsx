@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import React from "react";
 
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
+import AuthLogoutButton from "@/features/(auth)/components/auth-logout-button";
 import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
 import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
 import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email";
@@ -25,6 +25,7 @@ export default async function Page() {
         <DevlinksLogo className="mx-auto" />
         <EmailVerificationForm />
         <ResendEmailVerificationCodeForm />
+        <AuthLogoutButton />
       </div>
     </main>
   );

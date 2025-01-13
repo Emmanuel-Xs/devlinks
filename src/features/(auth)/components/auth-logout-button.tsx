@@ -7,9 +7,9 @@ import { LoaderIcon, LogOutIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { logoutAction } from "../../../(auth)/logout/server/action";
+import { logoutAction } from "../logout/server/action";
 
-export default function LogoutButton() {
+export default function AuthLogoutButton() {
   const [, formAction, isPending] = useActionState(logoutAction, {
     success: false,
   });
@@ -18,10 +18,10 @@ export default function LogoutButton() {
     <Form action={formAction}>
       <button
         disabled={isPending}
-        className="flex w-full items-center gap-1 rounded-sm bg-primary px-2 py-1 font-semibold text-primary-foreground hover:bg-accent hover:text-foreground focus:bg-accent focus:text-foreground"
+        className="mx-auto flex items-center justify-center gap-2"
       >
         <LogOutIcon size={20} />
-        <span className="font-semibold">Logout</span>
+        <span className="font-semibold text-card-foreground">Logout</span>
         {isPending ? (
           <LoaderIcon
             className={cn("animate-spin text-card-foreground")}
