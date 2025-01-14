@@ -28,6 +28,9 @@ import {
 import Loader from "@/components/loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link, User } from "@/drizzle/schema";
+import { useLinksStore } from "@/store/links-store";
+
+// import useLinksStore from "@/store/links-store";
 
 import { Button } from "../../../../components/ui/button";
 
@@ -40,10 +43,10 @@ const DndContextWithNoSSR = dynamic(
 );
 
 const LinksList = memo(
-  ({ user, userLinks }: { user: User; userLinks: Link[] }) => {
-    const [linksArray, setLinksArray] = useState<Link[]>(
-      userLinks.toSorted((a, b) => b.sequence - a.sequence)
-    );
+  ({ user }: { user: User }) => {
+    const { links, addNewLink, updateLink, removeLink, reorderLinks } =
+      useLinksStore((state) => state);
+
     const [activeItem, setActiveItem] = useState<Link | undefined>(undefined);
 
     const sensors = useSensors(
@@ -54,70 +57,38 @@ const LinksList = memo(
       })
     );
 
-    const addNewLink = useCallback(() => {
-      setLinksArray((prev) =>
-        [
-          {
-            id: Date.now(),
-            userId: user.id,
-            sequence: prev.length + 1,
-            url: "",
-            platform: "github" as const,
-          },
-          ...prev,
-        ].toSorted((a, b) => b.sequence - a.sequence)
-      );
-    }, [user.id]);
-
-    const updateLink = useCallback((id: number, updates: Partial<Link>) => {
-      setLinksArray((prevLinks) =>
-        prevLinks.map((link) =>
-          link.id === id ? { ...link, ...updates } : link
-        )
-      );
-    }, []);
-
-    const removeLink = useCallback((id: number) => {
-      setLinksArray((prev) => {
-        const filtered = prev.filter((link) => link.id !== id);
-        return filtered
-          .map((link, i) => ({ ...link, sequence: filtered.length - i }))
-          .toSorted((a, b) => b.sequence - a.sequence);
+    const handleAddNewLink = useCallback(() => {
+      addNewLink({
+        id: Date.now(),
+        userId: user.id,
+        sequence: links.length + 1,
+        url: "",
+        platform: "github" as const,
       });
-    }, []);
+    }, [addNewLink, user.id, links.length]);
 
-    const reorderLinks = useCallback(
+    const handleUpDownMove = useCallback(
       (sequence: number, direction: "up" | "down") => {
-        setLinksArray((prevLinks) => {
-          const linkIndex = prevLinks.findIndex(
-            (link) => link.sequence === sequence
-          );
-          if (
-            (direction === "up" && linkIndex > 0) ||
-            (direction === "down" && linkIndex < prevLinks.length - 1)
-          ) {
-            const newLinkIndex =
-              direction === "up" ? linkIndex - 1 : linkIndex + 1;
-            const newLinksArray = arrayMove(prevLinks, linkIndex, newLinkIndex);
-            return newLinksArray
-              .map((link, index) => ({
-                ...link,
-                sequence: newLinksArray.length - index,
-              }))
-              .toSorted((a, b) => b.sequence - a.sequence);
-          }
-          return prevLinks.toSorted((a, b) => b.sequence - a.sequence);
-        });
+        const currentIndex = links.findIndex(
+          (link) => link.sequence === sequence
+        );
+
+        const newIndex =
+          direction === "up" ? currentIndex - 1 : currentIndex + 1;
+        if (newIndex >= 0 && newIndex < links.length) {
+          const newLinks = arrayMove(links, currentIndex, newIndex);
+          reorderLinks(newLinks);
+        }
       },
-      []
+      [links, reorderLinks]
     );
 
     const handleDragStart = useCallback(
       (event: DragStartEvent) => {
         const { active } = event;
-        setActiveItem(linksArray?.find((link) => link.sequence === active.id));
+        setActiveItem(links?.find((link) => link.sequence === active.id));
       },
-      [linksArray]
+      [links]
     );
 
     const handleDragEnd = useCallback(
@@ -126,30 +97,17 @@ const LinksList = memo(
 
         if (!over) return;
 
-        const activeItem = linksArray.find((ex) => ex.sequence === active.id);
-        const overItem = linksArray.find((ex) => ex.sequence === over.id);
-
-        if (!activeItem || !overItem) return;
-
-        const activeIndex = linksArray.findIndex(
-          (ex) => ex.sequence === active.id
-        );
-        const overIndex = linksArray.findIndex((ex) => ex.sequence === over.id);
+        const activeIndex = links.findIndex((ex) => ex.sequence === active.id);
+        const overIndex = links.findIndex((ex) => ex.sequence === over.id);
 
         if (activeIndex !== overIndex) {
-          setLinksArray((prev) =>
-            arrayMove(prev, activeIndex, overIndex)
-              .map((link, index) => ({
-                ...link,
-                sequence: prev.length - index,
-              }))
-              .toSorted((a, b) => b.sequence - a.sequence)
-          );
+          const newLinks = arrayMove(links, activeIndex, overIndex);
+          reorderLinks(newLinks);
         }
 
         setActiveItem(undefined);
       },
-      [linksArray]
+      [links, reorderLinks]
     );
 
     const handleDragCancel = useCallback(() => {
@@ -162,12 +120,12 @@ const LinksList = memo(
           variant="outline"
           size="md"
           className="w-full"
-          onClick={addNewLink}
+          onClick={handleAddNewLink}
         >
           + Add new link
         </Button>
 
-        {linksArray?.length ? (
+        {links?.length ? (
           <ScrollArea className="h-[70vh] w-full rounded-md">
             <div className="space-y-6">
               <DndContextWithNoSSR
@@ -179,16 +137,16 @@ const LinksList = memo(
                 modifiers={[restrictToVerticalAxis]}
               >
                 <SortableContext
-                  items={linksArray.map((link) => link.sequence)}
+                  items={links.map((link) => link.sequence)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {linksArray.map((link) => (
+                  {links.map((link) => (
                     <LinkCard
                       links={link}
                       key={link.id}
                       updateLink={updateLink}
                       removeLink={removeLink}
-                      reorderLinks={reorderLinks}
+                      handleUpDownMove={handleUpDownMove}
                     />
                   ))}
                 </SortableContext>
@@ -203,7 +161,7 @@ const LinksList = memo(
                       links={activeItem}
                       updateLink={updateLink}
                       removeLink={removeLink}
-                      reorderLinks={reorderLinks}
+                      handleUpDownMove={handleUpDownMove}
                       forceDragging
                     />
                   ) : null}
@@ -219,11 +177,7 @@ const LinksList = memo(
   },
   (prevProps, nextProps) => {
     // Compare user and userLinks for equality
-    return (
-      prevProps.user.id === nextProps.user.id &&
-      JSON.stringify(prevProps.userLinks) ===
-        JSON.stringify(nextProps.userLinks)
-    );
+    return prevProps.user.id === nextProps.user.id;
   }
 );
 

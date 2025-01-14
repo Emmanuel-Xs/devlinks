@@ -16,7 +16,7 @@ type LinkCardProp = {
   // eslint-disable-next-line no-unused-vars
   removeLink: (id: number) => void;
   // eslint-disable-next-line no-unused-vars
-  reorderLinks: (sequence: number, direction: "up" | "down") => void;
+  handleUpDownMove: (sequence: number, direction: "up" | "down") => void;
   forceDragging?: boolean;
 };
 
@@ -25,7 +25,7 @@ export default function LinkCard({
   forceDragging = false,
   updateLink,
   removeLink,
-  reorderLinks,
+  handleUpDownMove,
 }: LinkCardProp) {
   const {
     attributes,
@@ -63,6 +63,9 @@ export default function LinkCard({
     [isDragging, forceDragging]
   );
 
+  console.log("links platform: ", links.platform);
+  console.log("links url: ", links.url);
+
   return (
     <div
       className="space-y-3 rounded-xl bg-background p-[20px]"
@@ -84,14 +87,14 @@ export default function LinkCard({
         <div className="flex gap-4">
           <button
             className="rounded-lg p-2 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
-            onClick={() => reorderLinks(links.sequence, "up")}
+            onClick={() => handleUpDownMove(links.sequence, "up")}
             aria-label="Move Link Card"
           >
             <ChevronUpIcon />
           </button>
           <button
             className="rounded-lg p-2 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
-            onClick={() => reorderLinks(links.sequence, "down")}
+            onClick={() => handleUpDownMove(links.sequence, "down")}
             aria-label="Move Link Card"
           >
             <ChevronDownIcon />
@@ -105,7 +108,11 @@ export default function LinkCard({
         platform={links.platform}
         onPlatformChange={handlePlatformChange}
       />
-      <LinkInput url={links.url} onLinkChange={handleLinkChange} />
+      <LinkInput
+        id={links.id}
+        url={links.url}
+        onLinkChange={handleLinkChange}
+      />
     </div>
   );
 }

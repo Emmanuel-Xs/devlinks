@@ -7,6 +7,7 @@ import LinksList from "@/features/(dashboard)/links/components/links-list";
 import { getUserLinksAction } from "@/features/(dashboard)/links/server/actions";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 import { getCurrentSession } from "@/lib/server/sessions";
+import { LinksStoreProvider } from "@/store/links-store-provider";
 
 export const metadata: Metadata = {
   title: "links",
@@ -29,7 +30,9 @@ export default async function Page() {
           description="Add/edit/remove links below and then share all your profiles with
             the world!"
         />
-        <LinksList user={user} userLinks={userLinks} />
+        <LinksStoreProvider userLinks={userLinks}>
+          <LinksList user={user} />
+        </LinksStoreProvider>
       </div>
       <div className="flex justify-end p-6 sm:px-10">
         <Button disabled className="max-sm:w-full">
