@@ -2,10 +2,11 @@ import { useMemo } from "react";
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { ChevronDownIcon, ChevronUpIcon, EqualIcon, X } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, EqualIcon } from "lucide-react";
 
 import { Link, PlatformKey } from "@/drizzle/schema";
 
+import DeleteLinkDialog from "./delete-link-dialog";
 import LinkInput from "./link-input";
 import LinkPlatform from "./link-select-platform";
 
@@ -63,6 +64,10 @@ export default function LinkCard({
     [isDragging, forceDragging]
   );
 
+  const handleLinkRemoval = () => {
+    removeLink(links.id);
+  };
+
   console.log("links platform: ", links.platform);
   console.log("links url: ", links.url);
 
@@ -73,7 +78,7 @@ export default function LinkCard({
       ref={setNodeRef}
     >
       <div className="-my-[6px] flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2">
           <div
             style={draggableStyles}
             ref={setActivatorNodeRef}
@@ -84,25 +89,23 @@ export default function LinkCard({
           </div>
           <h3 className="text text-card-foreground">Link #{links.sequence}</h3>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-1">
           <button
-            className="rounded-lg p-2 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
+            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
             onClick={() => handleUpDownMove(links.sequence, "up")}
             aria-label="Move Link Card"
           >
             <ChevronUpIcon />
           </button>
           <button
-            className="rounded-lg p-2 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
+            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
             onClick={() => handleUpDownMove(links.sequence, "down")}
             aria-label="Move Link Card"
           >
             <ChevronDownIcon />
           </button>
         </div>
-        <span className="cursor-pointer" onClick={() => removeLink(links.id)}>
-          <X size={18} className="text-red-900" />
-        </span>
+        <DeleteLinkDialog handleRemoveLink={handleLinkRemoval} />
       </div>
       <LinkPlatform
         id={links.id}
