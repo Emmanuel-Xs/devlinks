@@ -24,6 +24,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { v4 as uuidv4 } from "uuid";
 
 import Loader from "@/components/loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -59,7 +60,7 @@ const LinksList = memo(
 
     const handleAddNewLink = useCallback(() => {
       addNewLink({
-        id: Date.now(),
+        id: uuidv4(),
         userId: user.id,
         sequence: links.length + 1,
         url: "",

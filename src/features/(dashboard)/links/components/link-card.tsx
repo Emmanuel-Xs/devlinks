@@ -12,9 +12,9 @@ import LinkPlatform from "./link-select-platform";
 type LinkCardProp = {
   links: Link;
   // eslint-disable-next-line no-unused-vars
-  updateLink: (id: number, updates: Partial<Link>) => void;
+  updateLink: (id: string, updates: Partial<Link>) => void;
   // eslint-disable-next-line no-unused-vars
-  removeLink: (id: number) => void;
+  removeLink: (id: string) => void;
   // eslint-disable-next-line no-unused-vars
   handleUpDownMove: (sequence: number, direction: "up" | "down") => void;
   forceDragging?: boolean;
@@ -105,6 +105,7 @@ export default function LinkCard({
         </span>
       </div>
       <LinkPlatform
+        id={links.id}
         platform={links.platform}
         onPlatformChange={handlePlatformChange}
       />

@@ -4,7 +4,7 @@ import { Input } from "../../../../components/ui/input";
 import { Label } from "../../../../components/ui/label";
 
 type LinkInputProps = {
-  id: number;
+  id: string;
   url: string;
   // eslint-disable-next-line no-unused-vars
   onLinkChange: (url: string) => void;

@@ -11,14 +11,14 @@ import { Link } from "@/drizzle/schema";
 type LinkState = {
   linksFromDb: Link[];
   links: Link[];
-  modifiedLinkIds: Set<number>;
+  modifiedLinkIds: Set<string>;
 };
 
 // Action types
 type LinkAction = {
   addNewLink: (newLink: Link) => void;
-  updateLink: (id: number, updates: Partial<Link>) => void;
-  removeLink: (id: number) => void;
+  updateLink: (id: string, updates: Partial<Link>) => void;
+  removeLink: (id: string) => void;
   reorderLinks: (links: Link[]) => void;
   resetToOriginal: () => void;
   getModifiedLinks: () => Link[];
@@ -30,7 +30,7 @@ type LinkStore = LinkState & LinkAction;
 const defaultLinkState: LinkState = {
   linksFromDb: [],
   links: [],
-  modifiedLinkIds: new Set<number>(),
+  modifiedLinkIds: new Set<string>(),
 };
 
 // Store creator function that accepts initial props

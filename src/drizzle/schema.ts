@@ -85,12 +85,14 @@ export const platformEnum = pgEnum("platforms", [
   "gitlab",
   "hashnode",
   "stackoverflow",
+  "portfolio",
+  "others",
 ]);
 
 export const links = pgTable(
   "links",
   {
-    id: integer().primaryKey().generatedByDefaultAsIdentity(),
+    id: text().primaryKey(),
     userId: integer()
       .notNull()
       .references(() => usersTable.id, { onDelete: "cascade" }),

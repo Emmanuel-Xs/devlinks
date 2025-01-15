@@ -15,12 +15,14 @@ import { platformsArray } from "@/data/platforms";
 import { PlatformKey } from "@/drizzle/schema";
 
 type LinkSelectPlatformProps = {
+  id: string;
   platform: PlatformKey;
   // eslint-disable-next-line no-unused-vars
   onPlatformChange: (platform: PlatformKey) => void;
 };
 
 export default function LinkSelectPlatform({
+  id,
   platform,
   onPlatformChange,
 }: LinkSelectPlatformProps) {
@@ -32,7 +34,10 @@ export default function LinkSelectPlatform({
 
   return (
     <div className="space-y-1">
-      <Label htmlFor="platform" className="leading-[150%] text-card-foreground">
+      <Label
+        htmlFor={`platform-${id}`}
+        className="leading-[150%] text-card-foreground"
+      >
         Platform
       </Label>
       <Select
@@ -41,7 +46,7 @@ export default function LinkSelectPlatform({
         onValueChange={onPlatformChange}
         onOpenChange={handleSelectOpen}
       >
-        <SelectTrigger id="platform" isOpen={isSelectOpen} className="">
+        <SelectTrigger id={`platform-${id}`} isOpen={isSelectOpen} className="">
           <SelectValue placeholder="" />
         </SelectTrigger>
         <SelectContent>
