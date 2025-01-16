@@ -1,10 +1,14 @@
-import { useMemo } from "react";
+"use client";
+
+import { useMemo, useRef } from "react";
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDownIcon, ChevronUpIcon, EqualIcon } from "lucide-react";
 
 import { Link, PlatformKey } from "@/drizzle/schema";
+import useFocusOnChange from "@/hooks/use-focus-on-change";
+import useValidateUrl from "@/hooks/use-validate-url";
 
 import DeleteLinkDialog from "./delete-link-dialog";
 import LinkInput from "./link-input";
@@ -28,6 +32,11 @@ export default function LinkCard({
   removeLink,
   handleUpDownMove,
 }: LinkCardProp) {
+  const linkInputRef = useRef<HTMLInputElement>(null);
+  const { requestFocus } = useFocusOnChange();
+
+  const urlError = useValidateUrl(links.url, links.platform);
+
   const {
     attributes,
     isDragging,
@@ -42,6 +51,7 @@ export default function LinkCard({
 
   const handlePlatformChange = (newPlatform: PlatformKey) => {
     updateLink(links.id, { platform: newPlatform });
+    requestFocus(linkInputRef);
   };
 
   const handleLinkChange = (newUrl: string) => {
@@ -67,9 +77,6 @@ export default function LinkCard({
   const handleLinkRemoval = () => {
     removeLink(links.id);
   };
-
-  console.log("links platform: ", links.platform);
-  console.log("links url: ", links.url);
 
   return (
     <div
@@ -116,7 +123,14 @@ export default function LinkCard({
         id={links.id}
         url={links.url}
         onLinkChange={handleLinkChange}
+        error={urlError ? "bad URL" : undefined}
+        ref={linkInputRef}
       />
+      {urlError && (
+        <span className="whitespace-nowrap text-xs leading-[150%] text-destructive">
+          {urlError}
+        </span>
+      )}
     </div>
   );
 }

@@ -18,7 +18,7 @@ const Input = ({
   type = "text",
   ...props
 }: InputProps & {
-  ref?: React.RefObject<HTMLInputElement>;
+  ref?: React.RefObject<HTMLInputElement | null>;
 }) => {
   return (
     <div

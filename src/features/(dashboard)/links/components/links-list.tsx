@@ -63,7 +63,7 @@ const LinksList = memo(
         id: uuidv4(),
         userId: user.id,
         sequence: links.length + 1,
-        url: "",
+        url: "https://github.com/user",
         platform: "github" as const,
       });
     }, [addNewLink, user.id, links.length]);
