@@ -3,8 +3,15 @@ import { cookies } from "next/headers";
 import { generateState } from "arctic";
 
 import { github } from "@/lib/server/oauth";
+import { globalGETRateLimit } from "@/lib/server/request";
 
 export async function GET(): Promise<Response> {
+  if (!globalGETRateLimit()) {
+    return new Response("Too many requests", {
+      status: 429,
+    });
+  }
+
   const state = generateState();
   console.log("Generated state:", state);
 

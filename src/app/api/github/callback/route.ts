@@ -10,6 +10,7 @@ import {
   updateGithubId,
 } from "@/drizzle/query/users";
 import { github } from "@/lib/server/oauth";
+import { globalGETRateLimit } from "@/lib/server/request";
 import {
   generateSessionToken,
   setSessionTokenCookie,
@@ -23,6 +24,12 @@ type GithubUser = {
 };
 
 export async function GET(request: Request): Promise<Response> {
+  if (!globalGETRateLimit()) {
+    return new Response("Too many requests", {
+      status: 429,
+    });
+  }
+
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
@@ -31,11 +38,11 @@ export async function GET(request: Request): Promise<Response> {
   const storedState = cookieStore.get("github_oauth_state")?.value ?? null;
 
   if (code === null || state === null || storedState === null) {
-    return new Response("Missing required parameters", { status: 400 });
+    return new Response("Please restart the process.", { status: 400 });
   }
 
   if (state !== storedState) {
-    return new Response("Invalid state parameter", { status: 400 });
+    return new Response("Please restart the process.", { status: 400 });
   }
 
   let tokens: OAuth2Tokens;
@@ -44,7 +51,7 @@ export async function GET(request: Request): Promise<Response> {
     tokens = await github.validateAuthorizationCode(code);
   } catch (e) {
     console.error("Error validating authorization code:", e);
-    return new Response("Failed to validate authorization code", {
+    return new Response("Please restart the process.", {
       status: 400,
     });
   }

@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
-import { decodeIdToken } from "arctic";
 import type { OAuth2Tokens } from "arctic";
+import { decodeIdToken } from "arctic";
 
 import { createSession } from "@/drizzle/query/sessions";
 import {
@@ -11,6 +11,7 @@ import {
   updateGoogleId,
 } from "@/drizzle/query/users";
 import { google } from "@/lib/server/oauth";
+import { globalGETRateLimit } from "@/lib/server/request";
 import {
   generateSessionToken,
   setSessionTokenCookie,
@@ -26,6 +27,12 @@ type GoogleIdTokenClaims = {
 };
 
 export async function GET(request: Request): Promise<Response> {
+  if (!globalGETRateLimit()) {
+    return new Response("Too many requests", {
+      status: 429,
+    });
+  }
+
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
@@ -41,11 +48,11 @@ export async function GET(request: Request): Promise<Response> {
     storedState === null ||
     codeVerifier === null
   ) {
-    return new Response("Missing required parameters", { status: 400 });
+    return new Response("Please restart the process.", { status: 400 });
   }
 
   if (state !== storedState) {
-    return new Response("Invalid state parameter", { status: 400 });
+    return new Response("Please restart the process.", { status: 400 });
   }
 
   let tokens: OAuth2Tokens;
@@ -54,7 +61,7 @@ export async function GET(request: Request): Promise<Response> {
     tokens = await google.validateAuthorizationCode(code, codeVerifier);
   } catch (e) {
     console.error("Error validating authorization code:", e);
-    return new Response("Failed to validate authorization code", {
+    return new Response("Please restart the process.", {
       status: 400,
     });
   }
