@@ -1,3 +1,4 @@
+/* eslint-disable n/no-unsupported-features/node-builtins */
 /* eslint-disable no-unused-vars */
 import { createContext, use } from "react";
 
@@ -7,22 +8,25 @@ import { createStore } from "zustand/vanilla";
 
 import { Link } from "@/drizzle/schema";
 
-// Basic state types
+const sortBySequenceDesc = (a: Link, b: Link) => b.sequence - a.sequence;
+
 type LinkState = {
   linksFromDb: Link[];
   links: Link[];
   modifiedLinkIds: Set<string>;
+  errors: Record<string, string | undefined>;
+  isValid: boolean;
 };
 
-// Action types
 type LinkAction = {
   addNewLink: (newLink: Link) => void;
   updateLink: (id: string, updates: Partial<Link>) => void;
   removeLink: (id: string) => void;
   reorderLinks: (links: Link[]) => void;
-  resetToOriginal: () => void;
   getModifiedLinks: () => Link[];
-  markAllAsSaved: () => void;
+  setLinksFromDb: (ewLinksFromDb: Link[]) => void;
+  setError: (id: string, error: string | undefined) => void;
+  hasChanges: () => boolean;
 };
 
 type LinkStore = LinkState & LinkAction;
@@ -31,20 +35,17 @@ const defaultLinkState: LinkState = {
   linksFromDb: [],
   links: [],
   modifiedLinkIds: new Set<string>(),
+  errors: {},
+  isValid: true,
 };
 
-// Store creator function that accepts initial props
 export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
-  const DEFAULT_PROPS = defaultLinkState;
-
   return createStore<LinkStore>()(
     persist(
       (set, get) => ({
-        ...DEFAULT_PROPS,
+        ...defaultLinkState,
         linksFromDb: initProps?.userLinks || [],
-        links:
-          initProps?.userLinks?.toSorted((a, b) => b.sequence - a.sequence) ||
-          [],
+        links: initProps?.userLinks?.toSorted(sortBySequenceDesc) || [],
 
         addNewLink(newLink) {
           set((state) => {
@@ -53,8 +54,12 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
               sequence: state.links.length + 1 - index,
             }));
             return {
-              links: newLinks.toSorted((a, b) => b.sequence - a.sequence),
-              modifiedLinkIds: new Set(state.modifiedLinkIds).add(newLink.id),
+              links: newLinks.toSorted(sortBySequenceDesc),
+              modifiedLinkIds: new Set([
+                ...Array.from(state.modifiedLinkIds),
+                newLink.id,
+              ]),
+              isValid: Object.values(state.errors).every((error) => !error),
             };
           });
         },
@@ -64,7 +69,11 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
             links: state.links.map((link) =>
               link.id === id ? { ...link, ...updates } : link
             ),
-            modifiedLinkIds: new Set(state.modifiedLinkIds).add(id),
+            modifiedLinkIds: new Set([
+              ...Array.from(state.modifiedLinkIds),
+              id,
+            ]),
+            isValid: Object.values(state.errors).every((error) => !error),
           }));
         },
 
@@ -73,25 +82,29 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
             const linkExistsInDb = state.linksFromDb.some(
               (link) => link.id === id
             );
-
             const filtered = state.links.filter((link) => link.id !== id);
             const reSequenced = filtered
               .map((link, index) => ({
                 ...link,
                 sequence: filtered.length - index,
               }))
-              .toSorted((a, b) => b.sequence - a.sequence);
+              .toSorted(sortBySequenceDesc);
 
-            const newModifiedIds = new Set(state.modifiedLinkIds);
+            const newModifiedIds = new Set(Array.from(state.modifiedLinkIds));
             if (linkExistsInDb) {
               newModifiedIds.add(id);
             } else {
               newModifiedIds.delete(id);
             }
 
+            const newErrors = { ...state.errors };
+            delete newErrors[id];
+
             return {
               links: reSequenced,
               modifiedLinkIds: newModifiedIds,
+              errors: newErrors,
+              isValid: Object.values(newErrors).every((error) => !error),
             };
           });
         },
@@ -103,9 +116,9 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
                 ...link,
                 sequence: newLinks.length - index,
               }))
-              .toSorted((a, b) => b.sequence - a.sequence);
+              .toSorted(sortBySequenceDesc);
 
-            const newModifiedIds = new Set(state.modifiedLinkIds);
+            const newModifiedIds = new Set(Array.from(state.modifiedLinkIds));
 
             reorderedLinks.forEach((link) => {
               const dbLink = state.linksFromDb.find((l) => l.id === link.id);
@@ -117,42 +130,62 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
             return {
               links: reorderedLinks,
               modifiedLinkIds: newModifiedIds,
+              isValid: Object.values(state.errors).every((error) => !error),
             };
           });
         },
 
-        resetToOriginal: () => {
-          set((state) => ({
-            links: state.linksFromDb.toSorted(
-              (a, b) => b.sequence - a.sequence
-            ),
-            modifiedLinkIds: new Set(),
-          }));
+        setError(id, error) {
+          set((state) => {
+            const newErrors = { ...state.errors };
+            if (error) {
+              newErrors[id] = error;
+            } else {
+              delete newErrors[id];
+            }
+            return {
+              errors: newErrors,
+              isValid: Object.values(newErrors).every((error) => !error),
+            };
+          });
+        },
+
+        hasChanges() {
+          const state = get();
+          return state.modifiedLinkIds.size > 0;
         },
 
         getModifiedLinks: () => {
           const state = get();
           return state.links.filter((link) =>
-            state.modifiedLinkIds.has(link.id)
+            Array.from(state.modifiedLinkIds).includes(link.id)
           );
         },
 
-        markAllAsSaved: () => {
-          set((state) => ({
-            linksFromDb: state.links,
+        setLinksFromDb: (newLinksFromDb: Link[]) => {
+          set(() => ({
+            linksFromDb: newLinksFromDb,
+            links: newLinksFromDb.toSorted(sortBySequenceDesc),
             modifiedLinkIds: new Set(),
+            errors: {},
+            isValid: true,
           }));
         },
       }),
       {
         name: "links-store",
-        // eslint-disable-next-line n/no-unsupported-features/node-builtins
         storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
           links: state.links,
           linksFromDb: state.linksFromDb,
           modifiedLinkIds: Array.from(state.modifiedLinkIds),
+          errors: state.errors,
         }),
+        onRehydrateStorage: () => (state) => {
+          if (state) {
+            state.modifiedLinkIds = new Set(state.modifiedLinkIds);
+          }
+        },
       }
     )
   );

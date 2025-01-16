@@ -5,6 +5,7 @@ import { useMemo, useRef } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDownIcon, ChevronUpIcon, EqualIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import { Link, PlatformKey } from "@/drizzle/schema";
 import useFocusOnChange from "@/hooks/use-focus-on-change";
@@ -35,7 +36,7 @@ export default function LinkCard({
   const linkInputRef = useRef<HTMLInputElement>(null);
   const { requestFocus } = useFocusOnChange();
 
-  const urlError = useValidateUrl(links.url, links.platform);
+  const urlError = useValidateUrl(links.id, links.url, links.platform);
 
   const {
     attributes,
@@ -76,6 +77,7 @@ export default function LinkCard({
 
   const handleLinkRemoval = () => {
     removeLink(links.id);
+    toast.success("Link has been removed");
   };
 
   return (

@@ -31,8 +31,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link, User } from "@/drizzle/schema";
 import { useLinksStore } from "@/store/links-store";
 
-// import useLinksStore from "@/store/links-store";
-
 import { Button } from "../../../../components/ui/button";
 
 import LinkCard from "./link-card";
