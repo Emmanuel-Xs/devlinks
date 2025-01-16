@@ -1,4 +1,6 @@
 // config/platforms.tsx
+import { BriefcaseIcon, EllipsisIcon } from "lucide-react";
+
 import CodepenIcon from "@/components/Icons/codepen";
 import CodewarsIcon from "@/components/Icons/codewars";
 import DevDotToIcon from "@/components/Icons/dev-to";
@@ -128,6 +130,22 @@ export const platforms: PlatformConfig = {
       <StackOverFlowIcon className={className} />
     ),
     color: "bg-platform-stackoverflow",
+  },
+  portfolio: {
+    key: "portfolio",
+    label: "Portfolio",
+    getIcon: (className = "fill-primary-foreground") => (
+      <BriefcaseIcon className={className} size={18} />
+    ),
+    color: "bg-platform-portfolio",
+  },
+  others: {
+    key: "others",
+    label: "Others",
+    getIcon: (className = "fill-primary-foreground") => (
+      <EllipsisIcon className={className} size={18} />
+    ),
+    color: "bg-platform-others",
   },
 };
 

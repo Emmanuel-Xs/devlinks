@@ -20,6 +20,8 @@ const PLATFORM_URL_PATTERNS: Record<PlatformKey, RegExp> = {
   hashnode: /^https?:\/\/(www\.)?hashnode\.com\/@[a-zA-Z0-9_-]+\/?$/i,
   stackoverflow:
     /^https?:\/\/(www\.)?stackoverflow\.com\/users\/\d+\/[\w-]+\/?$/i,
+  portfolio: /^https?:\/\/(www\.)?[\w-]+(\.[a-z]{2,})+(\/[\w-]*)*\/?$/i,
+  others: /^https?:\/\/(www\.)?[\w-]+(\.[a-z]{2,})+(\/[\w-]*)*\/?$/i,
 };
 
 interface UrlValidationResult {

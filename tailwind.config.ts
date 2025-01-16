@@ -74,6 +74,8 @@ const config: Config = {
           gitlab: "hsl(var(--gitlab-color))",
           hashnode: "hsl(var(--hashnode-color))",
           stackoverflow: "hsl(var(--stackoverflow-color))",
+          portfolio: "hsl(var(--portfolio-color))",
+          others: "hsl(var(--others-color))",
         },
       },
       borderRadius: {
