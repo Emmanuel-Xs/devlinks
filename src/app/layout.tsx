@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 
+import { Toaster } from "sonner";
+
 import { insSans } from "@/lib/font";
 
 import "./globals.css";
@@ -20,7 +22,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${insSans.variable} antialiased`}>{children}</body>
+      <body className={`${insSans.variable} antialiased`}>
+        {children}
+        <Toaster
+          toastOptions={{
+            style: {
+              borderRadius: "8px",
+              padding: "16px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            },
+            classNames: {
+              success: "bg-green-500 text-white",
+              error: "bg-red-500 text-white",
+            },
+          }}
+        />
+      </body>
     </html>
   );
 }
