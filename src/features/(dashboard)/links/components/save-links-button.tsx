@@ -18,24 +18,26 @@ export default function SaveLinksButton({ userId }: { userId: number }) {
     hasChanges: Changes,
     getModifiedLinks,
     setLinksFromDb,
+    links: linksFromUser,
   } = useLinksStore((state) => state);
 
   const linksToSave = getModifiedLinks();
-  console.log("links to save", linksToSave);
+  console.log("links to save, modified links", linksToSave);
+  console.log("all user links", linksFromUser);
   const hasChanges = Changes();
 
   const [isPending, startTransition] = useTransition();
 
   const handleSave = () => {
     startTransition(async () => {
-      const result = await saveLinksAction(linksToSave, userId);
+      const result = await saveLinksAction(linksFromUser, userId);
 
       if (!result.success) {
         const errorMessages = Object.values(result.errors || {})
           .flat()
           .join(", ");
         console.error(errorMessages);
-        toast.error(result.errors?.message);
+        toast.error(result.errors?.message?.[0] || "Failed to save links");
         return;
       }
 
@@ -58,8 +60,8 @@ export default function SaveLinksButton({ userId }: { userId: number }) {
               <RefreshCwIcon
                 className={cn("animate-spin text-card")}
                 size={25}
-              />{" "}
-              {"Saving..."}
+              />
+              <span className="pl-1">Saving...</span>
             </>
           ) : (
             "Save"

@@ -45,54 +45,53 @@ export async function saveLinksAction(
 
   const { user } = await getCurrentSession();
 
-  if (user === null) {
+  if (!user || user.id !== userId) {
     return {
       success: false,
-      errors: { message: ["Not authenticated"] },
+      errors: { message: [!user ? "Not authenticated" : "Not authorized"] },
     };
   }
 
-  if (user.id !== userId) {
-    return {
-      success: false,
-      errors: { message: ["Not authorized"] },
-    };
-  }
-
+  // Validate all links
   const errors: Record<string, string[]> = {};
-  const validatedLinks = linksToSave.filter((link) => {
-    const { isValid, error } = validatePlatformUrl(link.url, link.platform);
+  const validatedLinks = linksToSave
+    .map((link) => {
+      const { isValid, error } = validatePlatformUrl(link.url, link.platform);
+      if (!isValid) {
+        errors[link.id] = [error || "Invalid link"];
+      }
+      return { ...link, isValid };
+    })
+    .filter((link) => link.isValid);
 
-    if (!isValid) {
-      errors[link.id] = [error || "Invalid link"];
-      return false;
-    }
-
-    return true;
-  });
-
-  if (Object.keys(errors).length > 0 && validatedLinks.length === 0) {
+  // Return errors if no valid links
+  if (Object.keys(errors).length > 0) {
     return {
       success: false,
       errors: {
         ...errors,
-        message: ["No valid links provided"],
+        message: ["Some links were invalid"],
       },
     };
   }
 
-  if (validatedLinks.length === 0) {
-    console.log("No valid links to upsert.");
-    return {
-      success: true,
-    };
-  }
+  // if (validatedLinks.length === 0) {
+  //   console.log("No valid links to upsert.");
+  //   return {
+  //     success: true,
+  //   };
+  // }
 
   ipBucket.consume(clientIP, 1);
 
-  // console.log("Calling upsertUserLinks with:", { validatedLinks, userId });
-
-  await upsertUserLinks(validatedLinks);
-
-  return { success: true };
+  try {
+    await upsertUserLinks(validatedLinks);
+    return { success: true };
+  } catch (error) {
+    console.error("Error saving links:", error);
+    return {
+      success: false,
+      errors: { message: ["Failed to save links"] },
+    };
+  }
 }

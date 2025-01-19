@@ -13,23 +13,24 @@ export const getLinksByUserId = async (userId: number): Promise<Link[]> => {
       platform: true,
     },
     where: (links, { eq }) => eq(links.userId, userId),
+    orderBy: (links, { desc }) => [desc(links.sequence)],
   });
 };
 
 export const upsertUserLinks = async (links: Link[]) => {
-  // if (!links || links.length === 0) {
-  //   console.error("No links to upsert.");
-  //   return;
-  // }
-  await db
-    .insert(linksSchema)
-    .values(links)
-    .onConflictDoUpdate({
-      target: [linksSchema.id],
-      set: {
-        url: sql`excluded.url`,
-        platform: sql`excluded.platform`,
-        sequence: sql`excluded.sequence`,
-      },
-    });
+  return await db.transaction(async (tx) => {
+    const userId = links[0]?.userId;
+    if (!userId) return;
+
+    await tx.delete(linksSchema).where(sql`${linksSchema.userId} = ${userId}`);
+
+    if (links.length > 0) {
+      await tx.insert(linksSchema).values(
+        links.map((link, index) => ({
+          ...link,
+          sequence: links.length - index,
+        }))
+      );
+    }
+  });
 };

@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-// import SaveLinksButton from "@/features/(dashboard)/links/components/save-links-button";
 import ClientLinkPage from "@/features/(dashboard)/links/components/client-link-page";
 import { getUserLinksAction } from "@/features/(dashboard)/links/server/actions";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";

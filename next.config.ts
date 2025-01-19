@@ -4,11 +4,14 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: true,
   },
-  // compiler: {
-  //   removeConsole: {
-  //     exclude: ["error"],
-  //   },
-  // },
+  compiler:
+    process.env.NODE_ENV === "production"
+      ? {
+          removeConsole: {
+            exclude: ["error"],
+          },
+        }
+      : undefined,
 };
 
 export default nextConfig;

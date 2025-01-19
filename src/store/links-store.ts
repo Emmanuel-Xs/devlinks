@@ -120,6 +120,7 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
 
             const newModifiedIds = new Set(Array.from(state.modifiedLinkIds));
 
+            // Check if any link's sequence has changed from its original position
             reorderedLinks.forEach((link) => {
               const dbLink = state.linksFromDb.find((l) => l.id === link.id);
               if (!dbLink || dbLink.sequence !== link.sequence) {
@@ -163,9 +164,10 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
         },
 
         setLinksFromDb: (newLinksFromDb: Link[]) => {
+          const sortedLinks = newLinksFromDb.toSorted(sortBySequenceDesc);
           set(() => ({
-            linksFromDb: newLinksFromDb,
-            links: newLinksFromDb.toSorted(sortBySequenceDesc),
+            linksFromDb: sortedLinks,
+            links: sortedLinks,
             modifiedLinkIds: new Set(),
             errors: {},
             isValid: true,
