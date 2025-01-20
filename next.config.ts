@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     process.env.NODE_ENV === "production"
       ? {
           removeConsole: {
-            exclude: ["error"],
+            exclude: ["error", "warn"],
           },
         }
       : undefined,
