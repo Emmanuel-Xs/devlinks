@@ -52,7 +52,22 @@ export async function saveLinksAction(
     };
   }
 
-  // Validate all links
+  // Handle null/undefined/empty array cases
+  if (!linksToSave || linksToSave.length === 0) {
+    ipBucket.consume(clientIP, 1);
+    try {
+      // Pass empty array to delete all links
+      await upsertUserLinks([], userId);
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting links:", error);
+      return {
+        success: false,
+        errors: { message: ["Failed to delete links"] },
+      };
+    }
+  }
+
   const errors: Record<string, string[]> = {};
   const validatedLinks = linksToSave
     .map((link) => {
@@ -75,17 +90,10 @@ export async function saveLinksAction(
     };
   }
 
-  // if (validatedLinks.length === 0) {
-  //   console.log("No valid links to upsert.");
-  //   return {
-  //     success: true,
-  //   };
-  // }
-
   ipBucket.consume(clientIP, 1);
 
   try {
-    await upsertUserLinks(validatedLinks);
+    await upsertUserLinks(validatedLinks, userId);
     return { success: true };
   } catch (error) {
     console.error("Error saving links:", error);

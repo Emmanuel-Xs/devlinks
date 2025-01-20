@@ -17,17 +17,17 @@ export const getLinksByUserId = async (userId: number): Promise<Link[]> => {
   });
 };
 
-export const upsertUserLinks = async (links: Link[]) => {
+export const upsertUserLinks = async (links: Link[], userId: number) => {
   return await db.transaction(async (tx) => {
-    const userId = links[0]?.userId;
     if (!userId) return;
 
     await tx.delete(linksSchema).where(sql`${linksSchema.userId} = ${userId}`);
 
-    if (links.length > 0) {
+    if (links && links.length > 0) {
       await tx.insert(linksSchema).values(
         links.map((link, index) => ({
           ...link,
+          userId, // ensure userId is set
           sequence: links.length - index,
         }))
       );
