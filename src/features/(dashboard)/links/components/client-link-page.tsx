@@ -22,7 +22,14 @@ const LinksStoreProvider = dynamic(
     import("@/store/links-store-provider").then(
       (mod) => mod.LinksStoreProvider
     ),
-  { ssr: false, loading: () => <Loader /> }
+  {
+    ssr: false,
+    loading: () => (
+      <div className="grid h-full w-full place-items-center">
+        <Loader />
+      </div>
+    ),
+  }
 );
 
 export default function ClientLinkPage({

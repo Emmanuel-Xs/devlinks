@@ -26,7 +26,7 @@ export default function ProfileDetailsForm() {
           Last name*
         </Label>
         <Input
-          id="firstName"
+          id="lastName"
           autoComplete="family-name"
           placeholder="e.g. Appleseed"
           wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
@@ -37,7 +37,7 @@ export default function ProfileDetailsForm() {
           Email*
         </Label>
         <Input
-          id="firstName"
+          id="email"
           type="email"
           autoComplete="email"
           placeholder="e.g. email@example.com"
@@ -49,7 +49,7 @@ export default function ProfileDetailsForm() {
           Username*
         </Label>
         <Input
-          id="firstName"
+          id="username"
           autoComplete="username"
           placeholder="Apple001"
           wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
