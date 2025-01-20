@@ -65,16 +65,39 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
         },
 
         updateLink(id, updates) {
-          set((state) => ({
-            links: state.links.map((link) =>
+          set((state) => {
+            const modifiedLinks = state.links.map((link) =>
               link.id === id ? { ...link, ...updates } : link
-            ),
-            modifiedLinkIds: new Set([
-              ...Array.from(state.modifiedLinkIds),
-              id,
-            ]),
-            isValid: Object.values(state.errors).every((error) => !error),
-          }));
+            );
+
+            const newModifiedIds = new Set(Array.from(state.modifiedLinkIds));
+
+            const updatedLink = modifiedLinks.find((link) => link.id === id);
+            const dbLink = state.linksFromDb.find((link) => link.id === id);
+
+            // Compare the updated link with its DB version
+            if (dbLink && updatedLink) {
+              const hasChanged =
+                updatedLink.url !== dbLink.url ||
+                updatedLink.platform !== dbLink.platform ||
+                updatedLink.sequence !== dbLink.sequence;
+
+              if (hasChanged) {
+                newModifiedIds.add(id);
+              } else {
+                newModifiedIds.delete(id);
+              }
+            } else if (!dbLink) {
+              // If link doesn't exist in DB, mark it as modified and also handles newly added links that aren't in linksFromDb
+              newModifiedIds.add(id);
+            }
+
+            return {
+              links: modifiedLinks,
+              modifiedLinkIds: newModifiedIds,
+              isValid: Object.values(state.errors).every((error) => !error),
+            };
+          });
         },
 
         removeLink(id) {
@@ -120,11 +143,12 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
 
             const newModifiedIds = new Set(Array.from(state.modifiedLinkIds));
 
-            // Check if any link's sequence has changed from its original position
             reorderedLinks.forEach((link) => {
               const dbLink = state.linksFromDb.find((l) => l.id === link.id);
               if (!dbLink || dbLink.sequence !== link.sequence) {
                 newModifiedIds.add(link.id);
+              } else if (dbLink.sequence === link.sequence) {
+                newModifiedIds.delete(link.id);
               }
             });
 
