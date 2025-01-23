@@ -70,7 +70,16 @@ const eslintConfig = [
       "n/no-missing-import": "off",
       "n/no-unsupported-features/node-builtins": [
         "error",
-        { ignores: ["crypto", "fetch", "FormData", "Response", "Request"] },
+        {
+          ignores: [
+            "crypto",
+            "fetch",
+            "FormData",
+            "Response",
+            "Request",
+            "localStorage",
+          ],
+        },
       ],
     },
   },

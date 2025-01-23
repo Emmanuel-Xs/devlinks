@@ -1,15 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
+// import { LinksStoreProvider } from "@/store/links-store-provider";
+
+// import { LinksStoreProvider } from "@/store/links-store-provider";
+
+import { ReactNode } from "react";
 
 import Loader from "@/components/loader";
 import { Link, User } from "@/drizzle/schema";
-
-// import { LinksStoreProvider } from "@/store/links-store-provider";
-
-// import { LinksStoreProvider } from "@/store/links-store-provider";
-
-import PageHeading from "../../components/page-heading";
+import { useLinksSyncWarning } from "@/hooks/use-links-sync-warning";
 
 import LinksList from "./links-list";
 
@@ -35,17 +35,17 @@ const LinksStoreProvider = dynamic(
 export default function ClientLinkPage({
   user,
   userLinks,
+  children,
 }: {
   user: User;
   userLinks: Link[];
+  children: ReactNode;
 }) {
+  useLinksSyncWarning();
   return (
     <LinksStoreProvider userLinks={userLinks}>
       <div className="space-y-10 p-6 sm:p-10">
-        <PageHeading
-          title="Customize your links"
-          description="Add/edit/remove links below and then share all your profiles with the world!"
-        />
+        {children}
         <LinksList user={user} />
       </div>
       <SaveLinksButton userId={user.id} />
