@@ -7,7 +7,7 @@ import { LoaderIcon, LogOutIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { logoutAction } from "../../../(auth)/logout/server/action";
+import { logoutAction } from "../../../(auth)/logout/server/actions";
 
 export default function LogoutButton() {
   const [, formAction, isPending] = useActionState(logoutAction, {

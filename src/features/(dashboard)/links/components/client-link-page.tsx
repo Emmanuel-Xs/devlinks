@@ -35,13 +35,15 @@ const LinksStoreProvider = dynamic(
 export default function ClientLinkPage({
   user,
   userLinks,
+  noOfUserSessions,
   children,
 }: {
   user: User;
   userLinks: Link[];
+  noOfUserSessions: number;
   children: ReactNode;
 }) {
-  useLinksSyncWarning();
+  useLinksSyncWarning(noOfUserSessions);
   return (
     <LinksStoreProvider userLinks={userLinks}>
       <div className="space-y-10 p-6 sm:p-10">

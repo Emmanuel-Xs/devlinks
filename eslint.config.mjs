@@ -78,6 +78,7 @@ const eslintConfig = [
             "Response",
             "Request",
             "localStorage",
+            "sessionStorage",
           ],
         },
       ],

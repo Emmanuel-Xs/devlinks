@@ -22,8 +22,10 @@ import OAuthButtons from "../../components/oauth-buttons";
 import { loginAction } from "../server/action";
 
 export function LoginForm() {
-  localStorage.removeItem("links-store");
-  localStorage.removeItem("links-sync-warning");
+  useEffect(() => {
+    localStorage.removeItem("links-store");
+    localStorage.removeItem("links-sync-warning");
+  }, []);
 
   const [formState, formAction, isPending] = useActionState(loginAction, {
     success: false,

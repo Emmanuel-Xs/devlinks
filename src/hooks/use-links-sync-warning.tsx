@@ -1,45 +1,43 @@
+"use client";
+
 import { useEffect } from "react";
 
-import { OctagonAlertIcon } from "lucide-react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
+import LinkSyncWarningToast from "@/features/(dashboard)/links/components/link-sync-warning-toast";
 
-export function useLinksSyncWarning() {
+const toastId = "link-sync-toast";
+
+export function useLinksSyncWarning(noOfUserSessions: number) {
+  const dismissHandler = () => {
+    localStorage.setItem("links-sync-warning", "true");
+    toast.dismiss(toastId);
+  };
+
   useEffect(() => {
     const hasSeenWarning = localStorage.getItem("links-sync-warning");
-    if (!hasSeenWarning) {
-      toast.warning("Links won't sync across devices", {
-        style: {
-          border: "1px solid yellow",
-          fontSize: "1rem",
-        },
-        classNames: {
-          toast: "flex flex-col shadow-md shadow-active ",
-          title: "py-2",
-          description: "pb-4",
-        },
-        description: (
-          <p className="text-sm">
-            Changes made here will overwrite those in other devices. Please log
-            out of other devices.
-          </p>
-        ),
-        icon: <OctagonAlertIcon className="text-destructive" />,
-        duration: Number.POSITIVE_INFINITY,
-        action: (
-          <Button
-            size="ex"
-            onClick={() => {
-              localStorage.setItem("links-sync-warning", "true");
-              toast.dismiss();
-            }}
-            className="ml-auto"
-          >
-            Understood
-          </Button>
-        ),
+
+    if (!hasSeenWarning && noOfUserSessions > 1) {
+      requestAnimationFrame(() => {
+        toast(<LinkSyncWarningToast onUnderstood={dismissHandler} />, {
+          id: toastId,
+          unstyled: true,
+          style: {
+            border: "1px solid yellow",
+            right: "1px",
+          },
+          classNames: {
+            toast: "p-2 bg-card",
+          },
+          duration: Number.POSITIVE_INFINITY,
+          onDismiss: () => dismissHandler(),
+          dismissible: false,
+        });
       });
     }
-  }, []);
+
+    return () => {
+      toast.dismiss(toastId);
+    };
+  }, [noOfUserSessions]);
 }

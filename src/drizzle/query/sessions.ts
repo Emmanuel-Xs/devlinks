@@ -1,6 +1,6 @@
 import { sha256 } from "@oslojs/crypto/sha2";
 import { encodeHexLowerCase } from "@oslojs/encoding";
-import { eq } from "drizzle-orm";
+import { eq, not } from "drizzle-orm";
 
 import { db } from "@/drizzle/db";
 import { Session, sessionsTable, usersTable } from "@/drizzle/schema";
@@ -66,4 +66,16 @@ export async function invalidateSession(sessionId: string): Promise<void> {
 
 export async function invalidateUserSessions(userId: number): Promise<void> {
   await db.delete(sessionsTable).where(eq(sessionsTable.userId, userId));
+}
+
+export async function invalidateUserSessionsExcept(
+  sessionId: string
+): Promise<void> {
+  await db.delete(sessionsTable).where(not(eq(sessionsTable.id, sessionId)));
+}
+
+export async function getAllUserSessions(userId: number) {
+  return await db.query.sessionsTable.findMany({
+    where: eq(sessionsTable.userId, userId),
+  });
 }
