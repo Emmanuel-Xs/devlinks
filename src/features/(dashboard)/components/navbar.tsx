@@ -1,10 +1,8 @@
-import React from "react";
-
 import { CircleUserRoundIcon, LinkIcon } from "lucide-react";
 
 import DevlinksLogo from "./devlinks-logo";
 import NavItem from "./nav-item";
-import PreviewButton from "./preview-button";
+import PreviewLinkButton from "./preview-button";
 
 export default function Navbar() {
   return (
@@ -23,7 +21,7 @@ export default function Navbar() {
             label="Profile Details"
           />
         </div>
-        <PreviewButton />
+        <PreviewLinkButton />
       </menu>
     </nav>
   );

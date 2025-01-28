@@ -1,20 +1,22 @@
-"use client";
-
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { use } from "react";
 
 import { EyeIcon } from "lucide-react";
 
+import { getCurrentSession } from "@/lib/server/sessions";
+
 import { Button } from "../../../components/ui/button";
 
-// import { useMediaQuery } from "@/hooks/useMediaQuery";
+export default function PreviewLinksButton() {
+  const { user } = use(getCurrentSession());
 
-export default function PreviewButton() {
-  // const isSmUp = useMediaQuery("only screen and (min-width : 580px)");
+  if (!user) redirect("/login");
+
   return (
     <Button asChild variant="outline" size="sm">
-      <Link href="preview" title="Preview Links">
+      <Link href={`/${user.username}`} title="Preview Links">
         <EyeIcon className="inline min-[580px]:hidden" />
-        {/* Text shown on larger screens */}
         <span className="hidden min-[580px]:inline">Preview</span>
       </Link>
     </Button>

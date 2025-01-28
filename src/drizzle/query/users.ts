@@ -15,6 +15,18 @@ export async function getUserByEmail(email: string) {
     .limit(1);
 }
 
+export async function getUserByUsername(username: string) {
+  return db
+    .select({
+      ...returningUserData,
+      googleId: usersTable.googleId,
+      githubId: usersTable.githubId,
+    })
+    .from(usersTable)
+    .where(eq(usersTable.username, username))
+    .limit(1);
+}
+
 export async function isUsernameTaken(username: string) {
   const result = await db
     .select()
