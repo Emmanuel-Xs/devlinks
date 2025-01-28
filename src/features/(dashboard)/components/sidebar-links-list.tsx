@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
+import PreviewLinks from "@/components/preview-links";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/drizzle/schema";
-import PreviewLinks from "@/features/preview/components/preview-links";
 
 export default function SideBarLinksList({ links }: { links: Link[] }) {
   const linkslist = useMemo(() => {
@@ -22,7 +22,7 @@ export default function SideBarLinksList({ links }: { links: Link[] }) {
             <PreviewLinks
               name={link.platform}
               url={link.url}
-              key={`link-${i}`}
+              key={`link-${link.id}`}
               className="h-[46px] w-full"
             />
           ) : (
