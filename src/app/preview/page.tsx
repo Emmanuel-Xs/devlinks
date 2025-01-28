@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 
 import PreviewLinks from "@/features/preview/components/preview-links";
 import PreviewNavbar from "@/features/preview/components/preview-navbar";
@@ -11,7 +10,7 @@ export default function Page() {
         <PreviewNavbar />
       </div>
       <PreviewNavbar className="px-0 sm:hidden" />
-      <div className="inset-x-1/2 top-[208px] mx-auto px-14 py-12 text-center sm:absolute sm:h-[569px] sm:w-[349px] sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card">
+      <div className="inset-x-1/2 top-[208px] mx-auto px-14 py-12 text-center sm:absolute sm:h-[569px] sm:w-[349px] sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:shadow-active">
         {/* TODO:  Image loading or PreLoading */}
         <Image
           src="/images/profile-image.png"

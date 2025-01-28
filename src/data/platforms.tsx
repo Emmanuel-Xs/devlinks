@@ -134,7 +134,7 @@ export const platforms: PlatformConfig = {
   portfolio: {
     key: "portfolio",
     label: "Portfolio",
-    getIcon: (className = "fill-primary-foreground") => (
+    getIcon: (className = "text-white") => (
       <BriefcaseIcon className={className} size={18} />
     ),
     color: "bg-platform-portfolio",
@@ -142,7 +142,7 @@ export const platforms: PlatformConfig = {
   others: {
     key: "others",
     label: "Others",
-    getIcon: (className = "fill-primary-foreground") => (
+    getIcon: (className = "text-white") => (
       <EllipsisIcon className={className} size={18} />
     ),
     color: "bg-platform-others",

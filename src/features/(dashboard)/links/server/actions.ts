@@ -1,6 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import { cache } from "react";
 
 import "server-only";
 
@@ -18,9 +20,9 @@ type FormState = {
 
 const ipBucket = new RefillingTokenBucket<string>(3, 10);
 
-export const getUserLinksAction = async (userId: number) => {
+export const getUserLinksAction = cache(async (userId: number) => {
   return await getLinksByUserId(userId);
-};
+});
 
 export async function saveLinksAction(
   linksToSave: Link[],
@@ -94,6 +96,7 @@ export async function saveLinksAction(
 
   try {
     await upsertUserLinks(validatedLinks, userId);
+    revalidatePath("/");
     return { success: true };
   } catch (error) {
     console.error("Error saving links:", error);

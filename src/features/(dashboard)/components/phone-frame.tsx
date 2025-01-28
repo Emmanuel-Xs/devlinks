@@ -11,16 +11,17 @@ export default function PhoneFrame({
   children: ReactNode;
 }) {
   return (
-    <div className={cn("relative", className)}>
+    <div className="relative h-[631px]">
       <Image
         src="/images/phone-frame.svg"
-        alt="devlinks text"
+        alt="Phone frame"
         priority
-        width="307"
-        height="631"
-        style={{ width: "auto" }}
+        width={307}
+        height={631}
       />
-      {children}
+      <div className={cn("absolute inset-0 px-8 py-16", className)}>
+        {children}
+      </div>
     </div>
   );
 }
