@@ -2,7 +2,14 @@
 "use no memo";
 
 import Form from "next/form";
-import { startTransition, useActionState, useEffect, useRef } from "react";
+import {
+  FormEvent,
+  startTransition,
+  useActionState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole } from "lucide-react";
@@ -45,6 +52,16 @@ export default function PasswordResetForm() {
     mode: "onTouched",
   });
 
+  const rhfSubmitHandler = useCallback(
+    (evt: FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
+      handleSubmit(() => {
+        startTransition(() => formAction(new FormData(formRef.current!)));
+      })(evt);
+    },
+    [formAction, handleSubmit]
+  );
+
   useEffect(() => {
     if (isSubmitSuccessful && formState.success) {
       reset();
@@ -80,12 +97,7 @@ export default function PasswordResetForm() {
           action={formAction}
           className="grid gap-6"
           ref={formRef}
-          onSubmit={(evt) => {
-            evt.preventDefault();
-            handleSubmit(() => {
-              startTransition(() => formAction(new FormData(formRef.current!)));
-            })(evt);
-          }}
+          onSubmit={rhfSubmitHandler}
         >
           <AuthPassword
             id="password"

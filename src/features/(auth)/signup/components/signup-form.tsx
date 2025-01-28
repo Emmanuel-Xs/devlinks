@@ -3,7 +3,14 @@
 
 import Form from "next/form";
 import Link from "next/link";
-import { startTransition, useActionState, useEffect, useRef } from "react";
+import {
+  FormEvent,
+  startTransition,
+  useActionState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole, Mail } from "lucide-react";
@@ -45,6 +52,16 @@ export function SignupForm() {
     },
     mode: "onTouched",
   });
+
+  const rhfSubmitHandler = useCallback(
+    (evt: FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
+      handleSubmit(() => {
+        startTransition(() => formAction(new FormData(formRef.current!)));
+      })(evt);
+    },
+    [formAction, handleSubmit]
+  );
 
   useEffect(() => {
     if (isSubmitSuccessful && formState.success) {
@@ -88,12 +105,7 @@ export function SignupForm() {
           action={formAction}
           className="grid gap-6"
           ref={formRef}
-          onSubmit={(evt) => {
-            evt.preventDefault();
-            handleSubmit(() => {
-              startTransition(() => formAction(new FormData(formRef.current!)));
-            })(evt);
-          }}
+          onSubmit={rhfSubmitHandler}
         >
           <AuthEmail
             icon={<Mail width={24} height={24} className="text-foreground" />}
