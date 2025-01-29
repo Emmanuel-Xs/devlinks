@@ -1,6 +1,5 @@
-import React from "react";
-
 import Link from "next/link";
+import React from "react";
 
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Mail } from "lucide-react";

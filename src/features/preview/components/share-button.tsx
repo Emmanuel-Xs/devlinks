@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
@@ -11,7 +11,13 @@ import { ShareDialog } from "./share-dialog";
 export default function ShareButton({ username }: { username: string }) {
   const [isSharing, setIsSharing] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
-  const shareUrl = `${window.location.origin}/${username}`;
+  const [shareUrl, setShareUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setShareUrl(`${window.location.origin}/${username}`);
+    }
+  }, [username]);
 
   const handleShare = async () => {
     setIsSharing(true);
