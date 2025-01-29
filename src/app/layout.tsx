@@ -30,6 +30,7 @@ export default function RootLayout({
               borderRadius: "8px",
               padding: "16px",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              fontSize: "1rem",
             },
             classNames: {
               success: "bg-green-500 text-white",
