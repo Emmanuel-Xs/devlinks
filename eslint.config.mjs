@@ -79,6 +79,7 @@ const eslintConfig = [
             "Request",
             "localStorage",
             "sessionStorage",
+            "navigator",
           ],
         },
       ],
