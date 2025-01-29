@@ -5,12 +5,16 @@ import { Button } from "@/components/ui/button";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { cn } from "@/lib/utils";
 
+import ShareButton from "./share-button";
+
 export default function PreviewNavbar({
   className,
   userId,
+  username,
 }: {
   className?: string;
   userId: number;
+  username: string;
 }) {
   const { session } = use(getCurrentSession());
 
@@ -32,7 +36,7 @@ export default function PreviewNavbar({
           <Link href="/login">Login</Link>
         </Button>
       )}
-      <Button size="ex">Share Link</Button>
+      <ShareButton username={username} />
     </nav>
   );
 }
