@@ -2,9 +2,8 @@ import { redirect } from "next/navigation";
 
 import { Avatar } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getUserLinksAction } from "@/lib/server/links";
 import { getCurrentSession } from "@/lib/server/sessions";
-
-import { getUserLinksAction } from "../links/server/actions";
 
 import PhoneFrame from "./phone-frame";
 import SideBarLinksList from "./sidebar-links-list";

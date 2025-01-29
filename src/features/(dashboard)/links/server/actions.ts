@@ -2,11 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { cache } from "react";
 
 import "server-only";
 
-import { getLinksByUserId, upsertUserLinks } from "@/drizzle/query/links";
+import { upsertUserLinks } from "@/drizzle/query/links";
 import { Link } from "@/drizzle/schema";
 import { RefillingTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
@@ -19,10 +18,6 @@ type FormState = {
 };
 
 const ipBucket = new RefillingTokenBucket<string>(3, 10);
-
-export const getUserLinksAction = cache(async (userId: number) => {
-  return await getLinksByUserId(userId);
-});
 
 export async function saveLinksAction(
   linksToSave: Link[],

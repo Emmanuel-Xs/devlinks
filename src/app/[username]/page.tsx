@@ -4,9 +4,9 @@ import { use } from "react";
 import PreviewLinks from "@/components/preview-links";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import UserAvatar from "@/components/user-avatar";
-import { getLinksByUserId } from "@/drizzle/query/links";
 import { getUserByUsername } from "@/drizzle/query/users";
 import PreviewNavbar from "@/features/preview/components/preview-navbar";
+import { getUserLinksAction } from "@/lib/server/links";
 import { formatUserDisplayName } from "@/lib/utils";
 
 export default function Page({
@@ -19,7 +19,7 @@ export default function Page({
 
   if (user.length <= 0) notFound();
 
-  const links = use(getLinksByUserId(user[0].id));
+  const links = use(getUserLinksAction(user[0].id));
 
   const fullName = formatUserDisplayName(user);
 

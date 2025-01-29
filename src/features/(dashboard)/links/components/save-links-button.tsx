@@ -7,10 +7,11 @@ import { RefreshCwIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { getUserLinksAction } from "@/lib/server/links";
 import { cn } from "@/lib/utils";
 import { useLinksStore } from "@/store/links-store";
 
-import { getUserLinksAction, saveLinksAction } from "../server/actions";
+import { saveLinksAction } from "../server/actions";
 
 export default function SaveLinksButton({ userId }: { userId: number }) {
   const {

@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import { getAllUserSessions } from "@/drizzle/query/sessions";
 import PageHeading from "@/features/(dashboard)/components/page-heading";
 import ClientLinkPage from "@/features/(dashboard)/links/components/client-link-page";
-import { getUserLinksAction } from "@/features/(dashboard)/links/server/actions";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
+import { getUserLinksAction } from "@/lib/server/links";
 import { getCurrentSession } from "@/lib/server/sessions";
 
 export const metadata: Metadata = {
