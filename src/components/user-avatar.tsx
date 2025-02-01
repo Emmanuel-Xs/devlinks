@@ -9,14 +9,15 @@ export function AvatarSkeleton() {
 export default function UserAvatar({
   avatarUrl,
   fullName,
+  blurDataURL,
 }: {
   avatarUrl: string;
   fullName: string;
+  blurDataURL?: string;
 }) {
   return (
     <div className="mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-[4px] border-primary">
       {avatarUrl.length > 0 ? (
-        //   TODO: data loader with base64 image on the db check next/image docs
         <Image
           src={avatarUrl}
           alt={`Profile image of ${fullName}`}
@@ -24,6 +25,8 @@ export default function UserAvatar({
           height={104}
           priority={true}
           loading="eager"
+          placeholder="blur"
+          blurDataURL={blurDataURL}
         />
       ) : (
         <span className="text text-center text-3xl font-bold">

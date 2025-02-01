@@ -7,6 +7,7 @@ import UserAvatar from "@/components/user-avatar";
 import { getUserByUsername } from "@/drizzle/query/users";
 import PreviewNavbar from "@/features/preview/components/preview-navbar";
 import { getUserLinksAction } from "@/lib/server/links";
+import { generateBlurDataURL } from "@/lib/server/utils";
 import { formatUserDisplayName } from "@/lib/utils";
 
 export default function Page({
@@ -28,6 +29,7 @@ export default function Page({
   );
 
   const avatarUrl = user[0].avatarUrl ?? "";
+  const blurDataURL = use(generateBlurDataURL(avatarUrl));
 
   const email = user[0].email;
 
@@ -42,7 +44,11 @@ export default function Page({
         username={username}
       />
       <div className="inset-x-1/2 top-[208px] mx-auto h-[560px] w-full max-w-[430px] px-10 py-12 pb-4 text-center sm:absolute sm:w-[349px] sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:py-9 sm:shadow-active">
-        <UserAvatar avatarUrl={avatarUrl} fullName={fullName} />
+        <UserAvatar
+          avatarUrl={avatarUrl}
+          fullName={fullName}
+          blurDataURL={blurDataURL}
+        />
         <div className="mb-5">
           <h1 className="heading">{fullName}</h1>
           <p className="text -mt-1 sm:-mt-2">{email}</p>
