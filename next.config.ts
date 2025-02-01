@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
         hostname: "avatars.githubusercontent.com",
         port: "",
         pathname: "/u/**",
-        search: "?v=4",
+        search: "?v=*",
       },
     ],
   },

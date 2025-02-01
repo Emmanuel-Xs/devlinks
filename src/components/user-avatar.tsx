@@ -16,6 +16,7 @@ export default function UserAvatar({
   return (
     <div className="mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-[4px] border-primary">
       {avatarUrl.length > 0 ? (
+        //   TODO: data loader with base64 image on the db check next/image docs
         <Image
           src={avatarUrl}
           alt={`Profile image of ${fullName}`}

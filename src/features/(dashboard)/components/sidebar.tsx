@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 
-import { Avatar } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import UserAvatar from "@/components/user-avatar";
 import { getUserLinksAction } from "@/lib/server/links";
 import { getCurrentSession } from "@/lib/server/sessions";
+import { formatUserDisplayName } from "@/lib/utils";
 
 import PhoneFrame from "./phone-frame";
 import SideBarLinksList from "./sidebar-links-list";
@@ -15,16 +16,32 @@ export default async function Sidebar() {
 
   const userLinks = await getUserLinksAction(user.id);
 
+  const fullName = formatUserDisplayName(
+    user.firstName,
+    user.lastName,
+    user.username
+  );
+
+  const avatarUrl = user.avatarUrl ?? "";
+
+  const email = user.email;
+
   return (
     <aside className="hidden h-full w-full max-w-[560px] justify-center rounded-xl bg-card p-6 pt-14 min-[1200px]:grid">
       <PhoneFrame className="space-y-10">
-        <div className="space-y-6">
-          <Avatar className="mx-auto h-28 w-28">
-            <Skeleton className="h-full w-full animate-none rounded-full" />
-          </Avatar>
-          <div className="space-y-3 text-center">
-            <Skeleton className="mx-auto h-4 w-40 animate-none" />
-            <Skeleton className="mx-auto h-3 w-20 animate-none" />
+        <div className="space-y-4">
+          <UserAvatar avatarUrl={avatarUrl} fullName={fullName} />
+          <div className="text-center">
+            {fullName.length <= 0 ? (
+              <Skeleton className="mx-auto h-4 w-40 animate-none" />
+            ) : (
+              <h2 className="heading">{fullName}</h2>
+            )}
+            {email.length <= 0 ? (
+              <Skeleton className="mx-auto mt-0.5 h-3 w-20 animate-none" />
+            ) : (
+              <p className="text -mt-1 sm:-mt-2">{email}</p>
+            )}
           </div>
         </div>
         <SideBarLinksList links={userLinks} />

@@ -21,7 +21,11 @@ export default function Page({
 
   const links = use(getUserLinksAction(user[0].id));
 
-  const fullName = formatUserDisplayName(user);
+  const fullName = formatUserDisplayName(
+    user[0].firstName,
+    user[0].lastName,
+    user[0].username
+  );
 
   const avatarUrl = user[0].avatarUrl ?? "";
 
