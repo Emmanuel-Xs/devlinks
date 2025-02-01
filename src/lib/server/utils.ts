@@ -19,15 +19,23 @@ export function generateRandomOTP(): string {
 }
 
 export async function generateBlurDataURL(imageUrl: string): Promise<string> {
-  const res = await fetch(imageUrl);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch image: ${res.statusText}`);
+  try {
+    const res = await fetch(imageUrl);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch image: ${res.statusText}`);
+    }
+
+    const arrayBuffer = await res.arrayBuffer();
+    const imageBuffer = Buffer.from(arrayBuffer);
+
+    const resizedBuffer = await sharp(imageBuffer)
+      .resize(10, 10)
+      .blur(5)
+      .toBuffer();
+
+    return `data:image/jpeg;base64,${resizedBuffer.toString("base64")}`;
+  } catch (error) {
+    console.error("Error processing image:", error);
+    return "";
   }
-
-  const arrayBuffer = await res.arrayBuffer();
-  const imageBuffer = Buffer.from(arrayBuffer);
-
-  const resizedBuffer = await sharp(imageBuffer).resize(10).toBuffer();
-
-  return `data:image/jpeg;base64,${resizedBuffer.toString("base64")}`;
 }

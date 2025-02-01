@@ -7,7 +7,6 @@ import UserAvatar from "@/components/user-avatar";
 import { getUserByUsername } from "@/drizzle/query/users";
 import PreviewNavbar from "@/features/preview/components/preview-navbar";
 import { getUserLinksAction } from "@/lib/server/links";
-import { generateBlurDataURL } from "@/lib/server/utils";
 import { formatUserDisplayName } from "@/lib/utils";
 
 export default function Page({
@@ -29,9 +28,8 @@ export default function Page({
   );
 
   const avatarUrl = user[0].avatarUrl ?? "";
-  const blurDataURL = use(generateBlurDataURL(avatarUrl));
-
   const email = user[0].email;
+  const blurDataURL = user[0].blurDataUrl ?? undefined;
 
   return (
     <main className="relative min-h-svh bg-card sm:bg-none">

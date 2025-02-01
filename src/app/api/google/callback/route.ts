@@ -8,6 +8,7 @@ import {
   createUserFromGoogle,
   getUserByEmail,
   updateAvatarUrl,
+  updateBlurDataUrl,
   updateGoogleId,
 } from "@/drizzle/query/users";
 import { google } from "@/lib/server/oauth";
@@ -17,6 +18,7 @@ import {
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { refineOAuthUsername } from "@/lib/server/users";
+import { generateBlurDataURL } from "@/lib/server/utils";
 
 type GoogleIdTokenClaims = {
   sub: string;
@@ -78,11 +80,15 @@ export async function GET(request: Request): Promise<Response> {
   if (!existingUser.length) {
     const refinedUserName = await refineOAuthUsername(username, googleUserId);
 
+    const blurDataUrl =
+      avatarUrl === null ? null : await generateBlurDataURL(avatarUrl);
+
     const user = await createUserFromGoogle(
       googleUserId,
       refinedUserName,
       email,
       avatarUrl,
+      blurDataUrl,
       emailVerified
     );
 
@@ -110,6 +116,10 @@ export async function GET(request: Request): Promise<Response> {
 
   if (!existingUser[0].avatarUrl) {
     await updateAvatarUrl(existingUser[0].id, avatarUrl);
+
+    const blurDataUrl =
+      avatarUrl === null ? null : await generateBlurDataURL(avatarUrl);
+    await updateBlurDataUrl(existingUser[0].id, blurDataUrl);
   }
 
   const sessionToken = generateSessionToken();

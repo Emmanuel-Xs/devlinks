@@ -66,11 +66,19 @@ export const createUserFromGithub = async (
   username: string,
   email: string,
   avatarUrl: string | null,
+  blurDataUrl: string | null,
   emailVerified: number
 ) => {
   return db
     .insert(usersTable)
-    .values({ githubId, username, email, avatarUrl, emailVerified })
+    .values({
+      githubId,
+      username,
+      email,
+      avatarUrl,
+      blurDataUrl,
+      emailVerified,
+    })
     .returning(returningUserData);
 };
 
@@ -79,11 +87,19 @@ export const createUserFromGoogle = async (
   username: string,
   email: string,
   avatarUrl: string | null,
+  blurDataUrl: string | null,
   emailVerified: number
 ) => {
   return db
     .insert(usersTable)
-    .values({ googleId, username, email, avatarUrl, emailVerified })
+    .values({
+      googleId,
+      username,
+      email,
+      avatarUrl,
+      blurDataUrl,
+      emailVerified,
+    })
     .returning(returningUserData);
 };
 
@@ -120,6 +136,16 @@ export async function updateAvatarUrl(
   await db
     .update(usersTable)
     .set({ avatarUrl })
+    .where(eq(usersTable.id, userId));
+}
+
+export async function updateBlurDataUrl(
+  userId: number,
+  blurDataUrl: string | null
+) {
+  await db
+    .update(usersTable)
+    .set({ blurDataUrl })
     .where(eq(usersTable.id, userId));
 }
 

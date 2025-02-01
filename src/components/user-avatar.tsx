@@ -27,6 +27,7 @@ export default function UserAvatar({
           loading="eager"
           placeholder="blur"
           blurDataURL={blurDataURL}
+          unoptimized
         />
       ) : (
         <span className="text text-center text-3xl font-bold">

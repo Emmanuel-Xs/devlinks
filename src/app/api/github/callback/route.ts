@@ -7,6 +7,7 @@ import {
   createUserFromGithub,
   getUserByEmail,
   updateAvatarUrl,
+  updateBlurDataUrl,
   updateGithubId,
 } from "@/drizzle/query/users";
 import { github } from "@/lib/server/oauth";
@@ -16,6 +17,7 @@ import {
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { refineOAuthUsername } from "@/lib/server/users";
+import { generateBlurDataURL } from "@/lib/server/utils";
 
 type GithubUser = {
   id: number;
@@ -100,11 +102,14 @@ export async function GET(request: Request): Promise<Response> {
       githubUserId
     );
 
+    const blurDataUrl = await generateBlurDataURL(githubAvatarUrl);
+
     const user = await createUserFromGithub(
       githubUserId,
       refinedUserName,
       email,
       githubAvatarUrl,
+      blurDataUrl,
       1
     );
 
@@ -127,6 +132,8 @@ export async function GET(request: Request): Promise<Response> {
 
   if (!existingUser[0].avatarUrl) {
     await updateAvatarUrl(existingUser[0].id, githubAvatarUrl);
+    const blurDataUrl = await generateBlurDataURL(githubAvatarUrl);
+    await updateBlurDataUrl(existingUser[0].id, blurDataUrl);
   }
 
   const sessionToken = generateSessionToken();
