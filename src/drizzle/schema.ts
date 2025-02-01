@@ -28,6 +28,7 @@ export const usersTable = pgTable("users", {
   password: text(),
   username: text().notNull().unique(),
   avatarUrl: text(),
+  blurDataUrl: text("blur-data-url"),
   createdAt,
   updatedAt,
 });
@@ -57,6 +58,7 @@ export const returningUserData = {
   username: usersTable.username,
   email: usersTable.email,
   avatarUrl: usersTable.avatarUrl,
+  blurDataUrl: usersTable.blurDataUrl,
   emailVerified: usersTable.emailVerified,
 };
 

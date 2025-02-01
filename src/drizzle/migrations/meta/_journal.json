@@ -50,6 +50,13 @@
       "when": 1736912536938,
       "tag": "0006_sloppy_stone_men",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1738396616621,
+      "tag": "0007_foamy_firestar",
+      "breakpoints": true
     }
   ]
 }
