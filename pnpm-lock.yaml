@@ -71,6 +71,9 @@ importers:
       "@uidotdev/usehooks":
         specifier: ^2.4.1
         version: 2.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      "@uploadthing/react":
+        specifier: ^7.1.5
+        version: 7.1.5(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(uploadthing@7.4.4(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(tailwindcss@3.4.17))
       "@vercel/postgres":
         specifier: ^0.10.0
         version: 0.10.0
@@ -83,6 +86,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cropperjs:
+        specifier: ^1.6.2
+        version: 1.6.2
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -110,12 +116,18 @@ importers:
       react:
         specifier: 19.0.0
         version: 19.0.0
+      react-cropper:
+        specifier: ^2.3.3
+        version: 2.3.3(react@19.0.0)
       react-dom:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
       react-hook-form:
         specifier: ^7.54.1
         version: 7.54.1(react@19.0.0)
+      react-image-file-resizer:
+        specifier: ^0.4.8
+        version: 0.4.8
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -128,6 +140,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17)
+      uploadthing:
+        specifier: ^7.4.4
+        version: 7.4.4(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(tailwindcss@3.4.17)
       uuid:
         specifier: ^11.0.5
         version: 11.0.5
@@ -453,6 +468,14 @@ packages:
       {
         integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==,
       }
+
+  "@effect/platform@0.70.7":
+    resolution:
+      {
+        integrity: sha512-TbNwj/mOJhycPygbmicGBS7CNtv5Z8WVheRbLUdP3oPAe/nbSOJVLc8ZPvOejhquF/1vJMKuqY5MWfkcBpvi/g==,
+      }
+    peerDependencies:
+      effect: ^3.11.5
 
   "@emnapi/core@1.3.1":
     resolution:
@@ -2716,6 +2739,12 @@ packages:
         integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==,
       }
 
+  "@standard-schema/spec@1.0.0-beta.3":
+    resolution:
+      {
+        integrity: sha512-0ifF3BjA1E8SY9C+nUew8RefNOIq0cDlYALPty4rhUm8Rrl6tCM8hBT4bhGhx7I7iXD0uAgt50lgo8dD73ACMw==,
+      }
+
   "@swc/counter@0.1.3":
     resolution:
       {
@@ -2931,6 +2960,31 @@ packages:
     peerDependencies:
       react: ">=18.0.0"
       react-dom: ">=18.0.0"
+
+  "@uploadthing/mime-types@0.3.4":
+    resolution:
+      {
+        integrity: sha512-EB0o0a4y++UJFMLqS8LDVhSQgXUllG6t5fwl5cbmOM0Uay8YY5Nc/JjFwzJ8wccdIKz4oYwQW7EOSfUyaMPbfw==,
+      }
+
+  "@uploadthing/react@7.1.5":
+    resolution:
+      {
+        integrity: sha512-D0lP4YnUWw5LFHrLuL+sq26wlul9dGE70G+oOQ+qkM1ZqSeKSGvIdAIOAQUBj2qQi4Re7o0VpF3+3qBF3svN6A==,
+      }
+    peerDependencies:
+      next: "*"
+      react: ^17.0.2 || ^18.0.0 || ^19.0.0
+      uploadthing: ^7.2.0
+    peerDependenciesMeta:
+      next:
+        optional: true
+
+  "@uploadthing/shared@7.1.5":
+    resolution:
+      {
+        integrity: sha512-5ePSiR2CPA5a8gfPqsHpE/uPwGG9iPqhxcFpeLGnEuExPqIi5ZY7upZgpc+6T1gMxwfbP0O5X4043TTNk3q/pA==,
+      }
 
   "@vercel/postgres@0.10.0":
     resolution:
@@ -3411,6 +3465,12 @@ packages:
       }
     engines: { node: ">= 0.10" }
 
+  cropperjs@1.6.2:
+    resolution:
+      {
+        integrity: sha512-nhymn9GdnV3CqiEHJVai54TULFAE3VshJTXSqSJKa8yXAKyBKDWdhHarnlIPrshJ0WMFTGuFvG02YjLXfPiuOA==,
+      }
+
   cross-spawn@7.0.6:
     resolution:
       {
@@ -3729,6 +3789,12 @@ packages:
     resolution:
       {
         integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==,
+      }
+
+  effect@3.11.5:
+    resolution:
+      {
+        integrity: sha512-oSzaR/S/2A/qDTnDqMWxQUNSjCG2sRLB4NEvTu+l9RqE122MTgKXOWzw0x4MHsdovRTzAihfkpgBj2aLFnH2+w==,
       }
 
   electron-to-chromium@1.5.63:
@@ -4119,6 +4185,13 @@ packages:
       }
     engines: { node: ">=0.10.0" }
 
+  fast-check@3.23.2:
+    resolution:
+      {
+        integrity: sha512-h5+1OzzfCC3Ef7VbtKdcv7zsstUQwUDlYpUTvjeUsJAssPgLn7QzbboPtL5ro04Mq0rPOsMzl7q5hIbRs2wD1A==,
+      }
+    engines: { node: ">=8.0.0" }
+
   fast-deep-equal@2.0.1:
     resolution:
       {
@@ -4170,12 +4243,25 @@ packages:
       }
     engines: { node: ">=16.0.0" }
 
+  file-selector@0.6.0:
+    resolution:
+      {
+        integrity: sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==,
+      }
+    engines: { node: ">= 12" }
+
   fill-range@7.1.1:
     resolution:
       {
         integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==,
       }
     engines: { node: ">=8" }
+
+  find-my-way-ts@0.1.5:
+    resolution:
+      {
+        integrity: sha512-4GOTMrpGQVzsCH2ruUn2vmwzV/02zF4q+ybhCIrw/Rkt3L8KWcycdC6aJMctJzwN4fXD4SD5F/4B9Sksh5rE0A==,
+      }
 
   find-up@5.0.0:
     resolution:
@@ -5113,6 +5199,12 @@ packages:
         integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==,
       }
 
+  multipasta@0.2.5:
+    resolution:
+      {
+        integrity: sha512-c8eMDb1WwZcE02WVjHoOmUVk7fnKU/RmUcosHACglrWAuPQsEJv+E8430sXj6jNc1jHw0zrS16aCjQh4BcEb4A==,
+      }
+
   mz@2.7.0:
     resolution:
       {
@@ -5731,11 +5823,25 @@ packages:
       }
     engines: { node: ">=6" }
 
+  pure-rand@6.1.0:
+    resolution:
+      {
+        integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==,
+      }
+
   queue-microtask@1.2.3:
     resolution:
       {
         integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==,
       }
+
+  react-cropper@2.3.3:
+    resolution:
+      {
+        integrity: sha512-zghiEYkUb41kqtu+2jpX2Ntigf+Jj1dF9ew4lAobPzI2adaPE31z0p+5TcWngK6TvmWQUwK3lj4G+NDh1PDQ1w==,
+      }
+    peerDependencies:
+      react: ">=17.0.2"
 
   react-dom@19.0.0:
     resolution:
@@ -5761,6 +5867,12 @@ packages:
     engines: { node: ">=18.0.0" }
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
+
+  react-image-file-resizer@0.4.8:
+    resolution:
+      {
+        integrity: sha512-Ue7CfKnSlsfJ//SKzxNMz8avDgDSpWQDOnTKOp/GNRFJv4dO9L5YGHNEnj40peWkXXAK2OK0eRIoXhOYpUzUTQ==,
+      }
 
   react-is@16.13.1:
     resolution:
@@ -6134,6 +6246,12 @@ packages:
       }
     engines: { node: ">= 10.x" }
 
+  sqids@0.3.0:
+    resolution:
+      {
+        integrity: sha512-lOQK1ucVg+W6n3FhRwwSeUijxe93b51Bfz5PMRMihVf1iVkl82ePQG7V5vwrhzB11v0NtsR25PSZRGiSomJaJw==,
+      }
+
   stable-hash@0.0.4:
     resolution:
       {
@@ -6469,6 +6587,30 @@ packages:
     hasBin: true
     peerDependencies:
       browserslist: ">= 4.21.0"
+
+  uploadthing@7.4.4:
+    resolution:
+      {
+        integrity: sha512-dgV8LqaKrXSnpDkqzzLbVEmIubMPi8a5bRtIzM+rG5EbZpIZyOG0bByLxdSlkSbK5L6F+HbIGX5eDkLPFNL8dg==,
+      }
+    engines: { node: ">=18.13.0" }
+    peerDependencies:
+      express: "*"
+      fastify: "*"
+      h3: "*"
+      next: "*"
+      tailwindcss: ^3.0.0 || ^4.0.0-beta.0
+    peerDependenciesMeta:
+      express:
+        optional: true
+      fastify:
+        optional: true
+      h3:
+        optional: true
+      next:
+        optional: true
+      tailwindcss:
+        optional: true
 
   uri-js@4.4.1:
     resolution:
@@ -6896,6 +7038,12 @@ snapshots:
       tslib: 2.8.1
 
   "@drizzle-team/brocli@0.10.2": {}
+
+  "@effect/platform@0.70.7(effect@3.11.5)":
+    dependencies:
+      effect: 3.11.5
+      find-my-way-ts: 0.1.5
+      multipasta: 0.2.5
 
   "@emnapi/core@1.3.1":
     dependencies:
@@ -8026,6 +8174,8 @@ snapshots:
 
   "@socket.io/component-emitter@3.1.2": {}
 
+  "@standard-schema/spec@1.0.0-beta.3": {}
+
   "@swc/counter@0.1.3": {}
 
   "@swc/helpers@0.5.13":
@@ -8187,6 +8337,23 @@ snapshots:
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
+
+  "@uploadthing/mime-types@0.3.4": {}
+
+  "@uploadthing/react@7.1.5(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(uploadthing@7.4.4(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(tailwindcss@3.4.17))":
+    dependencies:
+      "@uploadthing/shared": 7.1.5
+      file-selector: 0.6.0
+      react: 19.0.0
+      uploadthing: 7.4.4(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(tailwindcss@3.4.17)
+    optionalDependencies:
+      next: 15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+
+  "@uploadthing/shared@7.1.5":
+    dependencies:
+      "@uploadthing/mime-types": 0.3.4
+      effect: 3.11.5
+      sqids: 0.3.0
 
   "@vercel/postgres@0.10.0":
     dependencies:
@@ -8491,6 +8658,8 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
+  cropperjs@1.6.2: {}
+
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -8631,6 +8800,10 @@ snapshots:
       gopd: 1.2.0
 
   eastasianwidth@0.2.0: {}
+
+  effect@3.11.5:
+    dependencies:
+      fast-check: 3.23.2
 
   electron-to-chromium@1.5.63: {}
 
@@ -8982,7 +9155,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.18.0(jiti@1.21.6)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.18.0(jiti@1.21.6)))(eslint@9.18.0(jiti@1.21.6)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -9017,7 +9190,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.18.0(jiti@1.21.6)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.18.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.18.0(jiti@1.21.6)))(eslint@9.18.0(jiti@1.21.6))
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -9172,6 +9345,10 @@ snapshots:
 
   esutils@2.0.3: {}
 
+  fast-check@3.23.2:
+    dependencies:
+      pure-rand: 6.1.0
+
   fast-deep-equal@2.0.1: {}
 
   fast-deep-equal@3.1.3: {}
@@ -9204,9 +9381,15 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
+  file-selector@0.6.0:
+    dependencies:
+      tslib: 2.8.1
+
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
+
+  find-my-way-ts@0.1.5: {}
 
   find-up@5.0.0:
     dependencies:
@@ -9729,6 +9912,8 @@ snapshots:
 
   ms@2.1.3: {}
 
+  multipasta@0.2.5: {}
+
   mz@2.7.0:
     dependencies:
       any-promise: 1.3.0
@@ -10078,7 +10263,14 @@ snapshots:
 
   punycode@2.3.1: {}
 
+  pure-rand@6.1.0: {}
+
   queue-microtask@1.2.3: {}
+
+  react-cropper@2.3.3(react@19.0.0):
+    dependencies:
+      cropperjs: 1.6.2
+      react: 19.0.0
 
   react-dom@19.0.0(react@19.0.0):
     dependencies:
@@ -10116,6 +10308,8 @@ snapshots:
   react-hook-form@7.54.1(react@19.0.0):
     dependencies:
       react: 19.0.0
+
+  react-image-file-resizer@0.4.8: {}
 
   react-is@16.13.1: {}
 
@@ -10407,6 +10601,8 @@ snapshots:
   split2@4.2.0:
     optional: true
 
+  sqids@0.3.0: {}
+
   stable-hash@0.0.4: {}
 
   streamsearch@1.1.0: {}
@@ -10686,6 +10882,17 @@ snapshots:
       browserslist: 4.24.2
       escalade: 3.2.0
       picocolors: 1.1.1
+
+  uploadthing@7.4.4(next@15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(tailwindcss@3.4.17):
+    dependencies:
+      "@effect/platform": 0.70.7(effect@3.11.5)
+      "@standard-schema/spec": 1.0.0-beta.3
+      "@uploadthing/mime-types": 0.3.4
+      "@uploadthing/shared": 7.1.5
+      effect: 3.11.5
+    optionalDependencies:
+      next: 15.1.6(@babel/core@7.24.5)(babel-plugin-react-compiler@19.0.0-beta-27714ef-20250124)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      tailwindcss: 3.4.17
 
   uri-js@4.4.1:
     dependencies:

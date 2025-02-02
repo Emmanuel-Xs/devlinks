@@ -1,4 +1,8 @@
-import { isUsernameTaken } from "@/drizzle/query/users";
+"use server";
+
+import "server-only";
+
+import { getUserProfileData, isUsernameTaken } from "@/drizzle/query/users";
 
 import { getRandomDigits } from "./utils";
 
@@ -74,4 +78,55 @@ export async function generateDefaultUsername(email: string): Promise<string> {
     `Failed to generate a unique default username after ${maxAttempts} attempts. Fallback: ${fallbackUsername}`
   );
   return fallbackUsername;
+}
+
+export async function suggestAlternativeUsernames(
+  username: string,
+  maxSuggestions: number = 3
+): Promise<string[]> {
+  let baseUsername = username
+    .trim()
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toLowerCase();
+
+  if (!baseUsername) {
+    baseUsername = `user${getRandomDigits(4)}`;
+  }
+
+  const isTaken = await isUsernameTaken(baseUsername);
+  const isReserved = RESERVED_USERNAMES.includes(baseUsername);
+
+  const suggestions: string[] = [];
+
+  if (!isTaken && !isReserved) {
+    suggestions.push(baseUsername);
+  }
+
+  const suffixes = ["_", "123", "dev", "user", "xyz"];
+  let attempts = 0;
+
+  while (suggestions.length < maxSuggestions && attempts < 20) {
+    const randomDigits = getRandomDigits(3);
+    const suffix = suffixes[attempts % suffixes.length]; // Rotate through suffixes
+
+    const newUsername =
+      attempts % 2 === 0
+        ? `${baseUsername}${randomDigits}`
+        : `${baseUsername}${suffix}`;
+
+    if (
+      !(await isUsernameTaken(newUsername)) &&
+      !suggestions.includes(newUsername)
+    ) {
+      suggestions.push(newUsername);
+    }
+
+    attempts++;
+  }
+
+  return suggestions;
+}
+
+export async function getUserProfileDataAction(userId: number) {
+  return await getUserProfileData(userId);
 }

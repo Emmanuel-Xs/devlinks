@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import UserAvatar from "@/components/user-avatar";
 import { getUserLinksAction } from "@/lib/server/links";
 import { getCurrentSession } from "@/lib/server/sessions";
-import { formatUserDisplayName } from "@/lib/utils";
+import { cn, formatUserDisplayName } from "@/lib/utils";
 
 import PhoneFrame from "./phone-frame";
 import SideBarLinksList from "./sidebar-links-list";
@@ -28,7 +28,7 @@ export default async function Sidebar() {
 
   return (
     <aside className="hidden h-full w-full max-w-[560px] justify-center rounded-xl bg-card p-6 pt-14 min-[1200px]:grid">
-      <PhoneFrame className="space-y-10">
+      <PhoneFrame className="space-y-5">
         <div className="space-y-4">
           <UserAvatar
             avatarUrl={avatarUrl}
@@ -39,13 +39,15 @@ export default async function Sidebar() {
             {fullName.length <= 0 ? (
               <Skeleton className="mx-auto h-4 w-40 animate-none" />
             ) : (
-              <h2 className="heading">{fullName}</h2>
+              <h2
+                className={cn(
+                  "heading break-words leading-tight sm:text-[26px]"
+                )}
+              >
+                {fullName}
+              </h2>
             )}
-            {email.length <= 0 ? (
-              <Skeleton className="mx-auto mt-0.5 h-3 w-20 animate-none" />
-            ) : (
-              <p className="text -mt-1 sm:-mt-2">{email}</p>
-            )}
+            <p className="text">{email}</p>
           </div>
         </div>
         <SideBarLinksList links={userLinks} />

@@ -11,7 +11,7 @@ export default function PhoneFrame({
   children: ReactNode;
 }) {
   return (
-    <div className="relative h-[631px]">
+    <div className="relative h-[631px] overflow-y-hidden">
       <Image
         src="/images/phone-frame.svg"
         alt="Phone frame"

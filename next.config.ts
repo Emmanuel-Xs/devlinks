@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         pathname: "/u/**",
         search: "?v=*",
       },
+      {
+        protocol: "https",
+        hostname: `${process.env.UPLOADTHING_APP_ID}.ufs.sh`,
+        pathname: "/f/*",
+      },
     ],
   },
   experimental: {

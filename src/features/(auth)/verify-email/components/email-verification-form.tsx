@@ -1,7 +1,7 @@
 "use client";
 
 import Form from "next/form";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 import LoadingButton from "@/components/loading-button";
 import { CardHeader } from "@/components/ui/card";
@@ -14,6 +14,12 @@ export default function EmailVerificationForm() {
   const [formState, formAction, isPending] = useActionState(verifyEmailAction, {
     success: false,
   });
+
+  useEffect(() => {
+    localStorage.removeItem("links-store");
+    localStorage.removeItem("links-sync-warning");
+    sessionStorage.removeItem("profile-storage");
+  }, []);
 
   return (
     <div

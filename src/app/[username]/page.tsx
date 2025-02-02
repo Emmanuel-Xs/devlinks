@@ -7,7 +7,7 @@ import UserAvatar from "@/components/user-avatar";
 import { getUserByUsername } from "@/drizzle/query/users";
 import PreviewNavbar from "@/features/preview/components/preview-navbar";
 import { getUserLinksAction } from "@/lib/server/links";
-import { formatUserDisplayName } from "@/lib/utils";
+import { cn, formatUserDisplayName } from "@/lib/utils";
 
 export default function Page({
   params,
@@ -32,42 +32,46 @@ export default function Page({
   const blurDataURL = user[0].blurDataUrl ?? undefined;
 
   return (
-    <main className="relative min-h-svh bg-card sm:bg-none">
-      <div className="hidden h-[357px] rounded-b-[32px] bg-primary pt-4 sm:block">
-        <PreviewNavbar userId={user[0].id} username={username} />
-      </div>
-      <PreviewNavbar
-        className="px-0 sm:hidden"
-        userId={user[0].id}
-        username={username}
-      />
-      <div className="inset-x-1/2 top-[208px] mx-auto h-[560px] w-full max-w-[430px] px-10 py-12 pb-4 text-center sm:absolute sm:w-[349px] sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:py-9 sm:shadow-active">
-        <UserAvatar
-          avatarUrl={avatarUrl}
-          fullName={fullName}
-          blurDataURL={blurDataURL}
-        />
-        <div className="mb-5">
-          <h1 className="heading">{fullName}</h1>
-          <p className="text -mt-1 sm:-mt-2">{email}</p>
+    <main className="mb-16 min-h-svh">
+      <section className="relative h-full bg-card sm:bg-none">
+        <div className="hidden h-[357px] rounded-b-[32px] bg-primary pt-4 sm:block">
+          <PreviewNavbar userId={user[0].id} username={username} />
         </div>
-        <ScrollArea className="h-[370px] sm:h-[300px]">
-          <div className="flex flex-col gap-3">
-            {links.length > 0 ? (
-              links.map((link) => (
-                <PreviewLinks
-                  name={link.platform}
-                  url={link.url}
-                  key={link.id}
-                  className="h-[48px] sm:h-[46px]"
-                />
-              ))
-            ) : (
-              <p className="text pt-4 text-lg">User is yet to add links</p>
-            )}
+        <PreviewNavbar
+          className="px-0 sm:hidden"
+          userId={user[0].id}
+          username={username}
+        />
+        <div className="inset-x-1/2 top-[208px] mx-auto w-full max-w-[430px] px-10 py-12 pb-8 text-center sm:absolute sm:w-[349px] sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:shadow-active">
+          <UserAvatar
+            avatarUrl={avatarUrl}
+            fullName={fullName}
+            blurDataURL={blurDataURL}
+          />
+          <div className="mb-5">
+            <h1 className={cn("heading leading-tight sm:text-3xl")}>
+              {fullName}
+            </h1>
+            <p className="text">{email}</p>
           </div>
-        </ScrollArea>
-      </div>
+          <ScrollArea className="h-[370px] sm:h-[300px]">
+            <div className="flex flex-col gap-3">
+              {links.length > 0 ? (
+                links.map((link) => (
+                  <PreviewLinks
+                    name={link.platform}
+                    url={link.url}
+                    key={link.id}
+                    className="h-[48px] sm:h-[46px]"
+                  />
+                ))
+              ) : (
+                <p className="text pt-4 text-lg">User is yet to add links</p>
+              )}
+            </div>
+          </ScrollArea>
+        </div>
+      </section>
     </main>
   );
 }

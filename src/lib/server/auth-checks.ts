@@ -10,6 +10,8 @@ export async function goToLoginOrEmailVerified() {
   if (!user.emailVerified) {
     redirect("/verify-email");
   }
+
+  return { session, user };
 }
 
 export async function goToEmailVerifyOrLinks() {

@@ -172,3 +172,42 @@ export async function updateUserPassword(
 ): Promise<void> {
   db.update(usersTable).set({ password }).where(eq(usersTable.id, userId));
 }
+
+export async function updateUserProfile(
+  userId: number,
+  data: {
+    firstName: string | null;
+    lastName: string | null;
+    username: string;
+  }
+) {
+  await db
+    .update(usersTable)
+    .set({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      username: data.username,
+    })
+    .where(eq(usersTable.id, userId));
+}
+
+export async function getUserProfileData(userId: number) {
+  return await db
+    .select({
+      firstName: usersTable.firstName,
+      lastName: usersTable.lastName,
+      email: usersTable.email,
+      username: usersTable.username,
+    })
+    .from(usersTable)
+    .where(eq(usersTable.id, userId));
+}
+
+export async function unVerifyEmail(userId: number) {
+  await db
+    .update(usersTable)
+    .set({
+      emailVerified: 0,
+    })
+    .where(eq(usersTable.id, userId));
+}

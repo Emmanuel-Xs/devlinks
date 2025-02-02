@@ -102,14 +102,14 @@ export default function LinkCard({
           <button
             className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
             onClick={() => handleUpDownMove(links.sequence, "up")}
-            aria-label="Move Link Card"
+            aria-label="Move Link Card up"
           >
             <ChevronUpIcon />
           </button>
           <button
             className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
             onClick={() => handleUpDownMove(links.sequence, "down")}
-            aria-label="Move Link Card"
+            aria-label="Move Link Card down"
           >
             <ChevronDownIcon />
           </button>
