@@ -29,7 +29,7 @@ import { v4 as uuidv4 } from "uuid";
 import Loader from "@/components/loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link, User } from "@/drizzle/schema";
-import { useLinksStore } from "@/store/links-store";
+import { useLinksStore } from "@/store/links/links-store";
 
 import { Button } from "../../../../components/ui/button";
 

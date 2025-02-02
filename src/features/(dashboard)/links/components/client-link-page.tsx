@@ -15,7 +15,7 @@ const SaveLinksButton = dynamic(() => import("./save-links-button"), {
 
 const LinksStoreProvider = dynamic(
   () =>
-    import("@/store/links-store-provider").then(
+    import("@/store/links/links-store-provider").then(
       (mod) => mod.LinksStoreProvider
     ),
   {

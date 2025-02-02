@@ -18,9 +18,9 @@ import { z } from "zod";
 
 import LoadingButton from "@/components/loading-button";
 import { CardContent, CardHeader } from "@/components/ui/card";
-import { passwordResetSchema } from "@/lib/auth-validation";
 import { env } from "@/lib/client-env";
 import { cn } from "@/lib/utils";
+import { passwordResetSchema } from "@/lib/validation";
 
 import AuthPassword from "../../components/auth-password";
 import { resetPasswordAction } from "../server/action";

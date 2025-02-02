@@ -45,3 +45,11 @@ export const passwordResetSchema = z
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
+
+export const profileSchema = z.object({
+  firstName: z.string().nullable(),
+  lastName: z.string().nullable(),
+  email: z.string().email(),
+  username: z.string(),
+  croppedAvatar: z.instanceof(File).nullable(),
+});

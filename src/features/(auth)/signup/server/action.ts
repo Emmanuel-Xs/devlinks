@@ -8,7 +8,6 @@ import "server-only";
 import { createEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
 import { createSession } from "@/drizzle/query/sessions";
 import { createUser, isEmailTaken } from "@/drizzle/query/users";
-import { signupSchema } from "@/lib/auth-validation";
 import {
   sendVerificationEmail,
   setEmailVerificationRequestCookie,
@@ -22,6 +21,7 @@ import {
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { generateDefaultUsername } from "@/lib/server/users";
+import { signupSchema } from "@/lib/validation";
 
 type FormState = {
   success: boolean;

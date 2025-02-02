@@ -19,8 +19,8 @@ import { z } from "zod";
 
 import LoadingButton from "@/components/loading-button";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { signupSchema } from "@/lib/auth-validation";
 import { cn } from "@/lib/utils";
+import { signupSchema } from "@/lib/validation";
 
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";

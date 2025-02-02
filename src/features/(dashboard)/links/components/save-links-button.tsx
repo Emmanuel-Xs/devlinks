@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { getUserLinksAction } from "@/lib/server/links";
 import { cn } from "@/lib/utils";
-import { useLinksStore } from "@/store/links-store";
+import { useLinksStore } from "@/store/links/links-store";
 
 import { saveLinksAction } from "../server/actions";
 

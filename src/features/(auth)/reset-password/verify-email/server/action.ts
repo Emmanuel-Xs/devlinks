@@ -4,10 +4,10 @@ import { redirect } from "next/navigation";
 
 import "server-only";
 
-import { verifyPasswordResetEmailSchema } from "@/lib/auth-validation";
 import { validatePasswordResetSessionRequest } from "@/lib/server/password-reset";
 import { ExpiringTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
+import { verifyPasswordResetEmailSchema } from "@/lib/validation";
 
 type FormState = {
   success: boolean;

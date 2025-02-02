@@ -9,7 +9,6 @@ import {
   deleteUserEmailVerificationRequest,
 } from "@/drizzle/query/email-verifcation";
 import { updateUserEmailAndSetEmailAsVerified } from "@/drizzle/query/users";
-import { verifyEmailSchema } from "@/lib/auth-validation";
 import {
   deleteEmailVerificationRequestCookie,
   getUserEmailVerificationRequestFromRequest,
@@ -19,6 +18,7 @@ import {
 import { ExpiringTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
 import { getCurrentSession } from "@/lib/server/sessions";
+import { verifyEmailSchema } from "@/lib/validation";
 
 type FormState = {
   success: boolean;

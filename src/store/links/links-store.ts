@@ -23,7 +23,7 @@ type LinkAction = {
   removeLink: (id: string) => void;
   reorderLinks: (links: Link[]) => void;
   getModifiedLinks: () => Link[];
-  setLinksFromDb: (ewLinksFromDb: Link[]) => void;
+  setLinksFromDb: (newLinksFromDb: Link[]) => void;
   setError: (id: string, error: string | undefined) => void;
   hasChanges: () => boolean;
 };
@@ -186,7 +186,7 @@ export const createLinksStore = (initProps?: { userLinks: Link[] }) => {
           );
         },
 
-        setLinksFromDb: (newLinksFromDb: Link[]) => {
+        setLinksFromDb: (newLinksFromDb) => {
           const sortedLinks = newLinksFromDb.toSorted(sortBySequenceDesc);
           set(() => ({
             linksFromDb: sortedLinks,

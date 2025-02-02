@@ -10,7 +10,6 @@ import {
   invalidateUserPasswordResetSessions,
 } from "@/drizzle/query/password-reset";
 import { getUserByEmail } from "@/drizzle/query/users";
-import { passwordForgetSchema } from "@/lib/auth-validation";
 import {
   sendPasswordResetEmail,
   setPasswordResetSessionTokenCookie,
@@ -18,6 +17,7 @@ import {
 import { RefillingTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
 import { generateSessionToken } from "@/lib/server/sessions";
+import { passwordForgetSchema } from "@/lib/validation";
 
 type FormState = {
   success: boolean;

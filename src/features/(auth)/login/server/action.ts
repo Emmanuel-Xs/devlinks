@@ -7,7 +7,6 @@ import "server-only";
 
 import { createSession } from "@/drizzle/query/sessions";
 import { getUserByEmail, getUserPasswordHash } from "@/drizzle/query/users";
-import { loginSchema } from "@/lib/auth-validation";
 import { verifyPasswordHash } from "@/lib/server/password";
 import { RefillingTokenBucket, Throttler } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
@@ -15,6 +14,7 @@ import {
   generateSessionToken,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
+import { loginSchema } from "@/lib/validation";
 
 type FormState = {
   success: boolean;

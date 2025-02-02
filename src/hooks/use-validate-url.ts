@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { PlatformKey } from "@/drizzle/schema";
 import { validatePlatformUrl } from "@/lib/url-validation";
-import { useLinksStore } from "@/store/links-store";
+import { useLinksStore } from "@/store/links/links-store";
 
 function useValidateUrl(linkId: string, url: string, platform: PlatformKey) {
   const setError = useLinksStore((state) => state.setError);

@@ -13,7 +13,6 @@ import {
   updateUserEmailAndSetEmailAsVerified,
   updateUserPassword,
 } from "@/drizzle/query/users";
-import { passwordResetSchema } from "@/lib/auth-validation";
 import { checkPasswordSecurity, hashPassword } from "@/lib/server/password";
 import {
   deletePasswordResetSessionTokenCookie,
@@ -24,6 +23,7 @@ import {
   generateSessionToken,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
+import { passwordResetSchema } from "@/lib/validation";
 
 type FormState = {
   success: boolean;

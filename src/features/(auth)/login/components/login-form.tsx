@@ -19,8 +19,8 @@ import { z } from "zod";
 
 import LoadingButton from "@/components/loading-button";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { loginSchema } from "@/lib/auth-validation";
 import { cn } from "@/lib/utils";
+import { loginSchema } from "@/lib/validation";
 
 import AuthEmail from "../../components/auth-email";
 import AuthPassword from "../../components/auth-password";
@@ -32,6 +32,7 @@ export function LoginForm() {
   useEffect(() => {
     localStorage.removeItem("links-store");
     localStorage.removeItem("links-sync-warning");
+    sessionStorage.removeItem("profile-storage");
   }, []);
 
   const [formState, formAction, isPending] = useActionState(loginAction, {

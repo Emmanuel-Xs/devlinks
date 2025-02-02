@@ -1,23 +1,17 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 import { getAllUserSessions } from "@/drizzle/query/sessions";
 import PageHeading from "@/features/(dashboard)/components/page-heading";
 import ClientLinkPage from "@/features/(dashboard)/links/components/client-link-page";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 import { getUserLinksAction } from "@/lib/server/links";
-import { getCurrentSession } from "@/lib/server/sessions";
 
 export const metadata: Metadata = {
   title: "links",
 };
 
 export default async function Page() {
-  await goToLoginOrEmailVerified();
-
-  const { user } = await getCurrentSession();
-
-  if (!user) redirect("/login");
+  const { user } = await goToLoginOrEmailVerified();
 
   const allUserSessions = await getAllUserSessions(user.id);
 
