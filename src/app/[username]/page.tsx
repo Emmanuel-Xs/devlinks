@@ -14,10 +14,11 @@ const getUserByUsernameCached = cache(getUserByUsername);
 export async function generateMetadata({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
-  const username = params.username.toLowerCase();
-  const user = await getUserByUsernameCached(username);
+  const userParams = await params;
+
+  const user = await getUserByUsernameCached(userParams.username);
 
   if (!user || user.length === 0) {
     return {
