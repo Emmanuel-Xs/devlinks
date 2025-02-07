@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { cn } from "@/lib/utils";
+
 export function AvatarSkeleton() {
   return (
     <div className="mx-auto h-[104px] w-[104px] animate-pulse rounded-full bg-background" />
@@ -10,19 +12,28 @@ export default function UserAvatar({
   avatarUrl,
   fullName,
   blurDataURL,
+  className,
 }: {
   avatarUrl: string;
   fullName: string;
   blurDataURL?: string;
+  className?: string;
 }) {
   return (
-    <div className="mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-[4px] border-primary">
+    <div
+      className={cn(
+        "relative mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-[4px] border-primary",
+        className
+      )}
+    >
       {avatarUrl.length > 0 ? (
         <Image
           src={avatarUrl}
           alt={`Profile image of ${fullName}`}
-          width={104}
-          height={104}
+          fill
+          style={{
+            objectFit: "contain",
+          }}
           priority={true}
           loading="eager"
           placeholder="blur"
