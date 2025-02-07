@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { use } from "react";
+import { cache, use } from "react";
 
 import PreviewLinks from "@/components/preview-links";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,13 +9,60 @@ import PreviewNavbar from "@/features/preview/components/preview-navbar";
 import { getUserLinksAction } from "@/lib/server/links";
 import { cn, formatUserDisplayName } from "@/lib/utils";
 
+const getUserByUsernameCached = cache(getUserByUsername);
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { username: string };
+}) {
+  const username = params.username.toLowerCase();
+  const user = await getUserByUsernameCached(username);
+
+  if (!user || user.length === 0) {
+    return {
+      title: "User Not Found",
+      description: "The user you're looking for does not exist on devlinks.",
+    };
+  }
+
+  // Extract user details
+  const currentUser = user[0];
+  const fullName = formatUserDisplayName(
+    currentUser.firstName,
+    currentUser.lastName,
+    currentUser.username
+  );
+  const description = `Explore ${fullName}'s curated list of developer links and social profiles on devlinks.`;
+
+  return {
+    title: `${fullName}`,
+    description,
+    openGraph: {
+      title: `${fullName} | devlinks`,
+      description,
+      images: currentUser.avatarUrl
+        ? [currentUser.avatarUrl]
+        : ["https://devlinks-abc.vercel.app/og-image-home.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${fullName} | devlinks`,
+      description,
+      images: currentUser.avatarUrl
+        ? [currentUser.avatarUrl]
+        : ["https://devlinks-abc.vercel.app/og-image-home.png"],
+    },
+  };
+}
+
 export default function Page({
   params,
 }: {
   params: Promise<{ username: string }>;
 }) {
   const { username } = use(params);
-  const user = use(getUserByUsername(username.toLocaleLowerCase()));
+  const user = use(getUserByUsernameCached(username.toLocaleLowerCase()));
 
   if (user.length <= 0) notFound();
 

@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-import LogoutButton from "./logout-button";
+import LogoutButton from "../../../../components/logout-button";
 
 export default function SettingsDropDownMenu() {
   return (

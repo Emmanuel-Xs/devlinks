@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     template: "%s | devlinks",
     default: "devlinks",
   },
-  description: "All social links about you in one app",
+  description:
+    "Effortlessly organize and share your developer portfolio, and social links in one place.",
 };
 
 export default function RootLayout({

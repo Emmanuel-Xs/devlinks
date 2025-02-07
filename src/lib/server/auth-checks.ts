@@ -14,6 +14,15 @@ export async function goToLoginOrEmailVerified() {
   return { session, user };
 }
 
+export async function goToEmailVerified() {
+  const { session, user } = await getCurrentSession();
+  if (session !== null && !user.emailVerified) {
+    redirect("/login");
+  }
+
+  return { session, user };
+}
+
 export async function goToEmailVerifyOrLinks() {
   const { session, user } = await getCurrentSession();
   if (session !== null) {
