@@ -1,6 +1,7 @@
 import { CircleUserRoundIcon, LinkIcon } from "lucide-react";
 
-import DevlinksLogo from "./devlinks-logo";
+import DevlinksLogo from "@/components/devlinks-logo";
+
 import NavItem from "./nav-item";
 import PreviewLinkButton from "./preview-button";
 
