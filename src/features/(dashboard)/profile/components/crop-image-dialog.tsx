@@ -39,7 +39,7 @@ export default function CropImageDialog({
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="max-h-screen overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Crop image</DialogTitle>
         </DialogHeader>
@@ -52,10 +52,12 @@ export default function CropImageDialog({
           className="mx-auto size-fit"
         />
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" size="ex" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={crop}>Crop</Button>
+          <Button onClick={crop} size="ex">
+            Crop
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
