@@ -46,12 +46,12 @@ export default function ProfilePictureCard({
       <div className="flex max-w-[432px] flex-col gap-6 sm:flex-row sm:items-center">
         <div
           className={cn(
-            "relative flex h-48 w-48 shrink-0 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl bg-active-link",
-            avatarUrl && "border-2 border-primary"
+            "relative flex h-48 w-48 shrink-0 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl",
+            avatarUrl ? "border-[3px] border-primary" : "bg-active-link"
           )}
           onClick={() => fileInputRef.current?.click()}
         >
-          {avatarUrl ? (
+          {avatarUrl && (
             <Image
               src={
                 croppedAvatar ? URL.createObjectURL(croppedAvatar) : avatarUrl
@@ -65,14 +65,24 @@ export default function ProfilePictureCard({
               blurDataURL={blurDataUrl ?? undefined}
               unoptimized
             />
-          ) : (
-            <>
-              <ImageIcon />
-              <p className="text-center font-semibold text-primary">
-                + Upload Image
-              </p>
-            </>
           )}
+          {avatarUrl && (
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-black/30 to-black/10" />
+          )}
+
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+            <ImageIcon
+              className={cn(avatarUrl ? "fill-white" : "fill-primary")}
+            />
+            <p
+              className={cn(
+                "text-center font-semibold",
+                avatarUrl ? "text-white" : "text-primary"
+              )}
+            >
+              + Upload Image
+            </p>
+          </div>
           <input
             type="file"
             accept="image/*"
