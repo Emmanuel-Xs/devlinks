@@ -114,7 +114,7 @@ export default function Page({
             fullName={fullName}
             blurDataURL={blurDataURL}
           />
-          <div className="mb-5">
+          <div className="mb-5 mt-2">
             <h1 className={cn("heading leading-tight sm:text-3xl")}>
               {fullName}
             </h1>
