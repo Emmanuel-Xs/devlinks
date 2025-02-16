@@ -10,6 +10,15 @@ import TestimonialsSection from "@/features/(home)/components/testimonials-secti
 import { goToEmailVerified } from "@/lib/server/auth-checks";
 import { cn } from "@/lib/utils";
 
+const images = [
+  {
+    url: "https://devlinks-abc.vercel.app/og-image-home.png",
+    width: 1200,
+    height: 630,
+    alt: "devlinks homepage preview",
+  },
+];
+
 export const metadata: Metadata = {
   title: {
     absolute: "devlinks - Your Developer Social Links in One Place",
@@ -32,22 +41,16 @@ export const metadata: Metadata = {
       "Effortlessly organize and share your developer portfolio, and social links in one place.",
     url: "https://devlinks-abc.vercel.app",
     siteName: "devlinks",
-    images: [
-      {
-        url: "https://devlinks-abc.vercel.app/og-image-home.png",
-        width: 1200,
-        height: 630,
-        alt: "devlinks homepage preview",
-      },
-    ],
     type: "website",
+    images,
   },
   twitter: {
     card: "summary_large_image",
     title: "devlinks - Your Developer Social Links in One Place",
     description:
       "Effortlessly organize and share your developer portfolio, and social links in one place.",
-    images: ["https://devlinks-abc.vercel.app/og-image-home.png"],
+    images,
+    site: "devlinks",
   },
   alternates: {
     canonical: "https://devlinks-abc.vercel.app",

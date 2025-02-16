@@ -36,23 +36,41 @@ export async function generateMetadata({
   );
   const description = `Explore ${fullName}'s curated list of developer links and social profiles on devlinks.`;
 
+  const images = currentUser.avatarUrl
+    ? [
+        {
+          url: currentUser.avatarUrl,
+          width: 1200,
+          height: 630,
+          alt: "user avatar",
+        },
+      ]
+    : [
+        {
+          url: "https://devlinks-abc.vercel.app/og-image-home.png",
+          width: 1200,
+          height: 630,
+          alt: "devlinks homepage preview",
+        },
+      ];
+
   return {
     title: `${fullName}`,
     description,
     openGraph: {
       title: `${fullName} | devlinks`,
       description,
-      images: currentUser.avatarUrl
-        ? [currentUser.avatarUrl]
-        : ["https://devlinks-abc.vercel.app/og-image-home.png"],
+      url: `https://devlinks-abc.vercel.app/${userParams.username}`,
+      siteName: "devlinks",
+      type: "profile",
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title: `${fullName} | devlinks`,
       description,
-      images: currentUser.avatarUrl
-        ? [currentUser.avatarUrl]
-        : ["https://devlinks-abc.vercel.app/og-image-home.png"],
+      images,
+      site: "devlinks",
     },
   };
 }
