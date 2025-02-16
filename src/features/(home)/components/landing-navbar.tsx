@@ -66,7 +66,9 @@ export default function LandingNavbar({ user }: { user: User | null }) {
             </DropdownMenu>
           </div>
         ) : (
-          <Button size="ex">Log in</Button>
+          <Button size="ex" className="z-10">
+            Log in
+          </Button>
         )}
       </nav>
     </header>
