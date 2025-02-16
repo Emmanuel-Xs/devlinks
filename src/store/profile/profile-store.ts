@@ -12,6 +12,7 @@ type ProfileState = {
   email: string;
   username: string;
   croppedAvatar: Blob | null;
+  savedAvatarUrl: string | null; // Add this to track the last saved avatar URL
   isDirty: boolean;
   errors: Record<string, string[]> | undefined;
 };
@@ -21,6 +22,7 @@ type ProfileDataFromDb = {
   lastName: string | null;
   email: string;
   username: string;
+  avatarUrl: string | null;
 };
 
 type ProfileAction = {
@@ -30,6 +32,8 @@ type ProfileAction = {
   setErrors: (errors: Record<string, string[]> | undefined) => void;
   // eslint-disable-next-line no-unused-vars
   resetFromDb: (profileDataFromDb: ProfileDataFromDb) => void;
+  clearCroppedAvatar: () => void;
+  recomputeIsDirty: () => void;
 };
 
 type ProfileStore = ProfileState & ProfileAction;
@@ -40,6 +44,7 @@ const defaultProfileState: ProfileState = {
   email: "",
   username: "",
   croppedAvatar: null,
+  savedAvatarUrl: null,
   isDirty: false,
   errors: {},
 };
@@ -53,6 +58,7 @@ export const createProfileStore = (initProps?: { user: User }) => {
         lastName: initProps?.user.lastName ?? null,
         email: initProps?.user.email ?? "",
         username: initProps?.user.username ?? "",
+        savedAvatarUrl: initProps?.user.avatarUrl ?? null,
 
         setField: (field, value) =>
           set(() => ({
@@ -66,13 +72,28 @@ export const createProfileStore = (initProps?: { user: User }) => {
             isDirty: true,
           })),
 
+        clearCroppedAvatar: () =>
+          set(() => ({
+            croppedAvatar: null,
+          })),
+
+        recomputeIsDirty: () =>
+          set((state) => ({
+            isDirty:
+              state.croppedAvatar !== null ||
+              state.firstName !== initProps?.user.firstName ||
+              state.lastName !== initProps?.user.lastName ||
+              state.email !== initProps?.user.email ||
+              state.username !== initProps?.user.username,
+          })),
+
         resetFromDb: (profileDataFromDb) =>
           set(() => ({
             firstName: profileDataFromDb.firstName,
             lastName: profileDataFromDb.lastName,
             email: profileDataFromDb.email,
             username: profileDataFromDb.username,
-            croppedAvatar: null,
+            savedAvatarUrl: profileDataFromDb.avatarUrl,
             isDirty: false,
             errors: {},
           })),
@@ -85,9 +106,14 @@ export const createProfileStore = (initProps?: { user: User }) => {
           lastName: state.lastName,
           email: state.email,
           username: state.username,
+          savedAvatarUrl: state.savedAvatarUrl,
           errors: state.errors,
-          isDirty: state.isDirty,
         }),
+        onRehydrateStorage: () => (state) => {
+          if (state) {
+            state.recomputeIsDirty();
+          }
+        },
       }
     )
   );
@@ -95,12 +121,10 @@ export const createProfileStore = (initProps?: { user: User }) => {
 
 type ProfileStoreApi = ReturnType<typeof createProfileStore>;
 
-// Create context
 export const ProfileStoreContext = createContext<ProfileStoreApi | undefined>(
   undefined
 );
 
-// Custom hook to use the store
 // eslint-disable-next-line no-unused-vars
 export function useProfileStore<T>(selector: (state: ProfileStore) => T): T {
   const store = use(ProfileStoreContext);

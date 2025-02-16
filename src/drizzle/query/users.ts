@@ -198,6 +198,7 @@ export async function getUserProfileData(userId: number) {
       lastName: usersTable.lastName,
       email: usersTable.email,
       username: usersTable.username,
+      avatarUrl: usersTable.avatarUrl,
     })
     .from(usersTable)
     .where(eq(usersTable.id, userId));

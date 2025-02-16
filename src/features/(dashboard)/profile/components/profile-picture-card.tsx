@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Resizer from "react-image-file-resizer";
 
@@ -20,10 +20,23 @@ export default function ProfilePictureCard({
   avatarUrl: string | null;
   blurDataUrl: string | null;
 }) {
-  const { croppedAvatar, setField } = useProfileStore((state) => state);
+  const { croppedAvatar, savedAvatarUrl, setField } = useProfileStore(
+    (state) => state
+  );
   const [imageToCrop, setImageToCrop] = useState<File>();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const displayUrl = croppedAvatar
+    ? URL.createObjectURL(croppedAvatar)
+    : savedAvatarUrl || avatarUrl;
+
+  useEffect(() => {
+    if (croppedAvatar) {
+      const objectUrl = URL.createObjectURL(croppedAvatar);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [croppedAvatar]);
 
   const onImageSelected = (image: File | undefined) => {
     if (!image) return;
@@ -47,15 +60,13 @@ export default function ProfilePictureCard({
         <div
           className={cn(
             "relative flex h-48 w-48 shrink-0 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl",
-            avatarUrl ? "border-[3px] border-primary" : "bg-active-link"
+            displayUrl ? "border-[3px] border-primary" : "bg-active-link"
           )}
           onClick={() => fileInputRef.current?.click()}
         >
-          {avatarUrl && (
+          {displayUrl && (
             <Image
-              src={
-                croppedAvatar ? URL.createObjectURL(croppedAvatar) : avatarUrl
-              }
+              src={displayUrl}
               alt="Profile picture"
               priority
               width={192}
@@ -66,18 +77,18 @@ export default function ProfilePictureCard({
               unoptimized
             />
           )}
-          {avatarUrl && (
+          {displayUrl && (
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-black/30 to-black/10" />
           )}
 
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <ImageIcon
-              className={cn(avatarUrl ? "fill-white" : "fill-primary")}
+              className={cn(displayUrl ? "fill-white" : "fill-primary")}
             />
             <p
               className={cn(
                 "text-center font-semibold",
-                avatarUrl ? "text-white" : "text-primary"
+                displayUrl ? "text-white" : "text-primary"
               )}
             >
               + Upload Image
@@ -99,7 +110,13 @@ export default function ProfilePictureCard({
         <CropImageDialog
           src={URL.createObjectURL(imageToCrop)}
           cropAspectRatio={1}
-          onCropped={(blob) => setField("croppedAvatar", blob)}
+          onCropped={(blob) => {
+            setField("croppedAvatar", blob);
+            setImageToCrop(undefined);
+            if (fileInputRef.current) {
+              fileInputRef.current.value = "";
+            }
+          }}
           onClose={() => {
             setImageToCrop(undefined);
             if (fileInputRef.current) {

@@ -23,6 +23,7 @@ export default function SaveProfileButton({ userId }: { userId: number }) {
     isDirty,
     setErrors,
     resetFromDb,
+    clearCroppedAvatar,
   } = useProfileStore((state) => state);
 
   const newAvatarFile = croppedAvatar
@@ -58,12 +59,12 @@ export default function SaveProfileButton({ userId }: { userId: number }) {
 
       const user = await getUserProfileDataAction(userId);
 
+      clearCroppedAvatar();
+
       resetFromDb({ ...user[0] });
       toast.success("Profile Saved Successfully");
     });
   };
-
-  console.log(isDirty);
 
   return (
     <div className="flex justify-end p-6 sm:px-10">
