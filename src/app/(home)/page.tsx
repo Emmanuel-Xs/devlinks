@@ -1,8 +1,12 @@
 import { Metadata } from "next";
 
-import HeroSection from "@/components/hero-section";
 import { InteractiveGridPattern } from "@/components/interactive-grid-pattern";
-import LandingNavbar from "@/components/landing-navbar";
+import CTASection from "@/features/(home)/components/cta-section";
+import FeaturesSection from "@/features/(home)/components/feature-section";
+import Footer from "@/features/(home)/components/footer";
+import HeroSection from "@/features/(home)/components/hero-section";
+import LandingNavbar from "@/features/(home)/components/landing-navbar";
+import TestimonialsSection from "@/features/(home)/components/testimonials-section";
 import { goToEmailVerified } from "@/lib/server/auth-checks";
 import { cn } from "@/lib/utils";
 
@@ -54,23 +58,27 @@ export default async function Home() {
   const { user } = await goToEmailVerified();
 
   return (
-    <div className="relative">
-      <InteractiveGridPattern
-        className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-          "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
-        )}
-        width={40}
-        height={40}
-        squares={[80, 80]}
-        squaresClassName="hover:fill-primary"
-      />
-      <header className="mx-auto w-[min(100%_-_2.5rem,_1350px)]">
+    <main>
+      <div className="relative isolate overflow-hidden">
+        <InteractiveGridPattern
+          className={cn(
+            "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
+          )}
+          width={40}
+          height={40}
+          squares={[80, 80]}
+          squaresClassName="hover:fill-primary"
+        />
         <LandingNavbar user={user} />
-      </header>
-      <main className="mx-auto grid min-h-[88svh] w-[min(100%_-_2.5rem,_1350px)] place-items-center">
         <HeroSection />
-      </main>
-    </div>
+      </div>
+      <div>
+        <FeaturesSection />
+        <TestimonialsSection />
+        <CTASection />
+      </div>
+      <Footer />
+    </main>
   );
 }

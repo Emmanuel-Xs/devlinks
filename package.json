@@ -37,6 +37,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@react-email/components": "0.0.30",
     "@t3-oss/env-nextjs": "^0.11.1",
+    "@tailwindcss/typography": "^0.5.16",
     "@uidotdev/usehooks": "^2.4.1",
     "@uploadthing/react": "^7.1.5",
     "@vercel/postgres": "^0.10.0",
