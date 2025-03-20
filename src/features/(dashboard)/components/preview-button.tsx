@@ -15,7 +15,10 @@ export default function PreviewLinksButton() {
 
   return (
     <Button asChild variant="outline" size="sm">
-      <Link href={`/${user.username}`} title="Preview Links">
+      <Link
+        href={`/${encodeURIComponent(user.username.toLocaleLowerCase())}`}
+        title="Preview Links"
+      >
         <EyeIcon className="inline min-[580px]:hidden" />
         <span className="hidden min-[580px]:inline">Preview</span>
       </Link>

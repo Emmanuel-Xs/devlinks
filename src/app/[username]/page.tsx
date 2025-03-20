@@ -81,7 +81,9 @@ export default function Page({
   params: Promise<{ username: string }>;
 }) {
   const { username } = use(params);
-  const user = use(getUserByUsernameCached(username.toLocaleLowerCase()));
+  const user = use(
+    getUserByUsernameCached(decodeURIComponent(username.toLocaleLowerCase()))
+  );
 
   if (user.length <= 0) notFound();
 
