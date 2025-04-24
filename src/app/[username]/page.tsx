@@ -18,7 +18,9 @@ export async function generateMetadata({
 }) {
   const userParams = await params;
 
-  const user = await getUserByUsernameCached(userParams.username);
+  const user = await getUserByUsernameCached(
+    decodeURIComponent(userParams.username.toLocaleLowerCase())
+  );
 
   if (!user || user.length === 0) {
     return {
