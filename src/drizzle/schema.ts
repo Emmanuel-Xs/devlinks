@@ -33,6 +33,23 @@ export const usersTable = pgTable("users", {
   updatedAt,
 });
 
+export const userUsernamesTable = pgTable(
+  "user_usernames",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    userId: integer()
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    username: text().notNull().unique(),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    unique().on(table.userId, table.username),
+    index("user_usernames_user_id_idx").on(table.userId),
+  ]
+);
+
 export const sessionsTable = pgTable("sessions", {
   id: text().primaryKey(),
   userId: integer()
@@ -124,6 +141,9 @@ export type User = Pick<
   InferSelectModel<typeof usersTable>,
   keyof typeof returningUserData
 >;
+
+export type UserUsername = InferSelectModel<typeof userUsernamesTable>;
+
 export type Session = InferSelectModel<typeof sessionsTable>;
 
 export type EmailVerificationRequest = InferSelectModel<
@@ -148,6 +168,7 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   emailVerificationRequests: many(emailVerificationRequest),
   passwordResetSessions: many(passwordResetSessions),
   links: many(links),
+  extraUsernames: many(userUsernamesTable),
 }));
 
 export const sessionsRelations = relations(sessionsTable, ({ one }) => ({
