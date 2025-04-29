@@ -25,7 +25,7 @@ export default function NavItem({
       <Link
         href={href}
         className={cn(
-          "text flex gap-1 rounded-lg px-6 py-2 font-semibold tracking-wide transition-colors max-[350px]:px-4",
+          "text flex items-center gap-1 rounded-lg px-6 py-2 font-semibold tracking-wide transition-colors max-[350px]:px-4",
           isActive
             ? "bg-active-link text-primary"
             : "text-card-foreground hover:text-primary"
