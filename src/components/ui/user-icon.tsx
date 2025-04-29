@@ -1,12 +1,16 @@
 "use client";
 
 import type { HTMLAttributes } from "react";
+<<<<<<< HEAD
 import React, {
   forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
 } from "react";
+=======
+import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+>>>>>>> a9c68be (feat: implement animated icons for dashboard navbar)
 
 import type { Variants } from "motion/react";
 import { motion, useAnimation } from "motion/react";
