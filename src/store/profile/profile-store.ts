@@ -10,7 +10,6 @@ type ProfileState = {
   firstName: string | null;
   lastName: string | null;
   email: string;
-  username: string;
   croppedAvatar: Blob | null;
   savedAvatarUrl: string | null; // Add this to track the last saved avatar URL
   isDirty: boolean;
@@ -21,7 +20,6 @@ type ProfileDataFromDb = {
   firstName: string | null;
   lastName: string | null;
   email: string;
-  username: string;
   avatarUrl: string | null;
 };
 
@@ -42,7 +40,6 @@ const defaultProfileState: ProfileState = {
   firstName: null,
   lastName: null,
   email: "",
-  username: "",
   croppedAvatar: null,
   savedAvatarUrl: null,
   isDirty: false,
@@ -57,7 +54,6 @@ export const createProfileStore = (initProps?: { user: User }) => {
         firstName: initProps?.user.firstName ?? null,
         lastName: initProps?.user.lastName ?? null,
         email: initProps?.user.email ?? "",
-        username: initProps?.user.username ?? "",
         savedAvatarUrl: initProps?.user.avatarUrl ?? null,
 
         setField: (field, value) =>
@@ -83,8 +79,7 @@ export const createProfileStore = (initProps?: { user: User }) => {
               state.croppedAvatar !== null ||
               state.firstName !== initProps?.user.firstName ||
               state.lastName !== initProps?.user.lastName ||
-              state.email !== initProps?.user.email ||
-              state.username !== initProps?.user.username,
+              state.email !== initProps?.user.email,
           })),
 
         resetFromDb: (profileDataFromDb) =>
@@ -92,7 +87,6 @@ export const createProfileStore = (initProps?: { user: User }) => {
             firstName: profileDataFromDb.firstName,
             lastName: profileDataFromDb.lastName,
             email: profileDataFromDb.email,
-            username: profileDataFromDb.username,
             savedAvatarUrl: profileDataFromDb.avatarUrl,
             isDirty: false,
             errors: {},
@@ -105,7 +99,6 @@ export const createProfileStore = (initProps?: { user: User }) => {
           firstName: state.firstName,
           lastName: state.lastName,
           email: state.email,
-          username: state.username,
           savedAvatarUrl: state.savedAvatarUrl,
           errors: state.errors,
         }),

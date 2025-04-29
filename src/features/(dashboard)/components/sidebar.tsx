@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import UserAvatar from "@/components/user-avatar";
+import { getUserDefaultUsername } from "@/drizzle/query/usernames";
 import { getUserLinksAction } from "@/lib/server/links";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { cn, formatUserDisplayName } from "@/lib/utils";
@@ -15,11 +16,12 @@ export default async function Sidebar() {
   if (!user) redirect("/login");
 
   const userLinks = await getUserLinksAction(user.id);
+  const userDefaultUsername = (await getUserDefaultUsername(user.id)).username;
 
   const fullName = formatUserDisplayName(
     user.firstName,
     user.lastName,
-    user.username
+    userDefaultUsername
   );
 
   const avatarUrl = user.avatarUrl ?? "";

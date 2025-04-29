@@ -1,18 +1,31 @@
+import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
+import { getUserDefaultUsername } from "@/drizzle/query/usernames";
 import Footer from "@/features/(home)/components/footer";
 import LandingNavbar from "@/features/(home)/components/landing-navbar";
-import { goToEmailVerified } from "@/lib/server/auth-checks";
+import { getCurrentSession } from "@/lib/server/sessions";
 
 export default async function LegalLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const { user } = await goToEmailVerified();
+  const { user } = await getCurrentSession();
+
+  let username: string | undefined;
+
+  if (user) {
+    const data = await getUserDefaultUsername(user.id);
+    if (!data) {
+      redirect("/settings/usernames");
+    }
+    username = data.username;
+  }
+
   return (
     <>
-      <LandingNavbar user={user} />
+      <LandingNavbar user={user} username={username} />
       {children}
       <Footer />
     </>

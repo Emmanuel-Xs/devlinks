@@ -4,6 +4,7 @@ import { use } from "react";
 
 import { EyeIcon } from "lucide-react";
 
+import { getUserDefaultUsername } from "@/drizzle/query/usernames";
 import { getCurrentSession } from "@/lib/server/sessions";
 
 import { Button } from "../../../components/ui/button";
@@ -13,10 +14,14 @@ export default function PreviewLinksButton() {
 
   if (!user) redirect("/login");
 
+  const { username } = use(getUserDefaultUsername(user.id));
+
+  if (!username) redirect("/settings/usernames");
+
   return (
     <Button asChild variant="outline" size="sm">
       <Link
-        href={`/${encodeURIComponent(user.username.toLocaleLowerCase())}`}
+        href={`/${encodeURIComponent(username.toLocaleLowerCase())}`}
         title="Preview Links"
       >
         <EyeIcon className="inline min-[580px]:hidden" />

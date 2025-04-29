@@ -2,7 +2,8 @@
 
 import "server-only";
 
-import { getUserProfileData, isUsernameTaken } from "@/drizzle/query/users";
+import { isUsernameTaken } from "@/drizzle/query/usernames";
+import { getUserProfileData } from "@/drizzle/query/users";
 
 import { getRandomDigits } from "./utils";
 

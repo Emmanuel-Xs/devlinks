@@ -22,10 +22,13 @@ export default function SettingsDropDownMenu() {
           <SettingsIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mx-2 w-32">
+      <DropdownMenuContent className="mx-2 w-40">
         <DropdownMenuLabel>Quick Settings</DropdownMenuLabel>
         <DropdownMenuItem>
           <Link href="/forgot-password">Reset Password</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href="/settings/usernames">Change Usernames</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/settings">Other Settings</Link>

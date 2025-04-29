@@ -2,24 +2,20 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.ComponentProps<"input"> {
   icon?: React.ReactNode;
   error?: string;
   wrapperClassName?: string;
 }
 
 const Input = ({
-  ref,
   className,
   wrapperClassName,
   error,
   icon,
   type = "text",
   ...props
-}: InputProps & {
-  ref?: React.RefObject<HTMLInputElement | null>;
-}) => {
+}: InputProps) => {
   return (
     <div
       className={cn(
@@ -35,7 +31,6 @@ const Input = ({
           "w-full border-0 bg-transparent text-sm font-normal text-card-foreground outline-none file:text-sm file:font-medium placeholder:text-card-foreground/50 focus:ring-0 sm:text-base",
           className
         )}
-        ref={ref}
         {...props}
       />
       {error && (

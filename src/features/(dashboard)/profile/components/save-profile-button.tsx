@@ -19,7 +19,6 @@ export default function SaveProfileButton({ userId }: { userId: number }) {
     lastName,
     email,
     croppedAvatar,
-    username,
     isDirty,
     setErrors,
     resetFromDb,
@@ -38,7 +37,6 @@ export default function SaveProfileButton({ userId }: { userId: number }) {
         {
           firstName,
           lastName,
-          username,
           email,
           croppedAvatar: newAvatarFile,
         },

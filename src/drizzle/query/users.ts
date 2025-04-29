@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "../db";
-import { returningUserData, usersTable } from "../schema";
+import { returningUserData, userUsernamesTable, usersTable } from "../schema";
 
 export async function getUserByEmail(email: string) {
   return db
@@ -13,28 +13,6 @@ export async function getUserByEmail(email: string) {
     .from(usersTable)
     .where(eq(usersTable.email, email))
     .limit(1);
-}
-
-export async function getUserByUsername(username: string) {
-  return db
-    .select({
-      ...returningUserData,
-      googleId: usersTable.googleId,
-      githubId: usersTable.githubId,
-    })
-    .from(usersTable)
-    .where(eq(usersTable.username, username))
-    .limit(1);
-}
-
-export async function isUsernameTaken(username: string) {
-  const result = await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.username, username))
-    .limit(1);
-
-  return result.length > 0;
 }
 
 export async function isEmailTaken(email: string) {
@@ -69,17 +47,25 @@ export const createUserFromGithub = async (
   blurDataUrl: string | null,
   emailVerified: number
 ) => {
-  return db
-    .insert(usersTable)
-    .values({
-      githubId,
+  return db.transaction(async (tx) => {
+    const [user] = await tx
+      .insert(usersTable)
+      .values({
+        githubId,
+        email,
+        avatarUrl,
+        blurDataUrl,
+        emailVerified,
+      })
+      .returning(returningUserData);
+
+    await tx.insert(userUsernamesTable).values({
+      userId: user.id,
       username,
-      email,
-      avatarUrl,
-      blurDataUrl,
-      emailVerified,
-    })
-    .returning(returningUserData);
+    });
+
+    return { ...user, username };
+  });
 };
 
 export const createUserFromGoogle = async (
@@ -90,17 +76,25 @@ export const createUserFromGoogle = async (
   blurDataUrl: string | null,
   emailVerified: number
 ) => {
-  return db
-    .insert(usersTable)
-    .values({
-      googleId,
+  return db.transaction(async (tx) => {
+    const [user] = await tx
+      .insert(usersTable)
+      .values({
+        googleId,
+        email,
+        avatarUrl,
+        blurDataUrl,
+        emailVerified,
+      })
+      .returning(returningUserData);
+
+    await tx.insert(userUsernamesTable).values({
+      userId: user.id,
       username,
-      email,
-      avatarUrl,
-      blurDataUrl,
-      emailVerified,
-    })
-    .returning(returningUserData);
+    });
+
+    return { ...user, username };
+  });
 };
 
 export const createUser = async (
@@ -109,10 +103,19 @@ export const createUser = async (
   passwordHash: string,
   emailVerified = 0
 ) => {
-  return await db
-    .insert(usersTable)
-    .values({ username, email, password: passwordHash, emailVerified })
-    .returning(returningUserData);
+  return await db.transaction(async (tx) => {
+    const [user] = await tx
+      .insert(usersTable)
+      .values({ email, password: passwordHash, emailVerified })
+      .returning(returningUserData);
+
+    await tx.insert(userUsernamesTable).values({
+      userId: user.id,
+      username,
+    });
+
+    return { ...user, username };
+  });
 };
 
 export async function updateGithubId(userId: number, githubId: number) {
@@ -178,7 +181,6 @@ export async function updateUserProfile(
   data: {
     firstName: string | null;
     lastName: string | null;
-    username: string;
   }
 ) {
   await db
@@ -186,7 +188,6 @@ export async function updateUserProfile(
     .set({
       firstName: data.firstName,
       lastName: data.lastName,
-      username: data.username,
     })
     .where(eq(usersTable.id, userId));
 }
@@ -197,7 +198,6 @@ export async function getUserProfileData(userId: number) {
       firstName: usersTable.firstName,
       lastName: usersTable.lastName,
       email: usersTable.email,
-      username: usersTable.username,
       avatarUrl: usersTable.avatarUrl,
     })
     .from(usersTable)

@@ -124,8 +124,8 @@ export async function signUpAction(
   const user = await createUser(username, email, passwordHash);
 
   const emailVerificationRequest = await createEmailVerificationRequest(
-    user[0].id,
-    user[0].email
+    user.id,
+    user.email
   );
 
   sendVerificationEmail(
@@ -138,7 +138,7 @@ export async function signUpAction(
   setEmailVerificationRequestCookie(emailVerificationRequest[0]);
 
   const sessionToken = generateSessionToken();
-  const session = createSession(sessionToken, user[0].id);
+  const session = createSession(sessionToken, user.id);
   setSessionTokenCookie(sessionToken, (await session).expiresAt);
 
   return redirect("/verify-email");

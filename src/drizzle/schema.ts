@@ -26,12 +26,28 @@ export const usersTable = pgTable("users", {
   firstName: text(),
   lastName: text(),
   password: text(),
-  username: text().notNull().unique(),
   avatarUrl: text(),
   blurDataUrl: text("blur-data-url"),
   createdAt,
   updatedAt,
 });
+
+export const userUsernamesTable = pgTable(
+  "user_usernames",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    userId: integer()
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    username: text().notNull().unique(),
+    createdAt,
+    updatedAt,
+  },
+  (table) => [
+    unique().on(table.userId, table.username),
+    index("user_usernames_user_id_idx").on(table.userId),
+  ]
+);
 
 export const sessionsTable = pgTable("sessions", {
   id: text().primaryKey(),
@@ -55,7 +71,6 @@ export const returningUserData = {
   id: usersTable.id,
   firstName: usersTable.firstName,
   lastName: usersTable.lastName,
-  username: usersTable.username,
   email: usersTable.email,
   avatarUrl: usersTable.avatarUrl,
   blurDataUrl: usersTable.blurDataUrl,
@@ -118,12 +133,22 @@ export const returningLink = {
   platform: links.platform,
 };
 
+export const returningUsernames = {
+  username: userUsernamesTable.username,
+};
+
 // DB TYPES
 
 export type User = Pick<
   InferSelectModel<typeof usersTable>,
   keyof typeof returningUserData
 >;
+
+export type UserUsername = Pick<
+  InferSelectModel<typeof userUsernamesTable>,
+  keyof typeof returningUsernames
+>;
+
 export type Session = InferSelectModel<typeof sessionsTable>;
 
 export type EmailVerificationRequest = InferSelectModel<
@@ -148,7 +173,18 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   emailVerificationRequests: many(emailVerificationRequest),
   passwordResetSessions: many(passwordResetSessions),
   links: many(links),
+  extraUsernames: many(userUsernamesTable),
 }));
+
+export const userUsernamesRelations = relations(
+  userUsernamesTable,
+  ({ one }) => ({
+    user: one(usersTable, {
+      fields: [userUsernamesTable.userId],
+      references: [usersTable.id],
+    }),
+  })
+);
 
 export const sessionsRelations = relations(sessionsTable, ({ one }) => ({
   user: one(usersTable, {
