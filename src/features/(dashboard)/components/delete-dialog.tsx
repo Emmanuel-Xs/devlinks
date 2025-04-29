@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import { XIcon } from "lucide-react";
 
 import {
@@ -12,31 +14,39 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type DeleteLinkDialogProps = {
-  handleRemoveLink: () => void;
+type DeleteDialogProps = {
+  title: string;
+  description: string;
+  triggerIcon?: ReactNode;
+  onDelete: () => void;
 };
 
-export default function DeleteLinkDialog({
-  handleRemoveLink,
-}: DeleteLinkDialogProps) {
+export default function DeleteDialog({
+  title,
+  description,
+  triggerIcon,
+  onDelete,
+}: DeleteDialogProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <XIcon size={18} className="text-red-900" />
+      <AlertDialogTrigger asChild={triggerIcon !== undefined}>
+        {triggerIcon ? (
+          triggerIcon
+        ) : (
+          <XIcon size={18} className="text-red-900" />
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="heading">
-            Do you want to delete this link?
-          </AlertDialogTitle>
+          <AlertDialogTitle className="heading">{title}</AlertDialogTitle>
           <AlertDialogDescription className="text">
-            You cannot recover this link after deletion
+            {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={handleRemoveLink}
+            onClick={onDelete}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/50"
           >
             Continue

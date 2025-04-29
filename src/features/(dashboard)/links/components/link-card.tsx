@@ -11,7 +11,8 @@ import { Link, PlatformKey } from "@/drizzle/schema";
 import useFocusOnChange from "@/hooks/use-focus-on-change";
 import useValidateUrl from "@/hooks/use-validate-url";
 
-import DeleteLinkDialog from "./delete-link-dialog";
+import DeleteDialog from "../../components/delete-dialog";
+
 import LinkInput from "./link-input";
 import LinkPlatform from "./link-select-platform";
 
@@ -114,7 +115,11 @@ export default function LinkCard({
             <ChevronDownIcon />
           </button>
         </div>
-        <DeleteLinkDialog handleRemoveLink={handleLinkRemoval} />
+        <DeleteDialog
+          title="Do you want to delete this link?"
+          description=" You cannot recover this link after deletion"
+          onDelete={handleLinkRemoval}
+        />
       </div>
       <LinkPlatform
         id={links.id}

@@ -15,6 +15,7 @@ import { UserUsername } from "@/drizzle/schema";
 import { cn } from "@/lib/utils";
 import { usernameSchema } from "@/lib/validation";
 
+import DeleteDialog from "../../components/delete-dialog";
 import { saveUserUsernames } from "../server/actions";
 
 type FormValues = z.infer<typeof usernameSchema>;
@@ -115,13 +116,18 @@ export default function UsernamesForm({
     }
   };
 
+  const handleDeleteUsername = (index: number) => {
+    remove(index);
+    toast.success("Username has been removed!");
+  };
+
   console.log("errors from backend", errors);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {fields.map((field, index) => (
-        <div key={field.id} className="flex items-center gap-2">
-          <div className="w-full space-y-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+      <div className="space-y-4">
+        {fields.map((field, index) => (
+          <div key={field.id}>
             <Label
               htmlFor={`username-${index}`}
               className="mb-1 block text-sm font-medium"
@@ -143,16 +149,24 @@ export default function UsernamesForm({
                 />
 
                 {index > 0 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    onClick={() => remove(index)}
-                    className="flex items-center justify-center gap-2 border-destructive"
-                  >
-                    <TrashIcon className="h-4 w-4 text-destructive" />
-                    <span className="sr-only">Remove username {index + 1}</span>
-                  </Button>
+                  <DeleteDialog
+                    title="Do you want to delete this username?"
+                    description=" You cannot recover this username after deletion"
+                    onDelete={() => handleDeleteUsername(index)}
+                    triggerIcon={
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        className="flex items-center justify-center gap-2 border-destructive max-sm:h-10 max-sm:w-10"
+                      >
+                        <TrashIcon className="h-4 w-4 text-destructive" />
+                        <span className="sr-only">
+                          Remove username {index + 1}
+                        </span>
+                      </Button>
+                    }
+                  />
                 )}
               </div>
               {usernameSuggestions[index] &&
@@ -163,14 +177,15 @@ export default function UsernamesForm({
                 )}
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-end gap-4 max-sm:flex-col sm:gap-2">
         {fields.length < 4 && (
           <Button
             type="button"
             variant="outline"
+            size="ex"
             onClick={addUsername}
             className="flex items-center gap-2"
           >
@@ -181,8 +196,9 @@ export default function UsernamesForm({
 
         <Button
           type="submit"
+          size="ex"
           disabled={isPending || !isDirty}
-          className="tabular-nums max-sm:w-full"
+          className="tabular-nums"
         >
           {isPending ? (
             <>
