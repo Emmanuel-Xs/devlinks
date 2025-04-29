@@ -26,7 +26,6 @@ export const usersTable = pgTable("users", {
   firstName: text(),
   lastName: text(),
   password: text(),
-  username: text().notNull().unique(),
   avatarUrl: text(),
   blurDataUrl: text("blur-data-url"),
   createdAt,
@@ -72,7 +71,6 @@ export const returningUserData = {
   id: usersTable.id,
   firstName: usersTable.firstName,
   lastName: usersTable.lastName,
-  username: usersTable.username,
   email: usersTable.email,
   avatarUrl: usersTable.avatarUrl,
   blurDataUrl: usersTable.blurDataUrl,
@@ -135,6 +133,10 @@ export const returningLink = {
   platform: links.platform,
 };
 
+export const returningUsernames = {
+  username: userUsernamesTable.username,
+};
+
 // DB TYPES
 
 export type User = Pick<
@@ -142,7 +144,10 @@ export type User = Pick<
   keyof typeof returningUserData
 >;
 
-export type UserUsername = InferSelectModel<typeof userUsernamesTable>;
+export type UserUsername = Pick<
+  InferSelectModel<typeof userUsernamesTable>,
+  keyof typeof returningUsernames
+>;
 
 export type Session = InferSelectModel<typeof sessionsTable>;
 
@@ -170,6 +175,16 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   links: many(links),
   extraUsernames: many(userUsernamesTable),
 }));
+
+export const userUsernamesRelations = relations(
+  userUsernamesTable,
+  ({ one }) => ({
+    user: one(usersTable, {
+      fields: [userUsernamesTable.userId],
+      references: [usersTable.id],
+    }),
+  })
+);
 
 export const sessionsRelations = relations(sessionsTable, ({ one }) => ({
   user: one(usersTable, {
