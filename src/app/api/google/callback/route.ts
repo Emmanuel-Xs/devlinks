@@ -92,13 +92,13 @@ export async function GET(request: Request): Promise<Response> {
       emailVerified
     );
 
-    if (!user[0]) {
+    if (!user) {
       console.error("Failed to create user:", { username, email });
       return new Response("Failed to create user", { status: 500 });
     }
 
     const sessionToken = generateSessionToken();
-    const session = await createSession(sessionToken, user[0].id);
+    const session = await createSession(sessionToken, user.id);
     await setSessionTokenCookie(sessionToken, session.expiresAt);
 
     return new Response(null, {

@@ -4,8 +4,9 @@ import { Input } from "../../../../components/ui/input";
 import { Label } from "../../../../components/ui/label";
 
 export default function ProfileDetailsForm() {
-  const { firstName, lastName, email, username, setField, errors } =
-    useProfileStore((state) => state);
+  const { firstName, lastName, email, setField, errors } = useProfileStore(
+    (state) => state
+  );
 
   return (
     <div className="flex flex-col gap-6 rounded-xl border-input bg-background p-[20px]">
@@ -58,30 +59,6 @@ export default function ProfileDetailsForm() {
           error={errors?.email?.join(", ") || ""}
         />
       </div>
-      <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
-        <Label htmlFor="email" className="leading-[150%] text-card-foreground">
-          Username*
-        </Label>
-        <Input
-          id="username"
-          autoComplete="username"
-          placeholder="Apple001"
-          wrapperClassName="w-full bg-card max-w-[432px] basis-[432px]"
-          defaultValue={username}
-          onChange={(e) => setField("username", e.target.value)}
-          error={errors?.username?.join(", ") || ""}
-        />
-      </div>
-      {errors?.usernameSuggestions ? (
-        <p className="text flex justify-between">
-          Try one of these{" "}
-          <span className="text-primary">
-            {errors?.usernameSuggestions?.join(", ")}
-          </span>
-        </p>
-      ) : (
-        <p className="text text-center">make sure the details are correct</p>
-      )}
     </div>
   );
 }

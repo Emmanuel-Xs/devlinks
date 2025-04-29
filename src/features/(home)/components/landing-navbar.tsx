@@ -16,11 +16,17 @@ import {
 } from "../../../components/ui/dropdown-menu";
 import UserAvatar from "../../../components/user-avatar";
 
-export default function LandingNavbar({ user }: { user: User | null }) {
-  const fullName = formatUserDisplayName(
+export default function LandingNavbar({
+  user,
+  username,
+}: {
+  user: User | null;
+  username: string | undefined;
+}) {
+  const displayName = formatUserDisplayName(
     user?.firstName ?? "",
     user?.lastName ?? "",
-    user?.username ?? ""
+    username ?? null
   );
 
   return (
@@ -42,14 +48,14 @@ export default function LandingNavbar({ user }: { user: User | null }) {
               >
                 <UserAvatar
                   avatarUrl={user.avatarUrl ?? ""}
-                  fullName={fullName}
+                  fullName={displayName}
                   blurDataURL={user.blurDataUrl ?? undefined}
                   className="h-[45px] w-[45px] cursor-pointer"
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mr-6 mt-1">
                 <DropdownMenuLabel>
-                  <h3 className="text-lg font-bold">{fullName}</h3>
+                  <h3 className="text-lg font-bold">{displayName}</h3>
                   <p className="text -mt-2">{user.email}</p>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />

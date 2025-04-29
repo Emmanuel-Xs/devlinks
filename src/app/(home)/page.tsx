@@ -1,13 +1,15 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import { InteractiveGridPattern } from "@/components/interactive-grid-pattern";
+import { getUserDefaultUsername } from "@/drizzle/query/usernames";
 import CTASection from "@/features/(home)/components/cta-section";
 import FeaturesSection from "@/features/(home)/components/feature-section";
 import Footer from "@/features/(home)/components/footer";
 import HeroSection from "@/features/(home)/components/hero-section";
 import LandingNavbar from "@/features/(home)/components/landing-navbar";
 import TestimonialsSection from "@/features/(home)/components/testimonials-section";
-import { goToEmailVerified } from "@/lib/server/auth-checks";
+import { getCurrentSession } from "@/lib/server/sessions";
 import { cn } from "@/lib/utils";
 
 const images = [
@@ -58,7 +60,17 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const { user } = await goToEmailVerified();
+  const { user } = await getCurrentSession();
+
+  let username: string | undefined;
+
+  if (user) {
+    const data = await getUserDefaultUsername(user.id);
+    if (!data) {
+      redirect("/settings/usernames");
+    }
+    username = data.username;
+  }
 
   return (
     <main>
@@ -73,7 +85,7 @@ export default async function Home() {
           squares={[80, 80]}
           squaresClassName="hover:fill-primary"
         />
-        <LandingNavbar user={user} />
+        <LandingNavbar user={user} username={username} />
         <HeroSection />
       </div>
       <div>

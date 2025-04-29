@@ -50,6 +50,19 @@ export const profileSchema = z.object({
   firstName: z.string().nullable(),
   lastName: z.string().nullable(),
   email: z.string().email(),
-  username: z.string(),
   croppedAvatar: z.instanceof(File).nullable(),
+});
+
+export const usernameSchema = z.object({
+  usernames: z
+    .array(
+      z.object({
+        username: z.string().min(1, "can't be empty"),
+      })
+    )
+    .max(4, "usernames cannot be more than four")
+    .refine((data) => data[0]?.username.trim() !== "", {
+      message: "Default username is required",
+      path: ["usernames", 0, "username"],
+    }),
 });

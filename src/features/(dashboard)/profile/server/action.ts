@@ -10,7 +10,6 @@ import { z } from "zod";
 import { createEmailVerificationRequest } from "@/drizzle/query/email-verifcation";
 import {
   isEmailTaken,
-  isUsernameTaken,
   unVerifyEmail,
   updateAvatarUrl,
   updateBlurDataUrl,
@@ -25,7 +24,6 @@ import { RefillingTokenBucket } from "@/lib/server/rate-limit";
 import { globalPOSTRateLimit } from "@/lib/server/request";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { utapi } from "@/lib/server/uploadthing";
-import { suggestAlternativeUsernames } from "@/lib/server/users";
 import { generateBlurDataURL } from "@/lib/server/utils";
 import { profileSchema } from "@/lib/validation";
 
@@ -87,29 +85,22 @@ export async function saveProfileAction(
     };
   }
 
-  const {
-    firstName,
-    lastName,
-    username,
-    email: newEmail,
-    croppedAvatar,
-  } = parsed.data;
+  const { firstName, lastName, email: newEmail, croppedAvatar } = parsed.data;
 
-  const usernameTaken = await isUsernameTaken(username);
+  // const usernameTaken = await isUsernameTaken(username);
 
-  if (usernameTaken && user.username !== username) {
-    const usernameSuggestions = await suggestAlternativeUsernames(username);
+  // if (usernameTaken && user.username !== username) {
+  //   const usernameSuggestions = await suggestAlternativeUsernames(username);
 
-    return {
-      success: false,
-      errors: {
-        username: ["already taken"],
-        usernameSuggestions: usernameSuggestions,
-      },
-      fields,
-    };
-  }
-  ipBucket.consume(clientIP, 1);
+  //   return {
+  //     success: false,
+  //     errors: {
+  //       username: ["already taken"],
+  //       usernameSuggestions: usernameSuggestions,
+  //     },
+  //     fields,
+  //   };
+  // }
 
   if (croppedAvatar) {
     const avatarResult = await handleAvatarUpload(croppedAvatar, user);
@@ -118,10 +109,12 @@ export async function saveProfileAction(
       return avatarResult;
     }
   }
+
+  ipBucket.consume(clientIP, 1);
+
   await updateUserProfile(user.id, {
     firstName: firstName?.toLocaleLowerCase() ?? null,
     lastName: lastName?.toLocaleLowerCase() ?? null,
-    username: username?.toLocaleLowerCase() ?? null,
   });
 
   const emailChangeResult = await handleEmailChange(newEmail, user, fields);
