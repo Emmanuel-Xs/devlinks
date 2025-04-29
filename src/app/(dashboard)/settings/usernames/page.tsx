@@ -9,7 +9,7 @@ export default async function UsernamesPage() {
   const usernames = await getUserUsernames(user.id);
 
   return (
-    <section className="grid h-full w-full grid-rows-[1fr,_95px] divide-y divide-input rounded-xl bg-card">
+    <section className="grid h-full w-full rounded-xl bg-card">
       <div className="space-y-10 p-6 sm:p-10">
         <PageHeading
           title="Add Multiple Usernames"
