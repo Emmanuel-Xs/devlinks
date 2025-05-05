@@ -17,6 +17,8 @@ import {
 type DeleteDialogProps = {
   title: string;
   description: string;
+  openDialog?: boolean;
+  closeDialog?: () => void;
   triggerIcon?: ReactNode;
   onDelete: () => void;
 };
@@ -25,17 +27,19 @@ export default function DeleteDialog({
   title,
   description,
   triggerIcon,
+  openDialog,
+  closeDialog,
   onDelete,
 }: DeleteDialogProps) {
+  const isControlled = openDialog !== undefined;
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild={triggerIcon !== undefined}>
-        {triggerIcon ? (
-          triggerIcon
-        ) : (
-          <XIcon size={18} className="text-red-900" />
-        )}
-      </AlertDialogTrigger>
+    <AlertDialog open={openDialog}>
+      {!isControlled && (
+        <AlertDialogTrigger asChild={triggerIcon !== undefined}>
+          {triggerIcon ?? <XIcon size={18} className="text-red-900" />}
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="heading">{title}</AlertDialogTitle>
@@ -44,7 +48,7 @@ export default function DeleteDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={closeDialog}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={onDelete}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/50"

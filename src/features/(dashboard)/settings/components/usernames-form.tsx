@@ -32,6 +32,7 @@ export default function UsernamesForm({
     handleSubmit,
     setError,
     clearErrors,
+    watch,
     control,
     formState: { errors, isSubmitting: isPending, isDirty },
   } = useForm<FormValues>({
@@ -47,17 +48,20 @@ export default function UsernamesForm({
     name: "usernames",
   });
 
-  // State to store suggestions
+  const [newlyAddedIndices, setNewlyAddedIndices] = useState<number[]>([]);
   const [usernameSuggestions, setUsernameSuggestions] = useState<
     Record<number, string[]>
   >({});
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [usernameIndexToDelete, setUsernameIndexToDelete] = useState<
+    number | null
+  >(null);
 
   const onSubmit = async (data: FormValues) => {
     console.log("Submitting data");
     clearErrors();
     setUsernameSuggestions({});
 
-    // Check if the current usernames are different from the submitted data
     const usernamesExist =
       usernames.length === data.usernames.length &&
       usernames.every(
@@ -73,7 +77,6 @@ export default function UsernamesForm({
           "bg-yellow-100 border border-yellow-400 text-yellow-900 rounded-md shadow-md px-4 py-2",
         duration: 2500,
       });
-
       return;
     }
 
@@ -89,7 +92,6 @@ export default function UsernamesForm({
           const indexMatch = key.match(/usernameSuggestions\.(\d+)/);
           const index = indexMatch ? parseInt(indexMatch[1], 10) : null;
 
-          // Store suggestions for the specific index
           if (index !== null) {
             setUsernameSuggestions((prev) => ({
               ...prev,
@@ -104,80 +106,91 @@ export default function UsernamesForm({
         }
       });
     }
+
     if (result.success) {
       console.log("Saved successfully!", result);
       toast.success("Saved successfully!");
+      setNewlyAddedIndices([]);
     }
   };
 
   const addUsername = () => {
     if (fields.length < 4) {
+      const newIndex = fields.length;
       append({ username: "" });
+      setNewlyAddedIndices((prev) => [...prev, newIndex]);
     }
   };
 
-  const handleDeleteUsername = (index: number) => {
+  const removeUsername = (index: number) => {
     remove(index);
+    setNewlyAddedIndices((prev) => prev.filter((idx) => idx !== index));
     toast.success("Username has been removed!");
   };
 
-  console.log("errors from backend", errors);
+  const handleEmptyAddedUsername = (index: number) => {
+    const isEmptyField = watch(`usernames.${index}.username`).trim() === "";
+
+    if (isEmptyField && newlyAddedIndices.includes(index)) {
+      removeUsername(index);
+    } else {
+      setUsernameIndexToDelete(index);
+      setOpenDialog(true);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
       <div className="space-y-4">
-        {fields.map((field, index) => (
-          <div key={field.id}>
-            <Label
-              htmlFor={`username-${index}`}
-              className="mb-1 block text-sm font-medium"
-            >
-              Username {index + 1} {index === 0 && "(Default)"}
-            </Label>
-            <div>
-              <div className="flex items-center gap-2.5">
-                <Input
-                  id={`username-${index}`}
-                  placeholder={
-                    index === 0
-                      ? "Enter your default username"
-                      : `Enter username ${index + 1}`
-                  }
-                  error={errors.usernames?.[index]?.username?.message}
-                  {...register(`usernames.${index}.username`)}
-                  disabled={index === 0}
-                />
-
-                {index > 0 && (
-                  <DeleteDialog
-                    title="Do you want to delete this username?"
-                    description=" You cannot recover this username after deletion"
-                    onDelete={() => handleDeleteUsername(index)}
-                    triggerIcon={
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        className="flex items-center justify-center gap-2 border-destructive max-sm:h-10 max-sm:w-10"
-                      >
-                        <TrashIcon className="h-4 w-4 text-destructive" />
-                        <span className="sr-only">
-                          Remove username {index + 1}
-                        </span>
-                      </Button>
+        {fields.map((field, index) => {
+          return (
+            <div key={field.id}>
+              <Label
+                htmlFor={`username-${index}`}
+                className="mb-1 block text-sm font-medium"
+              >
+                Username {index + 1} {index === 0 && "(Default)"}
+              </Label>
+              <div>
+                <div className="flex items-center gap-2.5">
+                  <Input
+                    id={`username-${index}`}
+                    placeholder={
+                      index === 0
+                        ? "Enter your default username"
+                        : `Enter username ${index + 1}`
                     }
+                    error={errors.usernames?.[index]?.username?.message}
+                    {...register(`usernames.${index}.username`)}
+                    disabled={index === 0}
                   />
-                )}
+
+                  {index > 0 && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleEmptyAddedUsername(index)}
+                      className="flex items-center justify-center gap-2 border-destructive max-sm:h-10 max-sm:w-10"
+                    >
+                      <TrashIcon className="h-4 w-4 text-destructive" />
+                      <span className="sr-only">
+                        Remove username {index + 1}
+                      </span>
+                    </Button>
+                  )}
+                </div>
+
+                {usernameSuggestions[index] &&
+                  usernameSuggestions[index].length > 0 && (
+                    <p className="py-2 text-sm text-destructive">
+                      Suggestions: {usernameSuggestions[index].join(", ")}
+                    </p>
+                  )}
               </div>
-              {usernameSuggestions[index] &&
-                usernameSuggestions[index].length > 0 && (
-                  <p className="py-2 text-sm text-destructive">
-                    Suggestions: {usernameSuggestions[index].join(", ")}
-                  </p>
-                )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="flex justify-end gap-4 max-sm:flex-col sm:gap-2">
@@ -213,6 +226,23 @@ export default function UsernamesForm({
           )}
         </Button>
       </div>
+
+      <DeleteDialog
+        title="Do you want to delete this username?"
+        description="You cannot recover this username after deletion"
+        onDelete={() => {
+          if (usernameIndexToDelete !== null) {
+            removeUsername(usernameIndexToDelete);
+          }
+          setOpenDialog(false);
+          setUsernameIndexToDelete(null);
+        }}
+        openDialog={openDialog}
+        closeDialog={() => {
+          setOpenDialog(false);
+          setUsernameIndexToDelete(null);
+        }}
+      />
     </form>
   );
 }
