@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import type { Variants } from "motion/react";
 import { motion } from "motion/react";
 
@@ -28,7 +30,7 @@ const secondaryPathVariants: Variants = {
   },
 };
 
-export function ArrowRightIcon({ className, size = 28 }: ArrowRightIconProps) {
+export function ArrowRightIcon({ size = 28 }: ArrowRightIconProps) {
   return (
     <motion.svg
       xmlns="http://www.w3.org/2000/svg"

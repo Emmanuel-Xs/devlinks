@@ -1,22 +1,12 @@
 "use client";
 
 import type { HTMLAttributes } from "react";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> afae26e (fix: import react to pacify eslint)
 import React, {
   forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
 } from "react";
-<<<<<<< HEAD
-=======
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
->>>>>>> a9c68be (feat: implement animated icons for dashboard navbar)
-=======
->>>>>>> afae26e (fix: import react to pacify eslint)
 
 import type { Variants } from "motion/react";
 import { motion, useAnimation } from "motion/react";

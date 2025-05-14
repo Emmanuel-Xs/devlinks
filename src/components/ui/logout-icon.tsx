@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import type { Variants } from "motion/react";
 import { motion } from "motion/react";
 
