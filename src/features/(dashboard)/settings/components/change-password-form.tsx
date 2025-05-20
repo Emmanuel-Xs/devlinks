@@ -39,7 +39,7 @@ export default function ChangePasswordForm() {
     setError,
     clearErrors,
     setFocus,
-    formState: { errors: rhfErrors, isSubmitSuccessful },
+    formState: { errors: rhfErrors },
   } = useForm<z.output<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: {
@@ -106,7 +106,7 @@ export default function ChangePasswordForm() {
         startTransition(() => formAction(new FormData(formRef.current!)));
       })(evt);
     },
-    [formAction, handleSubmit]
+    [formAction, handleSubmit, clearErrors]
   );
 
   return (
@@ -140,7 +140,8 @@ export default function ChangePasswordForm() {
             {...register("oldPassword")}
           />
           <p className="pt-1 text-sm">
-            if you signed in with an Oauth just put "none" as your old password
+            if you signed in with an Oauth just put &quot;none&quot; as your old
+            password
           </p>
         </div>
         <PasswordInput
