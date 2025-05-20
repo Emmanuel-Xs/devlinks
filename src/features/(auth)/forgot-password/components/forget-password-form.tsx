@@ -11,7 +11,7 @@ import LoadingButton from "@/components/loading-button";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import AuthEmail from "../../components/auth-email";
+import EmailInput from "../../../../components/email-input";
 import { forgetPasswordAction } from "../server/action";
 
 export default function ForgetPasswordForm() {
@@ -41,7 +41,7 @@ export default function ForgetPasswordForm() {
           </p>
         ) : null}
         <Form action={formAction} className="grid gap-7">
-          <AuthEmail
+          <EmailInput
             icon={<Mail width={24} height={24} className="text-foreground" />}
             placeholder="m@example.com"
             name="email"

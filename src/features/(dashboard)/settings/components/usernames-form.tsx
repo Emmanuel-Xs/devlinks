@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 import { usernameSchema } from "@/lib/validation";
 
 import DeleteDialog from "../../components/delete-dialog";
-import { saveUserUsernames } from "../server/actions";
+import { saveUserUsernames } from "../server/action";
 
 type FormValues = z.infer<typeof usernameSchema>;
 

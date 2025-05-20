@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-import LogoutButton from "../../../../components/logout-button";
+import LogoutButton from "./logout-button";
 
 export default function SettingsDropDownMenu() {
   return (
@@ -25,13 +25,13 @@ export default function SettingsDropDownMenu() {
       <DropdownMenuContent className="mx-2 w-40">
         <DropdownMenuLabel>Quick Settings</DropdownMenuLabel>
         <DropdownMenuItem>
-          <Link href="/forgot-password">Reset Password</Link>
+          <Link href="/change-password">Change Password</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/settings/usernames">Change Usernames</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href="/settings">Other Settings</Link>
+          <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="mb-3" />
         <DropdownMenuItem asChild>

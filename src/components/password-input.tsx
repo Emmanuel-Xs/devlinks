@@ -6,20 +6,20 @@ import { Eye, EyeOff } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
 
-import { Input, InputProps } from "../../../components/ui/input";
+import { Input, InputProps } from "./ui/input";
 
-interface AuthPasswordProps extends InputProps {
+interface PasswordInputProps extends InputProps {
   id: string;
   label: string;
   forgetPassword?: ReactNode;
 }
 
-export default function AuthPassword({
+export default function PasswordInput({
   id,
   label,
   forgetPassword,
   ...props
-}: AuthPasswordProps) {
+}: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (

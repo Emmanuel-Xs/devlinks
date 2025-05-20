@@ -66,3 +66,14 @@ export const usernameSchema = z.object({
       path: ["usernames", 0, "username"],
     }),
 });
+
+export const changePasswordSchema = z
+  .object({
+    oldPassword: password,
+    newPassword: password,
+    confirmPassword: password,
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });

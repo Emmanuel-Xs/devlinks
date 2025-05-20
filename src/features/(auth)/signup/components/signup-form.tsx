@@ -22,8 +22,8 @@ import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { signupSchema } from "@/lib/validation";
 
-import AuthEmail from "../../components/auth-email";
-import AuthPassword from "../../components/auth-password";
+import EmailInput from "../../../../components/email-input";
+import PasswordInput from "../../../../components/password-input";
 import DashWith from "../../components/dash-with";
 import OAuthButtons from "../../components/oauth-buttons";
 import { signUpAction } from "../server/action";
@@ -107,7 +107,7 @@ export function SignupForm() {
           ref={formRef}
           onSubmit={rhfSubmitHandler}
         >
-          <AuthEmail
+          <EmailInput
             icon={<Mail width={24} height={24} className="text-foreground" />}
             placeholder="e.g. alex@email.com"
             error={
@@ -117,7 +117,7 @@ export function SignupForm() {
             defaultValue={formState.fields?.email}
             {...register("email")}
           />
-          <AuthPassword
+          <PasswordInput
             id="password"
             placeholder="At least 8 characters"
             icon={
@@ -132,7 +132,7 @@ export function SignupForm() {
             autoComplete="new-password"
             {...register("password")}
           />
-          <AuthPassword
+          <PasswordInput
             id="confirm-password"
             placeholder="Must match the above"
             icon={

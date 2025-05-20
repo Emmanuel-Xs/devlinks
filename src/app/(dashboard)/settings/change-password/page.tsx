@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 
+import SettingsDropDownMenu from "@/components/settings-dropdown-menu";
 import PageHeading from "@/features/(dashboard)/components/page-heading";
+import ChangePasswordForm from "@/features/(dashboard)/settings/components/change-password-form";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
 
 export const metadata: Metadata = {
@@ -11,9 +13,13 @@ export const metadata: Metadata = {
 export default async function ChangePasswordPage() {
   await goToLoginOrEmailVerified();
   return (
-    <section className="grid h-full w-full grid-rows-[1fr,_95px] divide-y divide-input rounded-xl bg-card">
+    <section className="grid h-full w-full rounded-xl bg-card">
       <div className="space-y-10 p-6 sm:p-10">
-        <PageHeading title="Change Your Password" description="" />
+        <div className="flex items-center justify-between">
+          <PageHeading title="Change Your Password" description="" />
+          <SettingsDropDownMenu />
+        </div>
+        <ChangePasswordForm />
       </div>
     </section>
   );

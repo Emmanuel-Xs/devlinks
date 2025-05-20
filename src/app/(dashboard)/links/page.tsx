@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 
+import SettingsDropDownMenu from "@/components/settings-dropdown-menu";
 import { getAllUserSessions } from "@/drizzle/query/sessions";
 import PageHeading from "@/features/(dashboard)/components/page-heading";
 import ClientLinkPage from "@/features/(dashboard)/links/components/client-link-page";
@@ -24,10 +25,13 @@ export default async function Page() {
         userLinks={userLinks}
         noOfUserSessions={allUserSessions.length}
       >
-        <PageHeading
-          title="Customize your links"
-          description="Add/edit/remove links below and then share all your profiles with the world!"
-        />
+        <div className="flex items-start justify-between">
+          <PageHeading
+            title="Customize your links"
+            description="Add/edit/remove links below and then share all your profiles with the world!"
+          />
+          <SettingsDropDownMenu />
+        </div>
       </ClientLinkPage>
     </section>
   );

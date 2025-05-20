@@ -3,11 +3,13 @@
 import Form from "next/form";
 import { useActionState } from "react";
 
-import { LoaderIcon, LogOutIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 import { logoutAction } from "../features/(auth)/logout/server/actions";
+
+import { LogoutIcon } from "./ui/logout-icon";
 
 export default function LogoutButton({ className }: { className?: string }) {
   const [, formAction, isPending] = useActionState(logoutAction, {
@@ -23,7 +25,7 @@ export default function LogoutButton({ className }: { className?: string }) {
           className
         )}
       >
-        <LogOutIcon size={20} />
+        <LogoutIcon size={20} />
         <span className="font-semibold">Logout</span>
         {isPending ? (
           <LoaderIcon

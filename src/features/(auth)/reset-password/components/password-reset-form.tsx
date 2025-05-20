@@ -22,7 +22,7 @@ import { env } from "@/lib/client-env";
 import { cn } from "@/lib/utils";
 import { passwordResetSchema } from "@/lib/validation";
 
-import AuthPassword from "../../components/auth-password";
+import PasswordInput from "../../../../components/password-input";
 import { resetPasswordAction } from "../server/action";
 
 export default function PasswordResetForm() {
@@ -99,7 +99,7 @@ export default function PasswordResetForm() {
           ref={formRef}
           onSubmit={rhfSubmitHandler}
         >
-          <AuthPassword
+          <PasswordInput
             id="password"
             placeholder="At least 8 characters"
             icon={
@@ -115,7 +115,7 @@ export default function PasswordResetForm() {
             autoComplete="new-password"
             {...register("password")}
           />
-          <AuthPassword
+          <PasswordInput
             id="confirm-password"
             placeholder="Passwords must match"
             icon={
