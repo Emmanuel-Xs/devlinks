@@ -25,7 +25,7 @@ export default function SettingsDropDownMenu() {
       <DropdownMenuContent className="mx-2 w-40">
         <DropdownMenuLabel>Quick Settings</DropdownMenuLabel>
         <DropdownMenuItem>
-          <Link href="/change-password">Change Password</Link>
+          <Link href="/settings/change-password">Change Password</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/settings/usernames">Change Usernames</Link>
