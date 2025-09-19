@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { ReactNode } from "react";
-
 import { Toaster } from "sonner";
-
-import { insSans } from "@/lib/font";
+import { ReactNode } from "react";
+import type { Metadata } from "next";
 
 import "./globals.css";
+import { insSans } from "@/lib/font";
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +20,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <body className={`${insSans.variable} antialiased`}>
         {children}
         <Toaster
