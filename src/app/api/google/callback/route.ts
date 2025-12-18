@@ -7,6 +7,7 @@ import { createSession } from "@/drizzle/query/sessions";
 import {
   createUserFromGoogle,
   getUserByEmail,
+  getUserFromGoogleId,
   updateAvatarUrl,
   updateBlurDataUrl,
   updateGoogleId,
@@ -15,6 +16,7 @@ import { google } from "@/lib/server/oauth";
 import { globalGETRateLimit } from "@/lib/server/request";
 import {
   generateSessionToken,
+  getCurrentSession,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { refineOAuthUsername } from "@/lib/server/users";
@@ -43,6 +45,7 @@ export async function GET(request: Request): Promise<Response> {
   const storedState = cookieStore.get("google_oauth_state")?.value ?? null;
 
   const codeVerifier = cookieStore.get("google_code_verifier")?.value ?? null;
+  const mode = cookieStore.get("google_oauth_mode")?.value ?? null;
 
   if (
     code === null ||
@@ -74,6 +77,40 @@ export async function GET(request: Request): Promise<Response> {
   const email = claims.email;
   const avatarUrl = claims.picture || null;
   const emailVerified = claims.email_verified ? 1 : 0;
+
+  // linking flow
+  if (mode === "link") {
+    cookieStore.delete("google_oauth_mode");
+
+    const { user: currentUser } = await getCurrentSession();
+    if (!currentUser) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "/login?error=session-expired" },
+      });
+    }
+
+    // Check if this Google account is already linked to someone else
+    const existingUserWithGoogle = await getUserFromGoogleId(googleUserId);
+
+    if (
+      existingUserWithGoogle.length &&
+      existingUserWithGoogle[0].id !== currentUser.id
+    ) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "/settings?error=google-already-linked" },
+      });
+    }
+
+    // Link Google to current user
+    await updateGoogleId(currentUser.id, googleUserId);
+
+    return new Response(null, {
+      status: 302,
+      headers: { Location: "/settings?success=google-linked" },
+    });
+  }
 
   const existingUser = await getUserByEmail(email);
 

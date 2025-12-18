@@ -42,7 +42,7 @@ export function ArrowRightIcon({ size = 28 }: ArrowRightIconProps) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="text-gray-400 transition-transform duration-300 group-hover:translate-x-0.5"
+      className="text-gray-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-primary"
     >
       <motion.path
         d="M5 12h14"

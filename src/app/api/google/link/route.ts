@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 
-import { generateState } from "arctic";
+import { generateCodeVerifier, generateState } from "arctic";
 
-import { github } from "@/lib/server/oauth";
+import { google } from "@/lib/server/oauth";
 import { globalGETRateLimit } from "@/lib/server/request";
 import { getCurrentSession } from "@/lib/server/sessions";
 
@@ -20,13 +20,32 @@ export async function GET(): Promise<Response> {
   }
 
   const state = generateState();
-  console.log("Generated state:", state);
-
-  const url = github.createAuthorizationURL(state, ["user:email"]);
-  console.log("Generated GitHub URL:", url.toString());
+  const codeVerifier = generateCodeVerifier();
+  const url = google.createAuthorizationURL(state, codeVerifier, [
+    "openid",
+    "profile",
+    "email",
+  ]);
 
   const cookieStore = await cookies();
-  cookieStore.set("github_oauth_state", state, {
+  cookieStore.set("google_oauth_state", state, {
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: "lax",
+  });
+
+  cookieStore.set("google_code_verifier", codeVerifier, {
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: "lax",
+  });
+
+  // linking flow
+  cookieStore.set("google_oauth_mode", "link", {
     path: "/",
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
