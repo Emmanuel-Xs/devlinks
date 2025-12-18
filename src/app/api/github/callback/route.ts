@@ -6,6 +6,7 @@ import { createSession } from "@/drizzle/query/sessions";
 import {
   createUserFromGithub,
   getUserByEmail,
+  getUserFromGithubId,
   updateAvatarUrl,
   updateBlurDataUrl,
   updateGithubId,
@@ -14,6 +15,7 @@ import { github } from "@/lib/server/oauth";
 import { globalGETRateLimit } from "@/lib/server/request";
 import {
   generateSessionToken,
+  getCurrentSession,
   setSessionTokenCookie,
 } from "@/lib/server/sessions";
 import { refineOAuthUsername } from "@/lib/server/users";
@@ -38,6 +40,7 @@ export async function GET(request: Request): Promise<Response> {
 
   const cookieStore = await cookies();
   const storedState = cookieStore.get("github_oauth_state")?.value ?? null;
+  const mode = cookieStore.get("github_oauth_mode")?.value ?? null;
 
   if (code === null || state === null || storedState === null) {
     return new Response("Please restart the process.", { status: 400 });
@@ -92,6 +95,36 @@ export async function GET(request: Request): Promise<Response> {
   const email: string = emails.find(
     (email: { primary: boolean }) => email.primary
   )?.email;
+
+  //handle linking flow
+  if (mode === "link") {
+    cookieStore.delete("github_oauth_mode");
+
+    const { user: currentUser } = await getCurrentSession();
+
+    if (!currentUser) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "/login?error=session-expired" },
+      });
+    }
+
+    const existingUserWithGithub = await getUserFromGithubId(githubUserId);
+
+    if (existingUserWithGithub) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "/settings?error=github-already-linked" },
+      });
+    }
+
+    await updateGithubId(currentUser.id, githubUserId);
+
+    return new Response(null, {
+      status: 302,
+      headers: { Location: "/settings?success=github-linked" },
+    });
+  }
 
   const existingUser = await getUserByEmail(email);
   console.log("Existing user from email:", existingUser);
