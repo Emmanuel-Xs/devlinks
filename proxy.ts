@@ -5,7 +5,7 @@ import { globalGETRateLimit, globalPOSTRateLimit } from "@/lib/server/request";
 import { env } from "@/lib/server/server-env";
 
 const allowedOrigins = [env.HOME_URL, env.LOCALHOST];
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
   if (!globalGETRateLimit()) {
     return new NextResponse("Too many requests", { status: 429 });
   }
