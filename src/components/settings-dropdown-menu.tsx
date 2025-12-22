@@ -17,7 +17,7 @@ import LogoutButton from "./logout-button";
 export default function SettingsDropDownMenu() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="flex-shrink-0">
+      <DropdownMenuTrigger asChild className="shrink-0">
         <Button size="icon" className="rounded-full" variant="outline">
           <SettingsIcon />
         </Button>

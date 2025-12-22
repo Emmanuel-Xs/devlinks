@@ -1,18 +1,7 @@
+import { XIcon } from "lucide-react";
 import { ReactNode } from "react";
 
-import { XIcon } from "lucide-react";
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 type DeleteDialogProps = {
   title: string;
@@ -36,7 +25,10 @@ export default function DeleteDialog({
   return (
     <AlertDialog open={openDialog}>
       {!isControlled && (
-        <AlertDialogTrigger asChild={triggerIcon !== undefined}>
+        <AlertDialogTrigger
+          asChild={triggerIcon !== undefined}
+          className="cursor-pointer"
+        >
           {triggerIcon ?? <XIcon size={18} className="text-red-900" />}
         </AlertDialogTrigger>
       )}

@@ -22,7 +22,7 @@ export default function UserAvatar({
   return (
     <div
       className={cn(
-        "relative mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-[4px] border-primary",
+        "relative mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-primary",
         className
       )}
     >

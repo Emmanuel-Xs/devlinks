@@ -6,7 +6,7 @@ import { Button } from "../../../components/ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="mx-auto flex min-h-[70svh] w-[min(100%_-_2.5rem,_1350px)] flex-col items-center justify-center">
+    <section className="mx-auto flex min-h-[70svh] w-[min(100%-2.5rem,1350px)] flex-col items-center justify-center">
       <div className="space-y-6 text-center">
         <h1
           className={cn(

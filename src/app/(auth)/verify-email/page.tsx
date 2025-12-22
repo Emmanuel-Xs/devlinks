@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 
+import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
+import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import AuthLogoutButton from "@/features/(auth)/components/auth-logout-button";
-import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
-import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
-import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email";
 import { getCurrentSession } from "@/lib/server/sessions";
+import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email";
 
 export default async function Page() {
   const { user } = await getCurrentSession();
@@ -21,7 +21,7 @@ export default async function Page() {
 
   return (
     <main className="grid h-svh place-items-center p-6 min-[375px]:p-8 sm:p-0">
-      <div className="w-full max-w-[496px] space-y-[51px]">
+      <div className="w-full max-w-124 space-y-12.75">
         <DevlinksLogo className="mx-auto" />
         <EmailVerificationForm />
         <ResendEmailVerificationCodeForm />

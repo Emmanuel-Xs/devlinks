@@ -30,7 +30,7 @@ export default function LandingNavbar({
   );
 
   return (
-    <header className="mx-auto w-[min(100%_-_2.5rem,_1350px)]">
+    <header className="mx-auto w-[min(100%-2.5rem,1350px)]">
       <nav className="flex items-center justify-between py-4">
         <DevlinksLogo className="z-10" />
         {user !== null ? (
@@ -43,7 +43,7 @@ export default function LandingNavbar({
             </Link>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className="flex-shrink-0 border-0 focus-visible:border-0"
+                className="shrink-0 border-0 focus-visible:border-0"
                 asChild
               >
                 <UserAvatar

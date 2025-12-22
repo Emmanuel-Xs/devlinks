@@ -78,7 +78,7 @@ export default function ProfilePictureCard({
             />
           )}
           {displayUrl && (
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-black/30 to-black/10" />
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-black/60 via-black/30 to-black/10" />
           )}
 
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">

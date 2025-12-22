@@ -9,7 +9,7 @@ export default function DashboardLayout({
   children: ReactNode;
 }>) {
   return (
-    <main className="mx-auto my-4 grid min-h-svh w-[min(100%_-_2rem,_1392px)] grid-rows-[78px,_1fr] gap-4 rounded-xl">
+    <main className="mx-auto my-4 grid min-h-svh w-[min(100%-2rem,1392px)] grid-rows-[78px_1fr] gap-4 rounded-xl">
       <Navbar />
       <section className="flex gap-4">
         <Sidebar />
