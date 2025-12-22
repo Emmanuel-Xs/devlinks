@@ -4,19 +4,12 @@ import { generateState } from "arctic";
 
 import { github } from "@/lib/server/oauth";
 import { globalGETRateLimit } from "@/lib/server/request";
-import { getCurrentSession } from "@/lib/server/sessions";
 
 export async function GET(): Promise<Response> {
   if (!globalGETRateLimit()) {
     return new Response("Too many requests", {
       status: 429,
     });
-  }
-
-  const { session } = await getCurrentSession();
-
-  if (!session) {
-    return new Response("Unauthorized", { status: 401 });
   }
 
   const state = generateState();
