@@ -23,7 +23,7 @@ export default function PreviewNavbar({
   return (
     <nav
       className={cn(
-        "mx-auto flex w-[min(100%_-_2rem,_1392px)] items-center justify-between rounded-xl bg-card p-4",
+        "mx-auto flex w-[min(100%-2rem,1392px)] items-center justify-between rounded-xl bg-card p-4",
         className
       )}
     >

@@ -34,7 +34,7 @@ export default function ClientProfilePage({
 }) {
   return (
     <ProfileStoreProvider user={user}>
-      <section className="grid h-full w-full grid-rows-[1fr,_95px] divide-y divide-input rounded-xl bg-card">
+      <section className="grid h-full w-full grid-rows-[1fr_95px] divide-y divide-input rounded-xl bg-card">
         <div className="space-y-10 p-6 sm:p-10">
           {children}
           <div className="space-y-6">

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function CTASection() {
   return (
     <section className="bg-primary py-20 pt-16 text-primary-foreground">
-      <div className="mx-auto w-[min(100%_-_2.5rem,_1350px)] px-4 text-center">
+      <div className="mx-auto w-[min(100%-2.5rem,1350px)] px-4 text-center">
         <h2 className="mb-6 text-3xl font-bold">
           Ready to Showcase Your Developer Profile?
         </h2>

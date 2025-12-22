@@ -43,7 +43,7 @@ export default async function Sidebar() {
             ) : (
               <h2
                 className={cn(
-                  "heading break-words leading-tight sm:text-[26px]"
+                  "heading wrap-break-word leading-tight sm:text-[26px]"
                 )}
               >
                 {fullName}

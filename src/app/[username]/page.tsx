@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import { cache, use } from "react";
 
-import PreviewLinks from "@/components/preview-links";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import UserAvatar from "@/components/user-avatar";
-import { getUserByUsername } from "@/drizzle/query/usernames";
 import PreviewNavbar from "@/features/preview/components/preview-navbar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import PreviewLinks from "@/components/preview-links";
+import { getUserByUsername } from "@/drizzle/query/usernames";
+import UserAvatar from "@/components/user-avatar";
 import { getUserLinksAction } from "@/lib/server/links";
 import { cn, formatUserDisplayName } from "@/lib/utils";
 
@@ -106,7 +106,7 @@ export default function Page({
   return (
     <main className="mb-16 min-h-svh">
       <section className="relative h-full bg-card sm:bg-none">
-        <div className="hidden h-[357px] rounded-b-[32px] bg-primary pt-4 sm:block">
+        <div className="hidden h-89.25 rounded-b-4xl bg-primary pt-4 sm:block">
           <PreviewNavbar userId={user.id} username={rawUsername} />
         </div>
         <PreviewNavbar
@@ -114,7 +114,7 @@ export default function Page({
           userId={user.id}
           username={rawUsername}
         />
-        <div className="inset-x-1/2 top-[208px] mx-auto w-full max-w-[430px] px-10 py-12 pb-8 text-center sm:absolute sm:w-[349px] sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:shadow-active">
+        <div className="inset-x-1/2 top-52 mx-auto w-full max-w-107.5 px-10 py-12 pb-8 text-center sm:absolute sm:w-87.25 sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:shadow-active">
           <UserAvatar
             avatarUrl={avatarUrl}
             fullName={displayName}
@@ -128,8 +128,8 @@ export default function Page({
           </div>
           <ScrollArea
             className={cn(
-              "h-[370px] sm:h-[300px]",
-              links.length <= 0 && "sm:h-[270px]"
+              "h-92.5 sm:h-75",
+              links.length <= 0 && "sm:h-67.5"
             )}
           >
             <div className="flex flex-col gap-3">
@@ -139,7 +139,7 @@ export default function Page({
                     name={link.platform}
                     url={link.url}
                     key={link.id}
-                    className="h-[48px] sm:h-[46px]"
+                    className="h-12 sm:h-11.5"
                   />
                 ))
               ) : (

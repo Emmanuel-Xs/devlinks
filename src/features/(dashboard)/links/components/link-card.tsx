@@ -83,11 +83,11 @@ export default function LinkCard({
 
   return (
     <div
-      className="space-y-3 rounded-xl bg-background p-[20px]"
+      className="space-y-3 rounded-xl bg-background p-5"
       style={parentStyles}
       ref={setNodeRef}
     >
-      <div className="-my-[6px] flex items-center justify-between">
+      <div className="-my-1.5 flex items-center justify-between">
         <div className="flex items-center justify-between gap-2">
           <div
             style={draggableStyles}
@@ -101,14 +101,14 @@ export default function LinkCard({
         </div>
         <div className="flex gap-1">
           <button
-            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
+            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link cursor-pointer"
             onClick={() => handleUpDownMove(links.sequence, "up")}
             aria-label="Move Link Card up"
           >
             <ChevronUpIcon />
           </button>
           <button
-            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link"
+            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link cursor-pointer"
             onClick={() => handleUpDownMove(links.sequence, "down")}
             aria-label="Move Link Card down"
           >

@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <main className="grid min-h-svh place-items-center p-6 min-[375px]:p-8 sm:p-0">
-      <div className="w-full max-w-[496px] space-y-[40px]">
+      <div className="w-full max-w-124 space-y-10">
         <DevlinksLogo className="mx-auto" />
         <SignupForm />
       </div>

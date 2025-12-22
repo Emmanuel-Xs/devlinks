@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <main className="mx-auto w-[min(100%_-_2.5rem,_1350px)] px-4 py-8">
+    <main className="mx-auto w-[min(100%-2.5rem,1350px)] px-4 py-8">
       <section className="prose prose-sm mx-auto sm:prose lg:prose-lg xl:prose-xl">
         <h1>Privacy Policy</h1>
         <p>Last Updated: 2/16/2025</p>

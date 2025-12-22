@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
-
 import { generateState } from "arctic";
 
-import { github } from "@/lib/server/oauth";
 import { globalGETRateLimit } from "@/lib/server/request";
+import { github } from "@/lib/server/oauth";
 
 export async function GET(): Promise<Response> {
   if (!globalGETRateLimit()) {

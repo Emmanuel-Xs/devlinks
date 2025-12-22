@@ -40,7 +40,7 @@ export default function FeaturesSection() {
 
   return (
     <section id="features" className="bg-muted py-20">
-      <div className="mx-auto w-[min(100%_-_2.5rem,_1350px)] px-4">
+      <div className="mx-auto w-[min(100%-2.5rem,1350px)] px-4">
         <h2 className="mb-12 text-center text-3xl font-bold">Features</h2>
         <div className="grid gap-8 md:grid-cols-3">
           {features.map((feature, index) => (
