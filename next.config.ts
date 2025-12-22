@@ -25,9 +25,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    reactCompiler: true,
-  },
+  reactCompiler: true,
   compiler:
     process.env.NODE_ENV === "production"
       ? {
