@@ -21,7 +21,7 @@ export default function LogoutButton({ className }: { className?: string }) {
       <button
         disabled={isPending}
         className={cn(
-          "flex w-full items-center gap-1 rounded-sm bg-primary px-2 py-1 font-semibold text-primary-foreground hover:bg-accent hover:text-foreground focus:bg-accent focus:text-foreground",
+          "bg-primary text-primary-foreground hover:bg-accent hover:text-foreground focus:bg-accent focus:text-foreground flex w-full items-center gap-1 rounded-sm px-2 py-1 font-semibold",
           className
         )}
       >
@@ -29,7 +29,7 @@ export default function LogoutButton({ className }: { className?: string }) {
         <span className="font-semibold">Logout</span>
         {isPending ? (
           <LoaderIcon
-            className={cn("animate-spin text-card-foreground")}
+            className={cn("text-card-foreground animate-spin")}
             size={20}
           />
         ) : null}

@@ -14,11 +14,11 @@ export default function LinkSyncWarningToast({
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   return (
     <div className="space-y-2">
-      <OctagonAlertIcon className="mx-auto text-destructive" />
-      <h4 className="text-center text-lg font-bold text-card-foreground sm:text-left">
+      <OctagonAlertIcon className="text-destructive mx-auto" />
+      <h4 className="text-card-foreground text-center text-lg font-bold sm:text-left">
         Links won&apos;t sync across devices
       </h4>
-      <p className="pb-4 text-center text-base text-foreground sm:text-left">
+      <p className="text-foreground pb-4 text-center text-base sm:text-left">
         Changes made here will overwrite those in other devices. Please log out
         of other devices.
       </p>

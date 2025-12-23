@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export function AvatarSkeleton() {
   return (
-    <div className="mx-auto h-[104px] w-[104px] animate-pulse rounded-full bg-background" />
+    <div className="bg-background mx-auto h-[104px] w-[104px] animate-pulse rounded-full" />
   );
 }
 
@@ -22,7 +22,7 @@ export default function UserAvatar({
   return (
     <div
       className={cn(
-        "relative mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4 border-primary",
+        "border-primary relative mx-auto flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border-4",
         className
       )}
     >

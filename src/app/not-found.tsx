@@ -9,7 +9,7 @@ export default function NotFound() {
       <div className="absolute inset-0 bg-linear-to-t from-white/20 via-white/90 to-white/20"></div>
 
       <div className="isolate text-center">
-        <h1 className={cn("heading text-9xl font-extrabold text-primary")}>
+        <h1 className={cn("heading text-primary text-9xl font-extrabold")}>
           404
         </h1>
         <h2 className="heading mb-4">Not Found</h2>

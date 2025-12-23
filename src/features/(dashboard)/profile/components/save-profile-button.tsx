@@ -75,7 +75,7 @@ export default function SaveProfileButton({ userId }: { userId: number }) {
           {isPending ? (
             <>
               <RefreshCwIcon
-                className={cn("animate-spin text-card")}
+                className={cn("text-card animate-spin")}
                 size={25}
               />
               <span className="pl-1">Saving...</span>

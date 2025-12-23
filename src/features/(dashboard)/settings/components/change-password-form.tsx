@@ -117,7 +117,7 @@ export default function ChangePasswordForm() {
       onSubmit={rhfSubmitHandler}
     >
       {formState?.errors?.message && !formState.success && !isPending ? (
-        <p className="text text-pretty text-center text-destructive">
+        <p className="text text-destructive text-center text-pretty">
           {formState?.errors?.message}
         </p>
       ) : null}

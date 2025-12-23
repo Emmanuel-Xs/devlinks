@@ -54,13 +54,13 @@ export default function ProfilePictureCard({
   };
 
   return (
-    <div className="flex flex-col justify-between gap-6 rounded-xl border-input bg-background p-[20px] sm:flex-row sm:items-center">
+    <div className="border-input bg-background flex flex-col justify-between gap-6 rounded-xl p-[20px] sm:flex-row sm:items-center">
       <p className="text">Profile picture</p>
       <div className="flex max-w-[432px] flex-col gap-6 sm:flex-row sm:items-center">
         <div
           className={cn(
             "relative flex h-48 w-48 shrink-0 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl",
-            displayUrl ? "border-[3px] border-primary" : "bg-active-link"
+            displayUrl ? "border-primary border-[3px]" : "bg-active-link"
           )}
           onClick={() => fileInputRef.current?.click()}
         >

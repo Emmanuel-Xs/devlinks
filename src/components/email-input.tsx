@@ -5,7 +5,7 @@ import { Input, InputProps } from "./ui/input";
 export default function EmailInput({ ...props }: InputProps) {
   return (
     <div className="grid gap-1">
-      <Label htmlFor="email" className="leading-[150%] text-card-foreground">
+      <Label htmlFor="email" className="text-card-foreground leading-[150%]">
         Email
       </Label>
       <Input id="email" type="email" autoComplete="email" {...props} />

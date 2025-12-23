@@ -33,7 +33,7 @@ export function OAuthLinks({ connections }: { connections: OAuthConnections }) {
               "group flex items-center rounded-md border p-2",
               connected
                 ? "cursor-not-allowed border-gray-300 opacity-50"
-                : "border-gray-400 hover:border-primary",
+                : "hover:border-primary border-gray-400",
               provider.name === "google" ? "gap-2" : "gap-3"
             )}
             onClick={(e) => connected && e.preventDefault()}

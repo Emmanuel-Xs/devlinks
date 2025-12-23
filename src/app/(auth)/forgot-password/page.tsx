@@ -1,5 +1,5 @@
-import ForgetPasswordForm from "@/features/(auth)/forgot-password/components/forget-password-form";
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
+import ForgetPasswordForm from "@/features/(auth)/forgot-password/components/forget-password-form";
 
 export default function Page() {
   return (

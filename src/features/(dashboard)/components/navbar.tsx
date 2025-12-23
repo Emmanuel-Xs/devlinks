@@ -7,7 +7,7 @@ import PreviewLinkButton from "./preview-button";
 
 export default function Navbar() {
   return (
-    <nav className="max-h-[78px] rounded-xl bg-card py-4 pl-6 pr-6">
+    <nav className="bg-card max-h-[78px] rounded-xl py-4 pr-6 pl-6">
       <menu className="flex items-center justify-between">
         <DevlinksLogo />
         <div className="flex items-center gap-4">

@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "./ui/button";
 
 interface LoadingButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   className?: string;
   text: string;
@@ -39,7 +40,7 @@ export default function LoadingButton({
       {itIsPending ? (
         <Loader
           className={cn(
-            "animate-spin text-card",
+            "text-card animate-spin",
             outline ? "text-primary" : ""
           )}
           size={25}

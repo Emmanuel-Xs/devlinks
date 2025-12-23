@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function LinksPrompt() {
   return (
-    <div className="grid place-items-center space-y-6 rounded-xl bg-background p-[20px] sm:space-y-10">
+    <div className="bg-background grid place-items-center space-y-6 rounded-xl p-[20px] sm:space-y-10">
       <Image
         src="/images/finger-on-phone.png"
         alt="placeholder image showing a finger tapping on a mobile phone indicating adding a ink"

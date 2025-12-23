@@ -83,7 +83,7 @@ export default function LinkCard({
 
   return (
     <div
-      className="space-y-3 rounded-xl bg-background p-5"
+      className="bg-background space-y-3 rounded-xl p-5"
       style={parentStyles}
       ref={setNodeRef}
     >
@@ -95,20 +95,20 @@ export default function LinkCard({
             {...attributes}
             {...listeners}
           >
-            <EqualIcon size={20} className="touch-none text-primary" />
+            <EqualIcon size={20} className="text-primary touch-none" />
           </div>
           <h3 className="text text-card-foreground">Link #{links.sequence}</h3>
         </div>
         <div className="flex gap-1">
           <button
-            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link cursor-pointer"
+            className="text-foreground hover:bg-active-link focus-visible:bg-active-link cursor-pointer rounded-lg p-1.5 text-sm"
             onClick={() => handleUpDownMove(links.sequence, "up")}
             aria-label="Move Link Card up"
           >
             <ChevronUpIcon />
           </button>
           <button
-            className="rounded-lg p-1.5 text-sm text-foreground hover:bg-active-link focus-visible:bg-active-link cursor-pointer"
+            className="text-foreground hover:bg-active-link focus-visible:bg-active-link cursor-pointer rounded-lg p-1.5 text-sm"
             onClick={() => handleUpDownMove(links.sequence, "down")}
             aria-label="Move Link Card down"
           >
@@ -134,7 +134,7 @@ export default function LinkCard({
         ref={linkInputRef}
       />
       {urlError && (
-        <span className="whitespace-nowrap text-xs leading-[150%] text-destructive">
+        <span className="text-destructive text-xs leading-[150%] whitespace-nowrap">
           {urlError}
         </span>
       )}

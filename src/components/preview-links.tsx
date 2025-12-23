@@ -56,7 +56,7 @@ export default function PreviewLinks({
     >
       <div className="flex items-center gap-2">
         {platform.getIcon()}
-        <span className="text font-medium text-primary-foreground">
+        <span className="text text-primary-foreground font-medium">
           {platform.label}
         </span>
       </div>
@@ -66,7 +66,7 @@ export default function PreviewLinks({
           size={16}
         />
       ) : (
-        <span className="text-sm text-destructive">Invalid</span>
+        <span className="text-destructive text-sm">Invalid</span>
       )}
     </Link>
   );

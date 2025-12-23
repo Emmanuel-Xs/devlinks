@@ -9,11 +9,11 @@ export default function ProfileDetailsForm() {
   );
 
   return (
-    <div className="flex flex-col gap-6 rounded-xl border-input bg-background p-[20px]">
+    <div className="border-input bg-background flex flex-col gap-6 rounded-xl p-[20px]">
       <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
         <Label
           htmlFor="firstName"
-          className="leading-[150%] text-card-foreground"
+          className="text-card-foreground leading-[150%]"
         >
           First name*
         </Label>
@@ -30,7 +30,7 @@ export default function ProfileDetailsForm() {
       <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
         <Label
           htmlFor="lastName"
-          className="leading-[150%] text-card-foreground"
+          className="text-card-foreground leading-[150%]"
         >
           Last name*
         </Label>
@@ -45,7 +45,7 @@ export default function ProfileDetailsForm() {
         />
       </div>
       <div className="items-center justify-between gap-4 max-[690px]:space-y-2 min-[690px]:flex">
-        <Label htmlFor="email" className="leading-[150%] text-card-foreground">
+        <Label htmlFor="email" className="text-card-foreground leading-[150%]">
           Email*
         </Label>
         <Input

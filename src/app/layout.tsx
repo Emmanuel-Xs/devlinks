@@ -1,9 +1,11 @@
-import { Toaster } from "sonner";
-import { ReactNode } from "react";
 import type { Metadata } from "next";
+import { ReactNode } from "react";
+
+import { Toaster } from "sonner";
+
+import { insSans } from "@/lib/font";
 
 import "./globals.css";
-import { insSans } from "@/lib/font";
 
 export const metadata: Metadata = {
   title: {

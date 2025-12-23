@@ -19,7 +19,7 @@ export default async function Page() {
   const userLinks = await getUserLinksAction(user.id);
 
   return (
-    <section className="grid h-full w-full grid-rows-[1fr_95px] divide-y divide-input rounded-xl bg-card">
+    <section className="divide-input bg-card grid h-full w-full grid-rows-[1fr_95px] divide-y rounded-xl">
       <ClientLinkPage
         user={user}
         userLinks={userLinks}

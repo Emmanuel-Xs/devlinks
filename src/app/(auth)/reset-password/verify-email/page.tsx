@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import PasswordResetEmailVerificationForm from "@/features/(auth)/reset-password/verify-email/components/password-reset-email-verification-form";
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
+import PasswordResetEmailVerificationForm from "@/features/(auth)/reset-password/verify-email/components/password-reset-email-verification-form";
 import { getCurrentPasswordSession } from "@/lib/server/password-reset";
 
 export default async function Page() {

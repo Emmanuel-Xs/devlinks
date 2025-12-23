@@ -8,14 +8,14 @@ export function ProfileLinks() {
       <h2 className="text-xl font-medium">Profile</h2>
       <Link
         href="/settings/usernames"
-        className="group flex items-center justify-between rounded-md border border-gray-400 p-2 hover:border-primary"
+        className="group hover:border-primary flex items-center justify-between rounded-md border border-gray-400 p-2"
       >
         Add Multiple Usernames
         <ArrowRightIcon className="text-gray-400" size={20} />
       </Link>
       <Link
         href="/settings/change-password"
-        className="group flex items-center justify-between rounded-md border border-gray-400 p-2 hover:border-primary"
+        className="group hover:border-primary flex items-center justify-between rounded-md border border-gray-400 p-2"
       >
         Change Your Password
         <ArrowRightIcon className="text-gray-400" size={20} />

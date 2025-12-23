@@ -36,7 +36,7 @@ export default function LinkSelectPlatform({
     <div className="space-y-1">
       <Label
         htmlFor={`platform-${id}`}
-        className="leading-[150%] text-card-foreground"
+        className="text-card-foreground leading-[150%]"
       >
         Platform
       </Label>

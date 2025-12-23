@@ -20,7 +20,7 @@ export default function TestimonialsSection() {
         </h2>
         <div className="grid gap-8 md:grid-cols-2">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="rounded-lg bg-muted p-6">
+            <div key={index} className="bg-muted rounded-lg p-6">
               <blockquote className="mb-4 text-lg">
                 &#34;{testimonial.quote}&rdquo;
               </blockquote>

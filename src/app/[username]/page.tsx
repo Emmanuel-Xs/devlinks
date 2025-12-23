@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import { cache, use } from "react";
 
-import PreviewNavbar from "@/features/preview/components/preview-navbar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import PreviewLinks from "@/components/preview-links";
-import { getUserByUsername } from "@/drizzle/query/usernames";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import UserAvatar from "@/components/user-avatar";
+import { getUserByUsername } from "@/drizzle/query/usernames";
+import PreviewNavbar from "@/features/preview/components/preview-navbar";
 import { getUserLinksAction } from "@/lib/server/links";
 import { cn, formatUserDisplayName } from "@/lib/utils";
 
@@ -105,8 +105,8 @@ export default function Page({
 
   return (
     <main className="mb-16 min-h-svh">
-      <section className="relative h-full bg-card sm:bg-none">
-        <div className="hidden h-89.25 rounded-b-4xl bg-primary pt-4 sm:block">
+      <section className="bg-card relative h-full sm:bg-none">
+        <div className="bg-primary hidden h-89.25 rounded-b-4xl pt-4 sm:block">
           <PreviewNavbar userId={user.id} username={rawUsername} />
         </div>
         <PreviewNavbar
@@ -114,23 +114,20 @@ export default function Page({
           userId={user.id}
           username={rawUsername}
         />
-        <div className="inset-x-1/2 top-52 mx-auto w-full max-w-107.5 px-10 py-12 pb-8 text-center sm:absolute sm:w-87.25 sm:-translate-x-1/2 sm:rounded-3xl sm:bg-card sm:shadow-active">
+        <div className="sm:bg-card sm:shadow-active inset-x-1/2 top-52 mx-auto w-full max-w-107.5 px-10 py-12 pb-8 text-center sm:absolute sm:w-87.25 sm:-translate-x-1/2 sm:rounded-3xl">
           <UserAvatar
             avatarUrl={avatarUrl}
             fullName={displayName}
             blurDataURL={blurDataURL}
           />
-          <div className="mb-5 mt-2">
+          <div className="mt-2 mb-5">
             <h1 className={cn("heading leading-tight sm:text-3xl")}>
               {displayName}
             </h1>
             <p className="text">{email}</p>
           </div>
           <ScrollArea
-            className={cn(
-              "h-92.5 sm:h-75",
-              links.length <= 0 && "sm:h-67.5"
-            )}
+            className={cn("h-92.5 sm:h-75", links.length <= 0 && "sm:h-67.5")}
           >
             <div className="flex flex-col gap-3">
               {links.length > 0 ? (

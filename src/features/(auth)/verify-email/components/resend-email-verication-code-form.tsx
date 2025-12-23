@@ -40,13 +40,13 @@ export function ResendEmailVerificationCodeForm({ initialCountDown = true }) {
         disabled={coolDown > 0}
       />
       {formState?.errors && !formState.success ? (
-        <p className="text text-pretty text-center text-destructive">
+        <p className="text text-destructive text-center text-pretty">
           {formState?.errors?.message}
         </p>
       ) : null}
 
       {formState.success && !isPending ? (
-        <p className="text text-pretty text-center text-green-700">
+        <p className="text text-center text-pretty text-green-700">
           {formState?.errors?.message}
         </p>
       ) : null}

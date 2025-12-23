@@ -21,10 +21,10 @@ export default function AuthLogoutButton() {
         className="mx-auto flex items-center justify-center gap-2"
       >
         <LogOutIcon size={20} />
-        <span className="font-semibold text-card-foreground">Logout</span>
+        <span className="text-card-foreground font-semibold">Logout</span>
         {isPending ? (
           <LoaderIcon
-            className={cn("animate-spin text-card-foreground")}
+            className={cn("text-card-foreground animate-spin")}
             size={20}
           />
         ) : null}

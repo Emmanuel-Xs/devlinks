@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Body,
   Column,
@@ -48,11 +46,14 @@ export const PasswordReset = ({ code }: PasswordResetProp) => (
             },
           },
         },
+        safelist: [],
+        separator: ":",
+        corePlugins: {},
       }}
     >
-      <Body className="m-auto bg-white font-sans text-foreground">
-        <Container className="mx-auto my-[40px] max-w-[465px] rounded-lg border border-solid border-gray-200 p-[20px] shadow-sm">
-          <Section className="mt-[32px] w-max">
+      <Body className="text-foreground m-auto bg-white font-sans">
+        <Container className="mx-auto my-10 max-w-116.25 rounded-lg border border-solid border-gray-200 p-5 shadow-sm">
+          <Section className="mt-8 w-max">
             <Row>
               <Column>
                 <Img
@@ -64,28 +65,28 @@ export const PasswordReset = ({ code }: PasswordResetProp) => (
                 />
               </Column>
               <Column>
-                <Text className="text-[28px] font-bold text-foreground">
+                <Text className="text-foreground text-[28px] font-bold">
                   devlinks
                 </Text>
               </Column>
             </Row>
           </Section>
 
-          <Heading className="my-[30px] text-center text-[32px] font-bold text-foreground">
+          <Heading className="text-foreground my-7.5 text-center text-[32px] font-bold">
             Reset Your Password
           </Heading>
-          <Text className="mb-[30px] text-center text-[16px] leading-[24px] text-gray-600">
+          <Text className="mb-7.5 text-center text-[16px] leading-6 text-gray-600">
             Your confirmation code is below - enter it in your open browser
             window and we&apos;ll help you reset your password.
           </Text>
 
-          <Section className="rounded-md bg-background py-[20px]">
-            <Text className="text-center text-[36px] font-bold tracking-wide text-primary">
+          <Section className="bg-background rounded-md py-5">
+            <Text className="text-primary text-center text-[36px] font-bold tracking-wide">
               {code}
             </Text>
           </Section>
 
-          <Text className="text-gray mt-[30px] text-center text-[14px] leading-[24px]">
+          <Text className="text-gray mt-7.5 text-center text-[14px] leading-6">
             If you didn&apos;t request this email, there&apos;s nothing to worry
             about, you can safely ignore it.
           </Text>

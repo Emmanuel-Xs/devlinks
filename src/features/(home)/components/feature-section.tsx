@@ -44,7 +44,7 @@ export default function FeaturesSection() {
         <h2 className="mb-12 text-center text-3xl font-bold">Features</h2>
         <div className="grid gap-8 md:grid-cols-3">
           {features.map((feature, index) => (
-            <div key={index} className="rounded-lg bg-background p-6 shadow-md">
+            <div key={index} className="bg-background rounded-lg p-6 shadow-md">
               <div className="mb-4 text-3xl">{feature.icon}</div>
               <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
               <p className="text-muted-foreground">{feature.description}</p>

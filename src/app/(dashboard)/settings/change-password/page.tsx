@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function ChangePasswordPage() {
   await goToLoginOrEmailVerified();
   return (
-    <section className="grid h-full w-full rounded-xl bg-card">
+    <section className="bg-card grid h-full w-full rounded-xl">
       <div className="space-y-10 p-6 sm:p-10">
         <div className="flex items-center justify-between">
           <PageHeading title="Change Your Password" description="" />

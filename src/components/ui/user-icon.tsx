@@ -82,7 +82,7 @@ const UserIcon = forwardRef<UserIconHandle, UserIconProps>(
     return (
       <div
         className={cn(
-          `flex cursor-pointer select-none items-center justify-center rounded-md transition-colors duration-200`,
+          `flex cursor-pointer items-center justify-center rounded-md transition-colors duration-200 select-none`,
           className
         )}
         onMouseEnter={handleMouseEnter}

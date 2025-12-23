@@ -26,7 +26,7 @@ export default function PasswordInput({
     <div className="grid gap-1">
       <Label
         htmlFor={id}
-        className="text-sm leading-[150%] text-card-foreground"
+        className="text-card-foreground text-sm leading-[150%]"
       >
         {label}
       </Label>

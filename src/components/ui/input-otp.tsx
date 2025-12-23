@@ -54,8 +54,8 @@ const InputOTPSlot = ({
     <div
       ref={ref}
       className={cn(
-        "relative flex h-[48px] w-[46px] items-center justify-center border-y-2 border-r-2 border-input text-sm shadow-sm transition-all first:rounded-l-md first:border-l-2 last:rounded-r-md max-[450px]:h-11 max-[450px]:w-[38px] max-[400px]:h-10 max-[400px]:w-[32px] max-[330px]:w-[30px]",
-        isActive && "z-10 border-none ring-2 ring-primary",
+        "border-input relative flex h-[48px] w-[46px] items-center justify-center border-y-2 border-r-2 text-sm shadow-sm transition-all first:rounded-l-md first:border-l-2 last:rounded-r-md max-[450px]:h-11 max-[450px]:w-[38px] max-[400px]:h-10 max-[400px]:w-[32px] max-[330px]:w-[30px]",
+        isActive && "ring-primary z-10 border-none ring-2",
         className
       )}
       {...props}
@@ -63,7 +63,7 @@ const InputOTPSlot = ({
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="animate-caret-blink h-4 w-px bg-foreground duration-1000" />
+          <div className="animate-caret-blink bg-foreground h-4 w-px duration-1000" />
         </div>
       )}
     </div>

@@ -29,7 +29,7 @@ export default async function Sidebar() {
   const blurDataURL = user.blurDataUrl ?? undefined;
 
   return (
-    <aside className="hidden h-full w-full max-w-[560px] justify-center rounded-xl bg-card p-6 pt-14 min-[1200px]:grid">
+    <aside className="bg-card hidden h-full w-full max-w-[560px] justify-center rounded-xl p-6 pt-14 min-[1200px]:grid">
       <PhoneFrame className="space-y-5">
         <div className="space-y-4">
           <UserAvatar
@@ -43,7 +43,7 @@ export default async function Sidebar() {
             ) : (
               <h2
                 className={cn(
-                  "heading wrap-break-word leading-tight sm:text-[26px]"
+                  "heading leading-tight wrap-break-word sm:text-[26px]"
                 )}
               >
                 {fullName}

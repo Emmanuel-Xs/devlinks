@@ -24,7 +24,7 @@ export default function LinkInput({
     <div className="space-y-1">
       <Label
         htmlFor={`link-${id}`}
-        className="leading-[150%] text-card-foreground"
+        className="text-card-foreground leading-[150%]"
       >
         Link
       </Label>

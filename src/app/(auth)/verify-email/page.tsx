@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 
-import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
-import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
 import DevlinksLogo from "@/features/(auth)/components/auth-devlinks-logo";
 import AuthLogoutButton from "@/features/(auth)/components/auth-logout-button";
-import { getCurrentSession } from "@/lib/server/sessions";
+import EmailVerificationForm from "@/features/(auth)/verify-email/components/email-verification-form";
+import { ResendEmailVerificationCodeForm } from "@/features/(auth)/verify-email/components/resend-email-verication-code-form";
 import { getUserEmailVerificationRequestFromRequest } from "@/lib/server/email";
+import { getCurrentSession } from "@/lib/server/sessions";
 
 export default async function Page() {
   const { user } = await getCurrentSession();

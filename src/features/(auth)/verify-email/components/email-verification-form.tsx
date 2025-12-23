@@ -24,7 +24,7 @@ export default function EmailVerificationForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:bg-card sm:p-8 sm:text-card-foreground sm:shadow"
+        "sm:bg-card sm:text-card-foreground mx-auto max-w-[500px] space-y-12 sm:rounded-xl sm:border sm:p-8 sm:shadow"
       )}
     >
       <CardHeader className="space-y-2 text-center">
@@ -38,7 +38,7 @@ export default function EmailVerificationForm() {
         <AuthOTP />
         <LoadingButton text="Verify" />
         {formState?.errors && !formState.success && !isPending ? (
-          <p className="text text-pretty text-center text-destructive">
+          <p className="text text-destructive text-center text-pretty">
             {formState?.errors?.message}
           </p>
         ) : null}

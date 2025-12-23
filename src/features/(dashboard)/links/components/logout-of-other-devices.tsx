@@ -39,13 +39,13 @@ export default function LogoutOfOtherDevices({
       <Button
         disabled={isPending}
         size="ex"
-        className="flex w-full items-center gap-1 rounded-sm bg-primary font-semibold text-primary-foreground hover:bg-accent hover:text-foreground focus:bg-accent focus:text-foreground"
+        className="bg-primary text-primary-foreground hover:bg-accent hover:text-foreground focus:bg-accent focus:text-foreground flex w-full items-center gap-1 rounded-sm font-semibold"
       >
         <LogOutIcon size={20} />
         <span className="font-semibold">Logout of other devices</span>
         {isPending ? (
           <LoaderIcon
-            className={cn("animate-spin text-card-foreground")}
+            className={cn("text-card-foreground animate-spin")}
             size={20}
           />
         ) : null}

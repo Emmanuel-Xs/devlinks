@@ -88,7 +88,7 @@ export function SignupForm() {
   return (
     <div
       className={cn(
-        "mx-auto max-w-[496px] space-y-8 sm:rounded-xl sm:border sm:bg-card sm:p-10 sm:py-7 sm:text-card-foreground sm:shadow"
+        "sm:bg-card sm:text-card-foreground mx-auto max-w-[496px] space-y-8 sm:rounded-xl sm:border sm:p-10 sm:py-7 sm:shadow"
       )}
     >
       <CardHeader className="space-y-2">
@@ -97,7 +97,7 @@ export function SignupForm() {
       </CardHeader>
       <CardContent className="grid gap-6">
         {formState?.errors?.message && !formState.success && !isPending ? (
-          <p className="text text-pretty text-center text-destructive">
+          <p className="text text-destructive text-center text-pretty">
             {formState?.errors?.message}
           </p>
         ) : null}

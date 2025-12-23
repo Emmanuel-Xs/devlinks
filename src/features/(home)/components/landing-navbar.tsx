@@ -37,7 +37,7 @@ export default function LandingNavbar({
           <div className="flex flex-row items-center gap-4">
             <Link
               href="/links"
-              className="z-10 font-medium text-card-foreground"
+              className="text-card-foreground z-10 font-medium"
             >
               Dashboard
             </Link>
@@ -53,7 +53,7 @@ export default function LandingNavbar({
                   className="h-[45px] w-[45px] cursor-pointer"
                 />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-6 mt-1">
+              <DropdownMenuContent className="mt-1 mr-6">
                 <DropdownMenuLabel>
                   <h3 className="text-lg font-bold">{displayName}</h3>
                   <p className="text -mt-2">{user.email}</p>

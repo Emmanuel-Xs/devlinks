@@ -10,14 +10,14 @@ export default function HeroSection() {
       <div className="space-y-6 text-center">
         <h1
           className={cn(
-            "heading max-w-2xl text-4xl text-primary sm:text-5xl md:text-6xl"
+            "heading text-primary max-w-2xl text-4xl sm:text-5xl md:text-6xl"
           )}
         >
           Your Developer Social Links in One Place
         </h1>
         <p
           className={cn(
-            "text mx-auto max-w-lg text-xl text-card-foreground sm:text-xl"
+            "text text-card-foreground mx-auto max-w-lg text-xl sm:text-xl"
           )}
         >
           Effortlessly organize and share your developer portfolio and social
