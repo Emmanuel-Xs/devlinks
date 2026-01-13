@@ -1,14 +1,15 @@
-import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
-import { InteractiveGridPattern } from "@/components/interactive-grid-pattern";
-import { getUserDefaultUsername } from "@/drizzle/query/usernames";
-import CTASection from "@/features/(home)/components/cta-section";
-import FeaturesSection from "@/features/(home)/components/feature-section";
-import Footer from "@/features/(home)/components/footer";
-import HeroSection from "@/features/(home)/components/hero-section";
-import LandingNavbar from "@/features/(home)/components/landing-navbar";
 import TestimonialsSection from "@/features/(home)/components/testimonials-section";
+import FeaturesSection from "@/features/(home)/components/feature-section";
+import { StorageCleaner } from "@/features/(home)/components/storage-cleaner";
+import LandingNavbar from "@/features/(home)/components/landing-navbar";
+import HeroSection from "@/features/(home)/components/hero-section";
+import CTASection from "@/features/(home)/components/cta-section";
+import { InteractiveGridPattern } from "@/components/interactive-grid-pattern";
+import Footer from "@/features/(home)/components/footer";
+import { getUserDefaultUsername } from "@/drizzle/query/usernames";
 import { getCurrentSession } from "@/lib/server/sessions";
 import { cn } from "@/lib/utils";
 
@@ -74,6 +75,7 @@ export default async function Home() {
 
   return (
     <main>
+      <StorageCleaner hasSession={!!user} />
       <div className="relative isolate overflow-hidden">
         <InteractiveGridPattern
           className={cn(
