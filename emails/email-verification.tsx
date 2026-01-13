@@ -1,20 +1,5 @@
+import { Body, Column, Container, Font, Head, Heading, Html, Img, Preview, Row, Section, Tailwind, Text } from "@react-email/components";
 import * as React from "react";
-
-import {
-  Body,
-  Column,
-  Container,
-  Font,
-  Head,
-  Heading,
-  Html,
-  Img,
-  Preview,
-  Row,
-  Section,
-  Tailwind,
-  Text,
-} from "@react-email/components";
 
 interface EmailVerificationProp {
   code?: string;
@@ -48,7 +33,7 @@ export const EmailVerification = ({ code }: EmailVerificationProp) => (
             },
           },
         },
-      }}
+      } as any}
     >
       <Body className="m-auto bg-white font-sans text-foreground">
         <Container className="mx-auto my-[40px] max-w-[465px] rounded-lg border border-solid border-gray-200 p-[20px] shadow-sm">

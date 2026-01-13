@@ -1,20 +1,4 @@
-import * as React from "react";
-
-import {
-  Body,
-  Column,
-  Container,
-  Font,
-  Head,
-  Heading,
-  Html,
-  Img,
-  Preview,
-  Row,
-  Section,
-  Tailwind,
-  Text,
-} from "@react-email/components";
+import { Body, Column, Container, Font, Head, Heading, Html, Img, Preview, Row, Section, Tailwind, Text } from "@react-email/components";
 
 interface PasswordResetProp {
   code?: string;
@@ -37,20 +21,22 @@ export const PasswordReset = ({ code }: PasswordResetProp) => (
     />
     <Preview>Reset Your Password</Preview>
     <Tailwind
-      config={{
-        theme: {
-          extend: {
-            colors: {
-              primary: "#633cff",
-              gray: "#737373",
-              background: "#fafafa",
-              foreground: "#333333",
+      config={
+        {
+          theme: {
+            extend: {
+              colors: {
+                primary: "#633cff",
+                gray: "#737373",
+                background: "#fafafa",
+                foreground: "#333333",
+              },
             },
           },
-        },
-      }}
+        } as any
+      }
     >
-      <Body className="m-auto bg-white font-sans text-foreground">
+      <Body className="text-foreground m-auto bg-white font-sans">
         <Container className="mx-auto my-[40px] max-w-[465px] rounded-lg border border-solid border-gray-200 p-[20px] shadow-sm">
           <Section className="mt-[32px] w-max">
             <Row>
@@ -64,14 +50,14 @@ export const PasswordReset = ({ code }: PasswordResetProp) => (
                 />
               </Column>
               <Column>
-                <Text className="text-[28px] font-bold text-foreground">
+                <Text className="text-foreground text-[28px] font-bold">
                   devlinks
                 </Text>
               </Column>
             </Row>
           </Section>
 
-          <Heading className="my-[30px] text-center text-[32px] font-bold text-foreground">
+          <Heading className="text-foreground my-[30px] text-center text-[32px] font-bold">
             Reset Your Password
           </Heading>
           <Text className="mb-[30px] text-center text-[16px] leading-[24px] text-gray-600">
@@ -79,8 +65,8 @@ export const PasswordReset = ({ code }: PasswordResetProp) => (
             window and we&apos;ll help you reset your password.
           </Text>
 
-          <Section className="rounded-md bg-background py-[20px]">
-            <Text className="text-center text-[36px] font-bold tracking-wide text-primary">
+          <Section className="bg-background rounded-md py-[20px]">
+            <Text className="text-primary text-center text-[36px] font-bold tracking-wide">
               {code}
             </Text>
           </Section>
