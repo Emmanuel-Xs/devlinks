@@ -123,7 +123,7 @@ export async function loginAction(
 
   const sessionToken = generateSessionToken();
   const session = await createSession(sessionToken, user[0].id);
-  setSessionTokenCookie(sessionToken, session.expiresAt);
+  await setSessionTokenCookie(sessionToken, session.expiresAt);
 
   if (!user[0].emailVerified) {
     redirect("/verify-email");

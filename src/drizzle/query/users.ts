@@ -215,3 +215,7 @@ export async function unVerifyEmail(userId: number) {
     })
     .where(eq(usersTable.id, userId));
 }
+
+export async function deleteUser(userId: number) {
+  return await db.delete(usersTable).where(eq(usersTable.id, userId));
+}

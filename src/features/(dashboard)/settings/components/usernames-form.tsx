@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 import { usernameSchema } from "@/lib/validation";
 
 import DeleteDialog from "../../components/delete-dialog";
-import { saveUserUsernames } from "../server/action";
+import { saveUserUsernames } from "../server/saved-usernames-action";
 
 type FormValues = z.infer<typeof usernameSchema>;
 
@@ -171,9 +171,9 @@ export default function UsernamesForm({
                       variant="outline"
                       size="icon"
                       onClick={() => handleEmptyAddedUsername(index)}
-                      className="flex items-center justify-center gap-2 border-destructive max-sm:h-10 max-sm:w-10"
+                      className="border-destructive flex items-center justify-center gap-2 max-sm:h-10 max-sm:w-10"
                     >
-                      <TrashIcon className="h-4 w-4 text-destructive" />
+                      <TrashIcon className="text-destructive h-4 w-4" />
                       <span className="sr-only">
                         Remove username {index + 1}
                       </span>
@@ -183,7 +183,7 @@ export default function UsernamesForm({
 
                 {usernameSuggestions[index] &&
                   usernameSuggestions[index].length > 0 && (
-                    <p className="py-2 text-sm text-destructive">
+                    <p className="text-destructive py-2 text-sm">
                       Suggestions: {usernameSuggestions[index].join(", ")}
                     </p>
                   )}
@@ -216,7 +216,7 @@ export default function UsernamesForm({
           {isPending ? (
             <>
               <RefreshCwIcon
-                className={cn("animate-spin text-card")}
+                className={cn("text-card animate-spin")}
                 size={25}
               />
               <span className="pl-1">Saving...</span>

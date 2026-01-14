@@ -1,13 +1,14 @@
 import { Metadata } from "next";
 
-import LogoutButton from "@/components/logout-button";
-import { getUserByEmail } from "@/drizzle/query/users";
-import PageHeading from "@/features/(dashboard)/components/page-heading";
+import { SettingsToast } from "@/features/(dashboard)/settings/components/settings-toast";
+import { ProfileLinks } from "@/features/(dashboard)/settings/components/profile-links";
 import { DangerZone } from "@/features/(dashboard)/settings/components/danger-zone";
 import { OAuthLinks } from "@/features/(dashboard)/settings/components/oauth-links";
-import { ProfileLinks } from "@/features/(dashboard)/settings/components/profile-links";
-import { SettingsToast } from "@/features/(dashboard)/settings/components/settings-toast";
+import PageHeading from "@/features/(dashboard)/components/page-heading";
+import LogoutButton from "@/components/logout-button";
+import { getUserUsernames } from "@/drizzle/query/usernames";
 import { goToLoginOrEmailVerified } from "@/lib/server/auth-checks";
+import { getUserByEmail } from "@/drizzle/query/users";
 
 export const metadata: Metadata = {
   title: "settings",
@@ -25,6 +26,8 @@ export default async function SettingsPage() {
     google: Boolean(user.googleId),
   };
 
+  const usernames = await getUserUsernames(user.id);
+
   return (
     <section className="grid h-full w-full grid-rows-[1fr,_95px] divide-y divide-input rounded-xl bg-card">
       <div className="space-y-10 p-6 sm:p-10">
@@ -39,7 +42,7 @@ export default async function SettingsPage() {
           <OAuthLinks connections={oauthConnections} />
           <LogoutButton className="mt-8 items-center justify-center gap-4 py-2.5" />
         </div>
-        <DangerZone />
+        <DangerZone username={usernames[0].username} />
       </div>
     </section>
   );

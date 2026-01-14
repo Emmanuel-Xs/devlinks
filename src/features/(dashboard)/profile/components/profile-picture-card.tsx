@@ -72,7 +72,7 @@ export default function ProfilePictureCard({
               width={192}
               height={192}
               loading="eager"
-              placeholder="blur"
+              placeholder={blurDataUrl ? "blur" : "empty"}
               blurDataURL={blurDataUrl ?? undefined}
               unoptimized
             />
